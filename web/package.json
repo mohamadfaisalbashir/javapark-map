@@ -1,0 +1,19 @@
+{
+  "name": "taman-kota-jawa-web",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "chart.js": "4.5.1",
+    "leaflet": "1.9.4",
+    "leaflet.markercluster": "1.5.3",
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-chartjs-2": "5.3.1",
+    "react-dom": "19.3.0",
+    "react-leaflet": "5.0.0"
+  }
+}

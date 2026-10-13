@@ -1,0 +1,200 @@
+/* Atlas Taman — kertas hangat, tinta hijau hutan, aksen terakota. */
+:root {
+  --paper: #f2eddd;
+  --paper-deep: #e6dfc8;
+  --panel: #faf6ea;
+  --field: #fffdf6;
+  --ink: #14342a;
+  --ink-2: #4a625a;
+  --rule: #cfc6ab;
+  --moss: #2e6b4a;
+  --moss-d: #1f4d35;
+  --clay: #c4552d;
+  --f-display: var(--font-display), Georgia, 'Times New Roman', serif;
+  --f-body: var(--font-body), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .08 0 0 0 0 .2 0 0 0 0 .16 0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: var(--moss-d); text-underline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+:focus-visible { outline: 3px solid var(--clay); outline-offset: 2px; }
+
+/* ---------- tata letak ---------- */
+.shell {
+  display: grid;
+  grid-template-columns: minmax(360px, 430px) minmax(0, 1fr);
+  height: 100vh;
+  height: 100svh;
+}
+.panel {
+  overflow-y: auto;
+  background: var(--grain), var(--panel);
+  border-right: 1px solid var(--ink);
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule) transparent;
+}
+.stage { position: relative; min-width: 0; padding: 20px; background: var(--paper-deep); }
+.frame {
+  position: relative;
+  height: 100%;
+  border: 1px solid var(--ink);
+  outline: 1px solid var(--ink);
+  outline-offset: 5px;
+  background: #dfe6d6;
+}
+.peta { height: 100%; width: 100%; }
+
+/* ---------- masthead ---------- */
+.masthead { padding: 30px 28px 26px; }
+.kicker {
+  display: flex; align-items: center; gap: 10px; margin: 0 0 18px;
+  font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--clay);
+}
+.kicker svg { flex: none; }
+h1 {
+  margin: 0; font-family: var(--f-display); font-weight: 400;
+  font-size: clamp(40px, 5.2vw, 52px); line-height: .98; letter-spacing: -.015em;
+}
+h1 span { display: block; color: var(--moss); }
+.lede { margin: 16px 0 0; max-width: 34ch; color: var(--ink-2); }
+.count-row {
+  display: flex; align-items: flex-end; gap: 14px; margin: 24px 0 0; padding-top: 18px;
+  border-top: 1px solid var(--ink);
+}
+.count {
+  font-family: var(--f-display); font-size: clamp(54px, 7vw, 76px); line-height: .85;
+  color: var(--moss-d); font-variant-numeric: tabular-nums; letter-spacing: -.02em;
+}
+.count-cap { display: flex; flex-direction: column; padding-bottom: 4px; font-size: 13px; color: var(--ink-2); }
+.count-cap b { font-weight: 700; color: var(--ink); font-size: 14px; }
+
+/* ---------- seksi ---------- */
+.sec { padding: 22px 28px 24px; border-top: 1px solid var(--rule); }
+.sec h2 {
+  display: flex; align-items: center; gap: 12px; margin: 0 0 14px;
+  font-family: var(--f-display); font-weight: 400; font-size: 24px; line-height: 1.1;
+}
+.num {
+  display: inline-grid; place-items: center; min-width: 30px; height: 30px; padding: 0 6px;
+  border: 1px solid var(--clay); border-radius: 15px; color: var(--clay); font-size: 14px;
+}
+.hint { margin: 0 0 14px; font-size: 13.5px; color: var(--ink-2); }
+
+.field { display: grid; gap: 6px; margin-bottom: 14px; }
+.field > span { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
+select {
+  appearance: none; width: 100%; min-height: 46px; padding: 11px 42px 11px 14px;
+  font: inherit; font-size: 16px; color: var(--ink);
+  background: var(--field) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1l6 6 6-6' fill='none' stroke='%2314342a' stroke-width='1.8'/></svg>") no-repeat right 14px center;
+  border: 1px solid var(--ink); border-radius: 0; cursor: pointer;
+}
+select:disabled { opacity: .5; cursor: not-allowed; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px;
+  font: inherit; font-size: 15px; font-weight: 700; letter-spacing: .02em; cursor: pointer;
+  border: 1px solid var(--ink); border-radius: 0;
+  transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease;
+}
+.btn-primary { width: 100%; background: var(--moss); color: #fff; box-shadow: 4px 4px 0 var(--ink); }
+.btn-primary:hover { background: var(--moss-d); }
+.btn-ghost { width: 100%; background: var(--field); color: var(--ink); box-shadow: 4px 4px 0 var(--clay); }
+.btn-primary:active, .btn-ghost:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
+.btn-text { min-height: 40px; padding: 0 2px; border: 0; background: none; color: var(--moss-d); text-decoration: underline; text-underline-offset: 4px; }
+.btn-text:hover { color: var(--clay); }
+
+.status { min-height: 4px; margin-top: 12px; font-size: 14px; }
+.status p { margin: 0 0 4px; color: var(--ink-2); }
+.status .akurasi { font-size: 12.5px; }
+.galat { margin: 10px 0 0; padding: 10px 12px; font-size: 14px; color: #7a2a10; background: #f6e2d8; border-left: 4px solid var(--clay); }
+.status .galat { color: #7a2a10; }
+
+.near { list-style: none; margin: 14px 0 0; padding: 0; }
+.near li {
+  display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: baseline;
+  padding: 11px 0; border-top: 1px dashed var(--rule);
+}
+.near .n { font-family: var(--f-display); font-size: 18px; color: var(--clay); }
+.near .nm { font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; }
+.near small { display: block; margin-top: 2px; font-size: 10.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+.near .d { font-family: var(--f-display); font-size: 17px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+.chart { position: relative; width: 100%; }
+
+.foot { padding: 18px 28px 26px; border-top: 1px solid var(--ink); font-size: 12px; color: var(--ink-2); }
+.foot p { margin: 0; }
+
+/* ---------- peta ---------- */
+.map-pesan {
+  position: absolute; inset: 0; z-index: 500; display: grid; place-items: center; padding: 20px; text-align: center;
+  font-family: var(--f-display); font-size: 20px; color: var(--ink); background: rgba(250, 246, 234, .78); pointer-events: none;
+}
+.leaflet-container { font-family: var(--f-body); background: #dfe6d6; }
+.leaflet-tile-pane { filter: sepia(.16) saturate(.88) contrast(.97); }
+.leaflet-bar { border: 1px solid var(--ink) !important; border-radius: 0 !important; box-shadow: 3px 3px 0 var(--ink) !important; }
+.leaflet-bar a { width: 36px; height: 36px; line-height: 36px; color: var(--ink); background: var(--panel); border-bottom: 1px solid var(--rule); border-radius: 0 !important; }
+.leaflet-bar a:hover { background: var(--paper); }
+.leaflet-control-attribution { padding: 3px 8px; font-size: 11px; color: var(--ink); background: rgba(250, 246, 234, .94) !important; border-top: 1px solid var(--ink); border-left: 1px solid var(--ink); }
+.leaflet-control-scale-line { color: var(--ink); background: rgba(250, 246, 234, .9); border: 1px solid var(--ink); border-top: 0; font-size: 11px; }
+
+.pk { width: 16px; height: 16px; background: var(--moss); border: 2.5px solid var(--panel); border-radius: 50%; box-shadow: 0 0 0 1px var(--ink); }
+.pk:hover { background: var(--clay); }
+/* .leaflet-marker-icon: menimpa `display: block` bawaan Leaflet (dimuat belakangan). */
+.leaflet-marker-icon.cluster {
+  display: grid; place-items: center; color: var(--panel); font-family: var(--f-display);
+  border: 2.5px solid var(--panel); border-radius: 50%; box-shadow: 0 0 0 1.5px var(--ink), 0 3px 8px rgba(20, 52, 42, .35);
+}
+.cluster.s { background: var(--moss); font-size: 14px; }
+.cluster.m { background: var(--moss-d); font-size: 15px; }
+.cluster.l { background: var(--ink); font-size: 17px; }
+
+.leaflet-marker-icon.me { display: grid; place-items: center; }
+.me i { position: relative; display: block; width: 14px; height: 14px; background: var(--clay); border: 2.5px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1.5px var(--ink); }
+.me i::after { content: ''; position: absolute; inset: -9px; border: 2px solid var(--clay); border-radius: 50%; animation: denyut 2s ease-out infinite; }
+@keyframes denyut { from { transform: scale(.4); opacity: .9; } to { transform: scale(1.5); opacity: 0; } }
+
+.leaflet-popup-content-wrapper { border: 1px solid var(--ink); border-radius: 0; background: var(--panel); box-shadow: 5px 5px 0 var(--ink); }
+.leaflet-popup-tip { background: var(--panel); border: 1px solid var(--ink); box-shadow: none; }
+.leaflet-popup-content { margin: 16px 20px 14px; }
+.popup p { margin: 0; }
+.popup-kat { font-size: 10.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--clay); }
+.popup-nama { margin: 4px 0 6px; font-family: var(--f-display); font-weight: 400; font-size: 20px; line-height: 1.15; }
+.popup-alamat { font-size: 13px; color: var(--ink-2); }
+.popup-kota { font-size: 13px; font-weight: 600; }
+.popup-link { display: inline-block; margin-top: 10px; font-size: 13px; font-weight: 700; color: var(--moss-d); }
+
+/* ---------- gerak ---------- */
+.rise { animation: naik .7s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--i, 0) * 90ms); }
+@keyframes naik { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .rise, .me i::after { animation: none; }
+  .btn { transition: none; }
+}
+
+/* ---------- responsif (NFR-05: 360 px – 1920 px) ---------- */
+@media (max-width: 1023px) {
+  .shell { display: flex; flex-direction: column; height: auto; min-height: 100svh; }
+  .panel { display: contents; }
+  .masthead, .sec, .foot { background: var(--grain), var(--panel); }
+  .masthead { order: 1; padding: 22px 20px 20px; border-bottom: 1px solid var(--ink); }
+  .stage { order: 2; height: 62svh; min-height: 380px; padding: 14px; }
+  .sec { order: 3; padding: 20px; }
+  .foot { order: 4; padding: 18px 20px 28px; }
+  .frame { outline-offset: 4px; }
+  .lede { max-width: none; }
+}
+@media (max-width: 420px) {
+  h1 { font-size: 38px; }
+  .count { font-size: 56px; }
+}

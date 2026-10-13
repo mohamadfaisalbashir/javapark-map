@@ -1,0 +1,10 @@
+data/raw/
+*.osm.pbf
+node_modules/
+.next/
+.env
+__pycache__/
+*.pdf
+*.md
+*.pbf
+*.qgz

@@ -1,0 +1,57 @@
+# Lingkungan lokal (Bagian 11). Urutan pakai:
+#   docker compose up -d db
+#   docker compose run --rm etl          # muat data OSM (data/raw/*.pbf) ke DB
+#   docker compose up -d --build api web
+# Variabel opsional lewat .env (lihat .env.example); tanpa .env, default di bawah dipakai.
+services:
+  db:
+    image: postgis/postgis:16-3.5
+    environment:
+      POSTGRES_USER: taman
+      POSTGRES_PASSWORD: taman
+      POSTGRES_DB: taman
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./etl/sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      # -h 127.0.0.1: server sementara saat initdb hanya di socket, jadi tidak lolos palsu.
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U taman -d taman"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  etl:
+    build: ./etl
+    profiles: ["etl"]
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql://taman:taman@db:5432/taman}
+    volumes:
+      - ./data/raw:/data/raw:ro
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    build: ./api
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql://taman:taman@db:5432/taman}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ./web
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+volumes:
+  pgdata:
