@@ -184,8 +184,9 @@ export default function Halaman() {
 
         <footer className="foot rise" style={{ '--i': 4 }}>
           <p>
-            Data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>,
-            snapshot Geofabrik 6 Oktober 2026. Taman = ruang terbuka hijau publik tanpa tiket masuk.
+            Data taman: inventaris tim (114 taman kota). Peta dasar &amp; batas wilayah &copy;{' '}
+            <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>.
+            Taman = ruang terbuka hijau publik tanpa tiket masuk.
           </p>
         </footer>
       </aside>

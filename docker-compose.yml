@@ -1,6 +1,6 @@
 # Lingkungan lokal (Bagian 11). Urutan pakai:
 #   docker compose up -d db
-#   docker compose run --rm etl          # muat data OSM (data/raw/*.pbf) ke DB
+#   docker compose run --rm etl          # muat GeoJSON bersih (data/clean/*.geojson) ke DB
 #   docker compose up -d --build api web
 # Variabel opsional lewat .env (lihat .env.example); tanpa .env, default di bawah dipakai.
 services:
@@ -28,7 +28,7 @@ services:
     environment:
       DATABASE_URL: ${DATABASE_URL:-postgresql://taman:taman@db:5432/taman}
     volumes:
-      - ./data/raw:/data/raw:ro
+      - ./data/clean:/data/clean:ro
     depends_on:
       db:
         condition: service_healthy

@@ -22,8 +22,6 @@ CREATE INDEX IF NOT EXISTS cities_province_idx ON cities (province_id);
 CREATE TABLE IF NOT EXISTS parks (
     id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     city_id    int          NOT NULL REFERENCES cities (id),
-    osm_type   text         NOT NULL CHECK (osm_type IN ('node', 'way', 'relation')),
-    osm_id     bigint       NOT NULL,
     name       text         NOT NULL,
     category   text         NOT NULL CHECK (category IN ('taman_kota', 'rth', 'alun_alun')),
     address    text,
@@ -32,7 +30,7 @@ CREATE TABLE IF NOT EXISTS parks (
     geom       geography(Point, 4326) NOT NULL,
     fee_tag    text,
     updated_at timestamptz  NOT NULL DEFAULT now(),
-    UNIQUE (osm_type, osm_id)
+    UNIQUE (city_id, name)
 );
 CREATE INDEX IF NOT EXISTS parks_geom_gix ON parks USING gist (geom);
 CREATE INDEX IF NOT EXISTS parks_city_idx ON parks (city_id);

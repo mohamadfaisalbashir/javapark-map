@@ -1,234 +1,219 @@
-"""ETL OSM -> PostGIS (requirements 6.3 dan 6.4).
+"""ETL GeoJSON bersih -> PostGIS.
 
-Membaca data/raw/boundaries.osm.pbf dan data/raw/parks_all.osm.pbf, memilih taman
-sesuai aturan 6.4, lalu memuat provinces, cities, parks. Idempoten: dijalankan ulang
-pada masukan yang sama menghasilkan isi tabel yang sama (upsert berdasarkan
-osm_type + osm_id, lalu hapus baris yang tidak ada pada run ini).
+Membaca data/clean/{provinces,cities}.geojson (batas wilayah OSM, hasil QGIS) dan
+data/clean/taman_kota.geojson (inventaris taman kota tim; salinan "Data Taman Kota Pulau Jawa
+GeoJSON.md", isinya sama dengan "Data taman beserta lon dan lat.xlsx"), memvalidasi, lalu memuat
+provinces, cities, parks. Kota/kab tiap taman ditentukan spasial (titik di dalam poligon kota).
+Idempoten: dijalankan ulang pada masukan yang sama menghasilkan isi tabel yang sama (upsert
+berdasarkan osm_id / city_id + nama taman, lalu hapus baris yang tidak ada pada run ini).
 
     docker compose run --rm etl                             # ETL penuh
-    docker compose run --rm etl python load.py --selftest   # uji aturan 6.4, tanpa DB
+    docker compose run --rm etl python load.py --selftest   # uji fungsi murni, tanpa DB
 """
 import collections
+import json
 import os
 import re
 import sys
 
-import osmium
 import psycopg
 
-RAW = "/data/raw"
-# Bagian 4: hanya 6 provinsi Pulau Jawa (ISO 3166-2 pada relasi admin_level=4).
-PROVINSI_JAWA = ["ID-BT", "ID-JK", "ID-JB", "ID-JT", "ID-YO", "ID-JI"]
-ALUN = re.compile(r"alun[- ]alun", re.I)
-AKSES_TERBATAS = {"private", "no", "customers", "permit"}
-TERLARANG = [("tourism", "theme_park"), ("tourism", "zoo"), ("leisure", "water_park"),
-             ("leisure", "golf_course"), ("landuse", "cemetery")]
-WKB = osmium.geom.WKBFactory()
-
-
-def classify(t):
-    """Aturan 6.4 untuk satu objek (t: dict atau osmium TagList).
-
-    -> (kategori, None)  diterima
-       (None, alasan)    dibuang
-       (None, None)      bukan tag utama (objek pendukung di PBF), diabaikan
-    """
-    leisure, landuse, place = t.get("leisure"), t.get("landuse"), t.get("place")
-    if not (leisure in ("park", "garden") or landuse == "recreation_ground" or place == "square"):
-        return None, None
-    name = t.get("name")
-    if not name:
-        return None, "tanpa_nama"
-    if t.get("fee") == "yes" or t.get("charge"):
-        return None, "berbayar"
-    if t.get("access") in AKSES_TERBATAS:
-        return None, "akses_terbatas"
-    if any(t.get(k) == v for k, v in TERLARANG):
-        return None, "jenis_terlarang"
-    taman = leisure == "park" or (leisure == "garden" and t.get("garden:type") not in ("residential", "private"))
-    if not (taman or landuse == "recreation_ground" or place == "square"):
-        return None, "garden_privat"
-    # Nama "Alun-alun" / "Alun Alun" menentukan kategori objek ber-tag utama (bukan syarat seleksi).
-    if place == "square" or ALUN.search(name):
-        return "alun_alun", None
-    return ("taman_kota" if taman else "rth"), None
-
-
-def alamat(t):
-    """address (7.1): dari tag addr:* bila ada."""
-    if t.get("addr:full"):
-        return t.get("addr:full")
-    jalan = " ".join(x for x in (t.get("addr:street"), t.get("addr:housenumber")) if x)
-    bagian = [jalan, t.get("addr:suburb"), t.get("addr:city"), t.get("addr:postcode")]
-    return ", ".join(x for x in bagian if x) or None
-
-
-def baca_batas(c, gagal):
-    """(osm_id, level, nama, iso, wkb) relasi administrative admin_level 4/5 yang berhasil dirakit."""
-    for o in osmium.FileProcessor(f"{RAW}/boundaries.osm.pbf").with_locations().with_areas():
-        if not o.is_area() or o.from_way():  # hanya multipolygon dari relasi
-            continue
-        t = o.tags
-        if t.get("boundary") != "administrative" or t.get("admin_level") not in ("4", "5"):
-            continue
-        level, nama = int(t.get("admin_level")), t.get("name")
-        if level == 5:
-            # name OSM tidak konsisten ("Blitar" untuk kota dan kabupaten); official_name
-            # ("Kota Blitar" / "Kabupaten Blitar") membedakannya. Fallback ke name.
-            nama = t.get("official_name") or nama
-        try:
-            wkb = WKB.create_multipolygon(o)
-        except RuntimeError:  # relasi terpotong di tepi ekstrak (mis. provinsi luar Jawa)
-            gagal.append((level, nama))
-            continue
-        yield o.orig_id(), level, nama, t.get("ISO3166-2"), wkb
-
-
-def baca_taman(c):
-    """(osm_type, osm_id, name, category, address, fee_tag, wkb) untuk node dan area terpilih."""
-    for o in osmium.FileProcessor(f"{RAW}/parks_all.osm.pbf").with_locations().with_areas():
-        if o.is_node():
-            tipe = "node"
-        elif o.is_area():
-            tipe = "way" if o.from_way() else "relation"
-        else:
-            continue  # way/relasi mentah sudah terwakili oleh areanya
-        kategori, alasan = classify(o.tags)
-        if kategori is None:
-            if alasan:
-                c[alasan] += 1
-            continue
-        try:
-            wkb = WKB.create_point(o) if tipe == "node" else WKB.create_multipolygon(o)
-        except RuntimeError:
-            c["geometri_tidak_valid"] += 1
-            continue
-        t = o.tags
-        yield (tipe, o.id if tipe == "node" else o.orig_id(), t.get("name"),
-               kategori, alamat(t), t.get("fee"), wkb)
-
-
-GEOM = "ST_GeomFromWKB(decode(%s, 'hex'), 4326)"
+CLEAN = "/data/clean"
+JUMLAH_PROVINSI = 6  # Bagian 4: Banten, DKI Jakarta, Jawa Barat, Jawa Tengah, DI Yogyakarta, Jawa Timur
 POLIGON = "ST_Multi(ST_CollectionExtract(ST_MakeValid(geom), 3))"
+GEOM = "ST_SetSRID(ST_GeomFromGeoJSON(%s::text), 4326)"
+
+
+def kategori(nama):
+    """Data tim tidak berkategori; diturunkan dari nama (Bagian 6.4: "Alun-alun" -> alun_alun)."""
+    n = nama.lower()
+    if re.search(r"alun[- ]alun", n):
+        return "alun_alun"
+    if "hutan kota" in n or re.search(r"\brth\b", n):
+        return "rth"
+    return "taman_kota"
+
+
+def siapkan_taman(f):
+    """-> (baris, []) bila lolos; (None, [pelanggaran, ...]) bila melanggar skema."""
+    p, g = f["properties"], f.get("geometry") or {}
+    nama = (p.get("nama_taman") or "").strip()
+    m = []
+    if g.get("type") != "Point":
+        m.append("geometri bukan Point")
+    elif not (-180 <= g["coordinates"][0] <= 180 and -90 <= g["coordinates"][1] <= 90):
+        m.append("koordinat di luar rentang")
+    if not nama:
+        m.append("nama kosong")
+    if m:
+        return None, m
+    lon, lat = g["coordinates"]
+    return (nama, kategori(nama), p.get("kota_kabupaten"), round(lat, 6), round(lon, 6), json.dumps(g)), []
+
+
+def periksa_batas(provinsi, kota):
+    m = []
+    if len(provinsi) != JUMLAH_PROVINSI:
+        m.append(f"provinces.geojson: {len(provinsi)} fitur, seharusnya {JUMLAH_PROVINSI}")
+    nama_prov = {f["properties"]["prov_name"] for f in provinsi}
+    for f in provinsi + kota:
+        if (f.get("geometry") or {}).get("type") not in ("Polygon", "MultiPolygon"):
+            m.append(f"geometri bukan poligon: {f['properties']}")
+    for f in kota:
+        if f["properties"]["prov_name"] not in nama_prov:
+            m.append(f"kota {f['properties']['city_name']!r}: prov_name tidak ada di provinces.geojson")
+    for tipe, fs, kunci in (("provinsi", provinsi, "prov_osm_id"), ("kota", kota, "city_osm_id")):
+        n = collections.Counter(str(f["properties"][kunci]) for f in fs)
+        m += [f"{tipe}: {kunci} ganda {i}" for i, c in n.items() if c > 1]
+    return m
+
+
+def baca(nama):
+    with open(f"{CLEAN}/{nama}.geojson", encoding="utf-8") as f:
+        return json.load(f)["features"]
 
 
 def main():
-    c = collections.Counter()
-    gagal = []
-    batas = list(baca_batas(c, gagal))
-    taman = list(baca_taman(c))
-    print(f"Dibaca: {len(batas)} batas, {len(taman)} taman lolos aturan tag", flush=True)
+    provinsi, kota = baca("provinces"), baca("cities")
+    taman = [f for f in baca("taman_kota") if f["properties"].get("status") == "Aktif"]
+    masalah = periksa_batas(provinsi, kota)
+    baris, kunci = [], collections.Counter()
+    for f in taman:
+        row, m = siapkan_taman(f)
+        if m:
+            masalah.append(f"taman {f['properties'].get('nama_taman')!r}: " + "; ".join(m))
+        else:
+            baris.append(row)
+            kunci[(row[2], row[0])] += 1
+    masalah += [f"taman ganda (kota, nama): {k}" for k, n in kunci.items() if n > 1]
+    if masalah:
+        print(f"GAGAL: {len(masalah)} pelanggaran data (15 pertama):")
+        for x in masalah[:15]:
+            print(" -", x)
+        sys.exit(1)
+    print(f"Dibaca: {len(provinsi)} provinsi, {len(kota)} kota/kab, {len(baris)} taman", flush=True)
 
     # Satu transaksi: gagal di tengah jalan = tidak ada perubahan.
     with psycopg.connect(os.environ["DATABASE_URL"]) as conn, conn.cursor() as cur:
-        cur.execute("CREATE TEMP TABLE stg_batas (osm_id bigint, level int, name text, iso text, geom geometry) ON COMMIT DROP")
-        cur.execute("CREATE TEMP TABLE stg_taman (osm_type text, osm_id bigint, name text, category text,"
-                    " address text, fee_tag text, geom geometry) ON COMMIT DROP")
-        cur.executemany(f"INSERT INTO stg_batas VALUES (%s, %s, %s, %s, {GEOM})", batas)
-        cur.executemany(f"INSERT INTO stg_taman VALUES (%s, %s, %s, %s, %s, %s, {GEOM})", taman)
+        cur.execute("""
+            CREATE TEMP TABLE stg_prov (osm_id bigint, name text, geom geometry) ON COMMIT DROP;
+            CREATE TEMP TABLE stg_kota (osm_id bigint, name text, prov_name text, geom geometry) ON COMMIT DROP;
+            CREATE TEMP TABLE stg_taman (name text, category text, kota_asal text,
+                latitude numeric(9,6), longitude numeric(9,6), geom geometry) ON COMMIT DROP""")
+        cur.executemany(f"INSERT INTO stg_prov VALUES (%s, %s, {GEOM})",
+                        [(int(f["properties"]["prov_osm_id"]), f["properties"]["prov_name"], json.dumps(f["geometry"]))
+                         for f in provinsi])
+        cur.executemany(f"INSERT INTO stg_kota VALUES (%s, %s, %s, {GEOM})",
+                        [(int(f["properties"]["city_osm_id"]), f["properties"]["city_name"],
+                          f["properties"]["prov_name"], json.dumps(f["geometry"])) for f in kota])
+        cur.executemany(f"INSERT INTO stg_taman VALUES (%s, %s, %s, %s, %s, {GEOM})", baris)
 
         cur.execute(f"""
             INSERT INTO provinces (osm_id, name, geom)
-            SELECT osm_id, name, {POLIGON} FROM stg_batas WHERE level = 4 AND iso = ANY(%s)
+            SELECT osm_id, name, {POLIGON} FROM stg_prov
             ON CONFLICT (osm_id) DO UPDATE SET name = EXCLUDED.name, geom = EXCLUDED.geom
-            RETURNING id""", (PROVINSI_JAWA,))
+            RETURNING id""")
         prov = [r[0] for r in cur.fetchall()]
-        if len(prov) != len(PROVINSI_JAWA):
-            sys.exit(f"GAGAL: provinsi Jawa terbaca {len(prov)}, seharusnya {len(PROVINSI_JAWA)}")
 
-        # Kota -> provinsi: titik-di-permukaan kota berada di dalam poligon provinsi (7.1).
+        # Nama kembar dalam satu provinsi (mis. Blitar): poligon lebih kecil = Kota, lebih besar = Kabupaten.
         cur.execute(f"""
             INSERT INTO cities (province_id, osm_id, name, geom)
-            SELECT DISTINCT ON (a.osm_id) p.id, a.osm_id, a.name, a.geom
-            FROM (SELECT osm_id, name, {POLIGON} AS geom FROM stg_batas WHERE level = 5) a
-            JOIN provinces p ON p.id = ANY(%s) AND ST_Contains(p.geom, ST_PointOnSurface(a.geom))
-            ORDER BY a.osm_id, p.id
+            SELECT p.id, s.osm_id,
+                   CASE WHEN s.bedakan AND s.r = 1 THEN 'Kota ' || s.name
+                        WHEN s.bedakan AND s.r = 2 THEN 'Kabupaten ' || s.name
+                        ELSE s.name END,
+                   s.geom
+            FROM (SELECT k.*,
+                         (count(*) OVER (PARTITION BY k.prov_name, k.name) = 2
+                          AND k.name !~ '^(Kota|Kabupaten) ') AS bedakan,
+                         rank() OVER (PARTITION BY k.prov_name, k.name ORDER BY ST_Area(k.geom::geography)) AS r
+                  FROM (SELECT osm_id, name, prov_name, {POLIGON} AS geom FROM stg_kota) k) s
+            JOIN provinces p ON p.id = ANY(%s) AND p.name = s.prov_name
             ON CONFLICT (osm_id) DO UPDATE
               SET province_id = EXCLUDED.province_id, name = EXCLUDED.name, geom = EXCLUDED.geom
-            RETURNING id""", (prov,))
-        kota = [r[0] for r in cur.fetchall()]
+            RETURNING id, osm_id, name""", (prov,))
+        hasil_kota = cur.fetchall()
+        kota_pk = [r[0] for r in hasil_kota]
+        asli = {int(f["properties"]["city_osm_id"]): f["properties"]["city_name"] for f in kota}
+        diganti = [(asli[o], n) for _, o, n in hasil_kota if n != asli[o]]
+        cur.execute("SELECT province_id, name FROM cities WHERE id = ANY(%s) GROUP BY 1, 2 HAVING count(*) > 1",
+                    (kota_pk,))
+        if cur.fetchall():
+            sys.exit("GAGAL: nama kota/kab masih kembar dalam satu provinsi; perbaiki city_name di cities.geojson")
 
-        # Titik taman = ST_PointOnSurface; city_id = ST_Contains; di luar semua kota dibuang.
-        # Bila kota bertumpang tindih, pilih yang terkecil (paling spesifik).
-        cur.execute(f"""
-            CREATE TEMP TABLE located ON COMMIT DROP AS
-            SELECT DISTINCT ON (s.osm_type, s.osm_id)
-                   s.osm_type, s.osm_id, s.name, s.category, s.address, s.fee_tag, s.geom, s.pt, c.id AS city_id
-            FROM (SELECT *, ST_PointOnSurface(geom) AS pt FROM (
-                    SELECT osm_type, osm_id, name, category, address, fee_tag,
-                           CASE WHEN GeometryType(geom) = 'POINT' THEN geom ELSE {POLIGON} END AS geom
-                    FROM stg_taman) v) s
-            JOIN cities c ON c.id = ANY(%s) AND ST_Contains(c.geom, s.pt)
-            ORDER BY s.osm_type, s.osm_id, ST_Area(c.geom), c.id""", (kota,))
-        # Deduplikasi 6.4: node bernama sama dalam <= 100 m dari poligon -> simpan poligon saja.
+        # Kota tiap taman = poligon kota yang memuat titiknya (LIMIT 1: titik tepat di garis batas).
         cur.execute("""
-            CREATE TEMP TABLE kept ON COMMIT DROP AS
-            SELECT l.* FROM located l
-            WHERE NOT (l.osm_type = 'node' AND EXISTS (
-                SELECT 1 FROM located q
-                WHERE q.osm_type <> 'node'
-                  AND lower(btrim(q.name)) = lower(btrim(l.name))
-                  AND ST_DWithin(l.pt::geography, q.geom::geography, 100)))""")
+            CREATE TEMP TABLE stg_join ON COMMIT DROP AS
+            SELECT s.*, c.id AS city_id, c.name AS city_name
+            FROM stg_taman s LEFT JOIN LATERAL (
+              SELECT id, name FROM cities WHERE id = ANY(%s) AND ST_Covers(geom, s.geom) LIMIT 1) c ON true""",
+                    (kota_pk,))
+        cur.execute("SELECT name, kota_asal FROM stg_join WHERE city_id IS NULL ORDER BY 2, 1")
+        di_luar = cur.fetchall()
+        if di_luar:
+            sys.exit("GAGAL: titik taman di luar semua poligon kota/kab: "
+                     + ", ".join(f"{n} ({k})" for n, k in di_luar))
+        cur.execute("SELECT city_id, name FROM stg_join GROUP BY 1, 2 HAVING count(*) > 1")
+        if cur.fetchall():
+            sys.exit("GAGAL: nama taman kembar dalam satu kota/kab hasil join spasial")
 
         cur.execute("""
-            INSERT INTO parks (city_id, osm_type, osm_id, name, category, address, latitude, longitude, geom, fee_tag)
-            SELECT city_id, osm_type, osm_id, name, category, address,
-                   round(ST_Y(pt)::numeric, 6), round(ST_X(pt)::numeric, 6), pt::geography, fee_tag
-            FROM kept
-            ON CONFLICT (osm_type, osm_id) DO UPDATE SET
-              city_id = EXCLUDED.city_id, name = EXCLUDED.name, category = EXCLUDED.category,
-              address = EXCLUDED.address, latitude = EXCLUDED.latitude, longitude = EXCLUDED.longitude,
-              geom = EXCLUDED.geom, fee_tag = EXCLUDED.fee_tag, updated_at = now()""")
+            INSERT INTO parks (city_id, name, category, latitude, longitude, geom)
+            SELECT city_id, name, category, latitude, longitude, geom::geography FROM stg_join
+            ON CONFLICT (city_id, name) DO UPDATE SET
+              category = EXCLUDED.category, latitude = EXCLUDED.latitude, longitude = EXCLUDED.longitude,
+              geom = EXCLUDED.geom, address = NULL, fee_tag = NULL, updated_at = now()
+            RETURNING id""")
+        taman_pk = [r[0] for r in cur.fetchall()]
         # Hapus yang tidak ada pada run ini (urutan: taman -> kota -> provinsi, patuh FK).
-        cur.execute("DELETE FROM parks p WHERE NOT EXISTS"
-                    " (SELECT 1 FROM kept k WHERE k.osm_type = p.osm_type AND k.osm_id = p.osm_id)")
-        cur.execute("DELETE FROM cities WHERE id <> ALL(%s)", (kota,))
+        cur.execute("DELETE FROM parks WHERE id <> ALL(%s)", (taman_pk,))
+        cur.execute("DELETE FROM cities WHERE id <> ALL(%s)", (kota_pk,))
         cur.execute("DELETE FROM provinces WHERE id <> ALL(%s)", (prov,))
         cur.execute("ANALYZE provinces; ANALYZE cities; ANALYZE parks")
 
-        cur.execute("SELECT count(*) FROM located")
-        n_located = cur.fetchone()[0]
-        cur.execute("SELECT count(*) FROM kept")
-        n_kept = cur.fetchone()[0]
         cur.execute("SELECT category, count(*) FROM parks GROUP BY category ORDER BY category")
         per_kategori = cur.fetchall()
+        cur.execute("""SELECT pr.name, count(*) FROM parks p JOIN cities c ON c.id = p.city_id
+                       JOIN provinces pr ON pr.id = c.province_id GROUP BY 1 ORDER BY 1""")
+        per_provinsi = cur.fetchall()
+        # Info: kota hasil join spasial berbeda dari kolom kota_kabupaten data tim (koordinat bisa meleset).
+        cur.execute("""
+            SELECT name, kota_asal, city_name FROM stg_join
+            WHERE city_name NOT ILIKE '%' || regexp_replace(kota_asal, '^(Kota|Kabupaten) ', '') || '%'
+            ORDER BY 2, 1""")
+        beda_kota = cur.fetchall()
 
     print("=== Ringkasan ETL ===")
-    print(f"Provinsi: {len(prov)} | Kota/Kab: {len(kota)}")
-    if gagal:
-        print("Batas gagal dirakit (diabaikan): " + ", ".join(f"{n} (level {l})" for l, n in sorted(gagal)))
-    print("Dibuang per alasan:", ", ".join(f"{k}={v}" for k, v in sorted(c.items())) or "-")
-    print(f"Dibuang di luar batas kota: {len(taman) - n_located}")
-    print(f"Dibuang duplikat node-poligon: {n_located - n_kept}")
-    print(f"Taman tersimpan: {n_kept} (" + ", ".join(f"{k}={v}" for k, v in per_kategori) + ")")
+    print(f"Provinsi: {len(prov)} | Kota/Kab: {len(kota_pk)}")
+    if diganti:
+        print("Nama kembar dibedakan: " + ", ".join(f"{a} -> {b}" for a, b in sorted(diganti, key=lambda x: x[1])))
+    print(f"Taman tersimpan: {sum(n for _, n in per_kategori)} ("
+          + ", ".join(f"{k}={n}" for k, n in per_kategori) + ")")
+    print("Per provinsi: " + ", ".join(f"{k}={n}" for k, n in per_provinsi))
+    if beda_kota:
+        print(f"PERINGATAN: {len(beda_kota)} taman jatuh di kota/kab lain dari kolom kota_kabupaten:")
+        for n, a, c in beda_kota:
+            print(f" - {n}: data={a}, titik di {c}")
 
 
 def selftest():
-    taman = {"leisure": "park", "name": "Taman A"}
-    kasus = [
-        (taman, ("taman_kota", None)),
-        ({"leisure": "park"}, (None, "tanpa_nama")),
-        ({"place": "square", "name": "Lapangan B"}, ("alun_alun", None)),
-        ({**taman, "name": "Alun-Alun Kota"}, ("alun_alun", None)),
-        ({**taman, "name": "ALUN ALUN Selatan"}, ("alun_alun", None)),
-        ({"landuse": "recreation_ground", "name": "RTH C"}, ("rth", None)),
-        ({**taman, "fee": "yes"}, (None, "berbayar")),
-        ({**taman, "fee": "no"}, ("taman_kota", None)),
-        ({**taman, "charge": "5000"}, (None, "berbayar")),
-        ({**taman, "access": "private"}, (None, "akses_terbatas")),
-        ({**taman, "access": "permissive"}, ("taman_kota", None)),
-        ({**taman, "access": "destination"}, ("taman_kota", None)),
-        ({**taman, "tourism": "zoo"}, (None, "jenis_terlarang")),
-        ({"landuse": "recreation_ground", "leisure": "golf_course", "name": "Golf"}, (None, "jenis_terlarang")),
-        ({"leisure": "garden", "name": "Kebun", "garden:type": "residential"}, (None, "garden_privat")),
-        ({"leisure": "garden", "name": "Kebun"}, ("taman_kota", None)),
-        ({"leisure": "garden", "name": "Kebun", "garden:type": "private", "landuse": "recreation_ground"}, ("rth", None)),
-        ({"highway": "pedestrian", "name": "Jalan Alun-Alun"}, (None, None)),
-    ]
-    for tag, harapan in kasus:
-        hasil = classify(tag)
-        assert hasil == harapan, f"{tag} -> {hasil}, harapan {harapan}"
-    print(f"selftest OK ({len(kasus)} kasus)")
+    assert kategori("Alun-Alun Kota Serang (Taman Kota)") == "alun_alun"
+    assert kategori("Alun Alun Bandung") == "alun_alun"
+    assert kategori("Hutan Kota Pamulang") == "rth"
+    assert kategori("RTH Maya Datar") == "rth"
+    assert kategori("Taman Perdamaian BSD") == "taman_kota"
+    assert kategori("Taman Kota Pandancang") == "taman_kota"
+
+    def taman(nama="Taman A", coords=(107.6, -6.9), tipe="Point"):
+        return {"properties": {"nama_taman": nama, "kota_kabupaten": "Kota Bandung", "status": "Aktif"},
+                "geometry": {"type": tipe, "coordinates": list(coords)}}
+
+    row, m = siapkan_taman(taman())
+    assert m == [] and row[:5] == ("Taman A", "taman_kota", "Kota Bandung", -6.9, 107.6)
+    assert siapkan_taman(taman(nama=" "))[1] == ["nama kosong"]
+    assert siapkan_taman(taman(coords=(200, -6.9)))[1] == ["koordinat di luar rentang"]
+    assert siapkan_taman(taman(tipe="Polygon"))[1] == ["geometri bukan Point"]
+    print("selftest OK")
 
 
 if __name__ == "__main__":

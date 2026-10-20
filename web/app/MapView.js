@@ -8,8 +8,8 @@ import { useEffect } from 'react';
 import { Circle, MapContainer, Marker, ScaleControl, TileLayer, useMap } from 'react-leaflet';
 import { KATEGORI } from '../lib/format';
 
-// 6.1: atribusi wajib + tanggal snapshot di footer peta.
-const ATRIBUSI = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &middot; data snapshot Geofabrik 6 Okt 2026';
+// 6.1: atribusi wajib peta dasar + sumber data taman.
+const ATRIBUSI = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &middot; data taman: inventaris tim';
 
 const ikonTaman = L.divIcon({ className: 'pk', iconSize: [16, 16] });
 const ikonSaya = L.divIcon({ className: 'me', html: '<i></i>', iconSize: [26, 26] });

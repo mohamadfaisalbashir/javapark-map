@@ -8,3 +8,6 @@ __pycache__/
 *.md
 *.pbf
 *.qgz
+/.claude
+*.png
+*.xlsx

@@ -7,7 +7,7 @@ const body = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-body', di
 export const metadata = {
   title: 'Taman Kota Pulau Jawa — Peta Taman Publik Gratis',
   description:
-    'Peta interaktif taman kota gratis tanpa tiket masuk di Banten, DKI Jakarta, Jawa Barat, Jawa Tengah, DI Yogyakarta, dan Jawa Timur. Data © OpenStreetMap contributors.',
+    'Peta interaktif taman kota gratis tanpa tiket masuk di Banten, DKI Jakarta, Jawa Barat, Jawa Tengah, DI Yogyakarta, dan Jawa Timur. Peta dasar © OpenStreetMap contributors.',
 };
 
 export default function RootLayout({ children }) {

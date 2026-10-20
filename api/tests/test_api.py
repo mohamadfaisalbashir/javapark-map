@@ -44,6 +44,12 @@ class Kontrak(unittest.TestCase):
             self.assertTrue(prov["cities"])
             self.assertEqual(set(prov["cities"][0]), {"id", "name"})
 
+    def test_nama_kota_unik_dalam_provinsi(self):
+        _, regions = get("/api/regions")
+        for prov in regions:
+            nama = [c["name"] for c in prov["cities"]]
+            self.assertEqual(len(nama), len(set(nama)), f"nama kembar di {prov['name']}")
+
     def test_bbox(self):
         _, regions = get("/api/regions")
         prov = regions[0]
