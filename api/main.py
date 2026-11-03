@@ -76,7 +76,8 @@ def parks(province_id: int | None = None, city_id: int | None = None):
                    'type', 'Feature',
                    'geometry', ST_AsGeoJSON(p.geom::geometry, 6)::json,
                    'properties', json_build_object('id', p.id, 'name', p.name, 'category', p.category,
-                                                   'address', p.address, 'city', c.name, 'province', pr.name))
+                                                   'address', p.address, 'city', c.name, 'province', pr.name,
+                                                   'vr_source', p.vr_source, 'mapillary_id', p.mapillary_id))
                  ORDER BY p.name, p.id), '[]'::json))::text AS g
         FROM parks p
         JOIN cities c ON c.id = p.city_id

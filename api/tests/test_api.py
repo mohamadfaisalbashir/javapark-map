@@ -69,7 +69,10 @@ class Kontrak(unittest.TestCase):
         ada = sql("SELECT count(*) FROM parks p JOIN cities c ON c.id = p.city_id WHERE c.province_id = %s", pid)[0][0]
         self.assertEqual(len(fc["features"]), ada)
         f = fc["features"][0]
-        self.assertEqual(set(f["properties"]), {"id", "name", "category", "address", "city", "province"})
+        self.assertEqual(set(f["properties"]),
+                         {"id", "name", "category", "address", "city", "province", "vr_source", "mapillary_id"})
+        for x in fc["features"]:
+            self.assertIn(x["properties"]["vr_source"], (None, "google", "mapillary"))
         self.assertEqual(f["geometry"]["type"], "Point")
         lon, lat = f["geometry"]["coordinates"]  # urutan GeoJSON
         self.assertTrue(105 < lon < 115 and -9 < lat < -5)

@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "node --test lib/xr.test.mjs"
   },
   "dependencies": {
     "chart.js": "4.5.1",

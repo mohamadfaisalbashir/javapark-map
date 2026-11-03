@@ -6,11 +6,13 @@ GeoJSON.md", isinya sama dengan "Data taman beserta lon dan lat.xlsx"), memvalid
 provinces, cities, parks. Kota/kab tiap taman ditentukan spasial (titik di dalam poligon kota).
 Idempoten: dijalankan ulang pada masukan yang sama menghasilkan isi tabel yang sama (upsert
 berdasarkan osm_id / city_id + nama taman, lalu hapus baris yang tidak ada pada run ini).
+Bila ada, data/clean/pano_taman.csv (hasil etl/cek_pano.py, Bagian 6.5) mengisi vr_source/mapillary_id.
 
     docker compose run --rm etl                             # ETL penuh
     docker compose run --rm etl python load.py --selftest   # uji fungsi murni, tanpa DB
 """
 import collections
+import csv
 import json
 import os
 import re
@@ -68,6 +70,26 @@ def periksa_batas(provinsi, kota):
     return m
 
 
+def periksa_pano(rows):
+    """Baris pano_taman.csv -> ({(kota_kabupaten, nama_taman): (vr_source, mapillary_id)}, [pelanggaran])."""
+    hasil, m = {}, []
+    for i, r in enumerate(rows, start=2):  # baris 1 = header
+        kunci = ((r.get("kota_kabupaten") or "").strip(), (r.get("nama_taman") or "").strip())
+        src = (r.get("vr_source") or "").strip() or None
+        mid = (r.get("mapillary_id") or "").strip() or None
+        if src not in (None, "google", "mapillary"):
+            m.append(f"baris {i}: vr_source {src!r} tidak dikenal")
+        elif (src == "mapillary") != (mid is not None):
+            m.append(f"baris {i}: mapillary_id wajib terisi jika dan hanya jika vr_source = mapillary")
+        elif mid and not mid.isdigit():  # dipakai di URL iframe FR-06
+            m.append(f"baris {i}: mapillary_id {mid!r} bukan angka")
+        elif kunci in hasil:
+            m.append(f"baris {i}: taman ganda {kunci}")
+        else:
+            hasil[kunci] = (src, mid)
+    return hasil, m
+
+
 def baca(nama):
     with open(f"{CLEAN}/{nama}.geojson", encoding="utf-8") as f:
         return json.load(f)["features"]
@@ -77,13 +99,20 @@ def main():
     provinsi, kota = baca("provinces"), baca("cities")
     taman = [f for f in baca("taman_kota") if f["properties"].get("status") == "Aktif"]
     masalah = periksa_batas(provinsi, kota)
+    pano = {}
+    if os.path.exists(f"{CLEAN}/pano_taman.csv"):
+        with open(f"{CLEAN}/pano_taman.csv", encoding="utf-8", newline="") as f:
+            pano, m = periksa_pano(list(csv.DictReader(f)))
+        masalah += [f"pano_taman.csv {x}" for x in m]
+    else:
+        print("Info: data/clean/pano_taman.csv belum ada (jalankan etl/cek_pano.py); tombol 360° tidak tampil.")
     baris, kunci = [], collections.Counter()
     for f in taman:
         row, m = siapkan_taman(f)
         if m:
             masalah.append(f"taman {f['properties'].get('nama_taman')!r}: " + "; ".join(m))
         else:
-            baris.append(row)
+            baris.append(row + pano.pop((row[2], row[0]), (None, None)))
             kunci[(row[2], row[0])] += 1
     masalah += [f"taman ganda (kota, nama): {k}" for k, n in kunci.items() if n > 1]
     if masalah:
@@ -92,6 +121,9 @@ def main():
             print(" -", x)
         sys.exit(1)
     print(f"Dibaca: {len(provinsi)} provinsi, {len(kota)} kota/kab, {len(baris)} taman", flush=True)
+    if pano:
+        print(f"PERINGATAN: {len(pano)} baris pano_taman.csv tidak cocok dengan taman mana pun "
+              "(jalankan ulang etl/cek_pano.py): " + ", ".join(f"{n} ({k})" for k, n in pano))
 
     # Satu transaksi: gagal di tengah jalan = tidak ada perubahan.
     with psycopg.connect(os.environ["DATABASE_URL"]) as conn, conn.cursor() as cur:
@@ -99,14 +131,15 @@ def main():
             CREATE TEMP TABLE stg_prov (osm_id bigint, name text, geom geometry) ON COMMIT DROP;
             CREATE TEMP TABLE stg_kota (osm_id bigint, name text, prov_name text, geom geometry) ON COMMIT DROP;
             CREATE TEMP TABLE stg_taman (name text, category text, kota_asal text,
-                latitude numeric(9,6), longitude numeric(9,6), geom geometry) ON COMMIT DROP""")
+                latitude numeric(9,6), longitude numeric(9,6), geom geometry,
+                vr_source text, mapillary_id text) ON COMMIT DROP""")
         cur.executemany(f"INSERT INTO stg_prov VALUES (%s, %s, {GEOM})",
                         [(int(f["properties"]["prov_osm_id"]), f["properties"]["prov_name"], json.dumps(f["geometry"]))
                          for f in provinsi])
         cur.executemany(f"INSERT INTO stg_kota VALUES (%s, %s, %s, {GEOM})",
                         [(int(f["properties"]["city_osm_id"]), f["properties"]["city_name"],
                           f["properties"]["prov_name"], json.dumps(f["geometry"])) for f in kota])
-        cur.executemany(f"INSERT INTO stg_taman VALUES (%s, %s, %s, %s, %s, {GEOM})", baris)
+        cur.executemany(f"INSERT INTO stg_taman VALUES (%s, %s, %s, %s, %s, {GEOM}, %s, %s)", baris)
 
         cur.execute(f"""
             INSERT INTO provinces (osm_id, name, geom)
@@ -158,11 +191,13 @@ def main():
             sys.exit("GAGAL: nama taman kembar dalam satu kota/kab hasil join spasial")
 
         cur.execute("""
-            INSERT INTO parks (city_id, name, category, latitude, longitude, geom)
-            SELECT city_id, name, category, latitude, longitude, geom::geography FROM stg_join
+            INSERT INTO parks (city_id, name, category, latitude, longitude, geom, vr_source, mapillary_id)
+            SELECT city_id, name, category, latitude, longitude, geom::geography, vr_source, mapillary_id
+            FROM stg_join
             ON CONFLICT (city_id, name) DO UPDATE SET
               category = EXCLUDED.category, latitude = EXCLUDED.latitude, longitude = EXCLUDED.longitude,
-              geom = EXCLUDED.geom, address = NULL, fee_tag = NULL, updated_at = now()
+              geom = EXCLUDED.geom, address = NULL, fee_tag = NULL,
+              vr_source = EXCLUDED.vr_source, mapillary_id = EXCLUDED.mapillary_id, updated_at = now()
             RETURNING id""")
         taman_pk = [r[0] for r in cur.fetchall()]
         # Hapus yang tidak ada pada run ini (urutan: taman -> kota -> provinsi, patuh FK).
@@ -176,6 +211,8 @@ def main():
         cur.execute("""SELECT pr.name, count(*) FROM parks p JOIN cities c ON c.id = p.city_id
                        JOIN provinces pr ON pr.id = c.province_id GROUP BY 1 ORDER BY 1""")
         per_provinsi = cur.fetchall()
+        cur.execute("SELECT coalesce(vr_source, 'tanpa'), count(*) FROM parks GROUP BY 1 ORDER BY 1")
+        per_pano = cur.fetchall()
         # Info: kota hasil join spasial berbeda dari kolom kota_kabupaten data tim (koordinat bisa meleset).
         cur.execute("""
             SELECT name, kota_asal, city_name FROM stg_join
@@ -190,6 +227,7 @@ def main():
     print(f"Taman tersimpan: {sum(n for _, n in per_kategori)} ("
           + ", ".join(f"{k}={n}" for k, n in per_kategori) + ")")
     print("Per provinsi: " + ", ".join(f"{k}={n}" for k, n in per_provinsi))
+    print("Panorama 360°: " + ", ".join(f"{k}={n}" for k, n in per_pano))
     if beda_kota:
         print(f"PERINGATAN: {len(beda_kota)} taman jatuh di kota/kab lain dari kolom kota_kabupaten:")
         for n, a, c in beda_kota:
@@ -213,6 +251,19 @@ def selftest():
     assert siapkan_taman(taman(nama=" "))[1] == ["nama kosong"]
     assert siapkan_taman(taman(coords=(200, -6.9)))[1] == ["koordinat di luar rentang"]
     assert siapkan_taman(taman(tipe="Polygon"))[1] == ["geometri bukan Point"]
+
+    def pano(src="", mid="", nama="Taman A"):
+        return {"kota_kabupaten": "Kota Bandung", "nama_taman": nama, "vr_source": src, "mapillary_id": mid}
+
+    hasil, m = periksa_pano([pano("google"), pano("mapillary", "123", "Taman B"), pano(nama="Taman C")])
+    assert m == [] and hasil == {("Kota Bandung", "Taman A"): ("google", None),
+                                 ("Kota Bandung", "Taman B"): ("mapillary", "123"),
+                                 ("Kota Bandung", "Taman C"): (None, None)}
+    assert periksa_pano([pano("flickr")])[1] == ["baris 2: vr_source 'flickr' tidak dikenal"]
+    assert len(periksa_pano([pano("mapillary")])[1]) == 1  # mapillary tanpa id
+    assert len(periksa_pano([pano("google", "123")])[1]) == 1  # id tanpa mapillary
+    assert periksa_pano([pano("mapillary", "1&x=2")])[1] == ["baris 2: mapillary_id '1&x=2' bukan angka"]
+    assert periksa_pano([pano("google"), pano("google")])[1] == ["baris 3: taman ganda ('Kota Bandung', 'Taman A')"]
     print("selftest OK")
 
 

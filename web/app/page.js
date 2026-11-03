@@ -5,6 +5,7 @@ import { api } from '../lib/api';
 import { KATEGORI, jarakLabel } from '../lib/format';
 import { useNearest } from '../lib/useNearest';
 import BarChart from './BarChart';
+import { ArView, Viewer360 } from './Xr';
 
 // Leaflet butuh `window`: komponen peta tidak dirender di server.
 const MapView = dynamic(() => import('./MapView'), {
@@ -47,6 +48,8 @@ export default function Halaman() {
   const [resetN, setResetN] = useState(0);
   const [data, setData] = useState({ parks: null, stats: [], bbox: JAWA });
   const [galat, setGalat] = useState(null);
+  const [ar, setAr] = useState(null); // FR-05: null = tertutup, { izinArah } = terbuka
+  const [vr, setVr] = useState(null); // FR-06: fitur taman yang panoramanya dibuka
   const nearest = useNearest();
 
   useEffect(() => {
@@ -90,6 +93,14 @@ export default function Halaman() {
     setProvinsiId('');
     setKotaId('');
     setResetN((n) => n + 1);
+  };
+  const bukaAr = async () => {
+    let izinArah = true;
+    // Safari iOS dan Chrome versi baru: izin sensor arah wajib diminta langsung dari ketukan pengguna.
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      izinArah = await DeviceOrientationEvent.requestPermission().then((s) => s === 'granted', () => false);
+    }
+    setAr({ izinArah });
   };
 
   return (
@@ -171,6 +182,9 @@ export default function Halaman() {
               ))}
             </ol>
           )}
+          {nearest.daftar?.length > 0 && (
+            <button type="button" className="btn btn-primary btn-ar" onClick={bukaAr}>Mode AR</button>
+          )}
         </section>
 
         <section className="sec rise" style={{ '--i': 3 }} aria-labelledby="h-statistik">
@@ -193,10 +207,21 @@ export default function Halaman() {
 
       <main className="stage">
         <div className="frame">
-          <MapView fitur={data.parks?.features ?? []} bbox={data.bbox} pos={nearest.pos} fokus={nearest.fokus} />
+          <MapView
+            fitur={data.parks?.features ?? []}
+            bbox={data.bbox}
+            pos={nearest.pos}
+            fokus={nearest.fokus}
+            onVr={setVr}
+          />
           {data.parks == null && !galat && <div className="map-pesan">Memuat data taman…</div>}
         </div>
       </main>
+
+      {ar && (
+        <ArView pos={nearest.pos} daftar={nearest.daftar ?? []} izinArah={ar.izinArah} onTutup={() => setAr(null)} />
+      )}
+      {vr && <Viewer360 fitur={vr} onTutup={() => setVr(null)} />}
     </div>
   );
 }

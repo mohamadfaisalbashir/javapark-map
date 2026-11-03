@@ -7,6 +7,7 @@ import 'leaflet.markercluster/dist/MarkerCluster.css';
 import { useEffect } from 'react';
 import { Circle, MapContainer, Marker, ScaleControl, TileLayer, useMap } from 'react-leaflet';
 import { KATEGORI } from '../lib/format';
+import { urlPanorama } from '../lib/xr';
 
 // 6.1: atribusi wajib peta dasar + sumber data taman.
 const ATRIBUSI = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &middot; data taman: inventaris tim';
@@ -22,7 +23,7 @@ function el(tag, kelas, teks) {
   return e;
 }
 
-function isiPopup(f) {
+function isiPopup(f, onVr) {
   const { name, category, address, city, province } = f.properties;
   const [lon, lat] = f.geometry.coordinates;
   const root = document.createElement('div');
@@ -36,10 +37,16 @@ function isiPopup(f) {
   a.target = '_blank';
   a.rel = 'noopener noreferrer';
   root.append(a);
+  if (urlPanorama(f)) {
+    const b = el('button', 'popup-vr', 'Lihat 360°'); // FR-06
+    b.type = 'button';
+    b.addEventListener('click', () => onVr(f));
+    root.append(b);
+  }
   return root;
 }
 
-function LapisTaman({ fitur }) {
+function LapisTaman({ fitur, onVr }) {
   const map = useMap();
   useEffect(() => {
     const grup = L.markerClusterGroup({
@@ -56,15 +63,15 @@ function LapisTaman({ fitur }) {
     grup.addLayers(
       fitur.map((f) => {
         const [lon, lat] = f.geometry.coordinates;
-        return L.marker([lat, lon], { icon: ikonTaman, title: f.properties.name, alt: f.properties.name })
-          .bindPopup(() => isiPopup(f), { maxWidth: 280 });
+        const m = L.marker([lat, lon], { icon: ikonTaman, title: f.properties.name, alt: f.properties.name });
+        return m.bindPopup(() => isiPopup(f, onVr), { maxWidth: 280, minWidth: 240 });
       }),
     );
     map.addLayer(grup);
     return () => {
       map.removeLayer(grup);
     };
-  }, [fitur, map]);
+  }, [fitur, map, onVr]);
   return null;
 }
 
@@ -85,12 +92,12 @@ function FlyTo({ fokus }) {
   return null;
 }
 
-export default function MapView({ fitur, bbox, pos, fokus }) {
+export default function MapView({ fitur, bbox, pos, fokus, onVr }) {
   return (
     <MapContainer center={[-7.3, 110]} zoom={7} minZoom={5} zoomSnap={0.5} className="peta">
       <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" attribution={ATRIBUSI} maxZoom={19} />
       <ScaleControl imperial={false} position="bottomleft" />
-      <LapisTaman fitur={fitur} />
+      <LapisTaman fitur={fitur} onVr={onVr} />
       <FitBounds bbox={bbox} />
       <FlyTo fokus={fokus} />
       {pos && (
