@@ -190,8 +190,12 @@ export default function Halaman() {
               <p>Menghitung jarak tempuh ({MODA[moda].label.toLowerCase()})…</p>
             )}
             {nearest.pos && <p className="akurasi">Akurasi GPS ±{Math.round(nearest.pos.akurasi)} m</p>}
-            {nearest.daftar?.length === 0 && (
-              <p>Tidak ada taman dengan jarak tempuh ≤ 10 km ({MODA[moda].label.toLowerCase()}) dari posisi Anda.</p>
+            {nearest.kandidat === 0 && <p>Tidak ada taman dalam radius 10 km dari posisi Anda.</p>}
+            {nearest.kandidat > 0 && nearest.daftar?.length === 0 && (
+              <p>
+                Ada {nearest.kandidat} taman dalam radius 10 km (garis lurus), tetapi jarak tempuh {MODA[moda].label.toLowerCase()} ke
+                semuanya lebih dari 10 km atau tidak ada jalur. Jarak tempuh berbeda per moda; coba moda lain.
+              </p>
             )}
             {nearest.tempuhGagal && <p className="galat">Jarak tempuh tidak dapat dihitung (layanan rute tidak tersedia). Coba lagi nanti.</p>}
           </div>
@@ -250,6 +254,7 @@ export default function Halaman() {
             fokus={nearest.fokus}
             onVr={setVr}
             rute={rute.rute?.titik}
+            jalur={rute.pandu?.menuju && nearest.pos ? [[nearest.pos.lat, nearest.pos.lon], [rute.pandu.titikArah.lat, rute.pandu.titikArah.lon]] : null}
           />
           {data.parks == null && !galat && <div className="map-pesan">Memuat data taman…</div>}
           {/* FR-07: kartu rute di atas peta (ala Google Maps). */}

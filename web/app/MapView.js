@@ -101,7 +101,7 @@ function FitRute({ rute }) {
   return null;
 }
 
-export default function MapView({ fitur, bbox, pos, fokus, onVr, rute }) {
+export default function MapView({ fitur, bbox, pos, fokus, onVr, rute, jalur }) {
   return (
     <MapContainer center={[-7.3, 110]} zoom={7} minZoom={5} zoomSnap={0.5} className="peta">
       <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" attribution={ATRIBUSI} maxZoom={19} />
@@ -116,6 +116,8 @@ export default function MapView({ fitur, bbox, pos, fokus, onVr, rute }) {
           <FitRute rute={rute} />
         </>
       )}
+      {/* FR-07: garis putus-putus dari posisi pengguna ke jalur rute selama belum di jalur (mis. dari dalam bangunan). */}
+      {jalur && <Polyline positions={jalur} pathOptions={{ color: '#c4552d', weight: 3, dashArray: '2 8' }} interactive={false} />}
       {pos && (
         <>
           <Circle

@@ -190,8 +190,15 @@ select:disabled { opacity: .5; cursor: not-allowed; }
 .layar-kepala h2 { margin: 2px 0 0; font-family: var(--f-display); font-weight: 400; font-size: 20px; line-height: 1.15; overflow-wrap: anywhere; }
 .layar-kepala p { margin: 0; }
 .layar-tutup { flex: none; width: auto; min-height: 44px; }
-.layar-isi { position: relative; flex: 1; min-height: 0; overflow: hidden; }
-.layar-iframe { display: block; width: 100%; height: 100%; border: 0; }
+/* Kolom flex untuk viewer 360° (iframe + bilah tautan); anak Mode AR semuanya absolute sehingga tidak terpengaruh. */
+.layar-isi { position: relative; flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+.layar-iframe { position: relative; display: block; flex: 1; min-height: 0; width: 100%; border: 0; }
+.vr-muat { position: absolute; left: 16px; right: 16px; top: 40%; margin: 0; text-align: center; font-size: 15px; color: var(--panel); opacity: .85; }
+.vr-alt {
+  flex: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0 8px; min-height: 44px; margin: 0;
+  padding: 6px 16px; font-size: 13.5px; color: var(--panel); background: var(--ink); border-top: 1px solid rgba(250, 246, 234, .2);
+}
+.vr-alt a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; color: var(--panel); text-underline-offset: 3px; }
 .layar-galat { position: absolute; left: 16px; right: 16px; top: 16px; margin: 0; }
 
 .ar-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }

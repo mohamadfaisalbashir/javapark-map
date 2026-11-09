@@ -3,6 +3,7 @@
 // ponytail: server demo FOSSGIS (batas pemakaian wajar, tanpa SLA); untuk produksi self-host Valhalla dengan PBF Jawa.
 const VALHALLA = 'https://valhalla1.openstreetmap.de';
 const LIHAT_DEPAN_M = 40; // panah AR menunjuk titik rute sejauh ini di depan pengguna
+const MENUJU_M = 20; // lebih jauh dari garis rute = pandu dulu ke jalur (mis. masih di dalam bangunan); kalibrasi lapangan
 const MAKS_M = 10000; // FR-02/FR-07: hanya taman dengan jarak tempuh ≤ 10 km
 const MAKS_TAMAN = 10;
 
@@ -102,7 +103,9 @@ export async function ambilRute(asal, tujuan, moda, signal) {
     costing: MODA[moda].costing,
   }, signal);
   const leg = d.trip.legs[0];
-  return bentukRute(dekode6(leg.shape), leg.maneuvers, leg.summary.time);
+  const r = bentukRute(dekode6(leg.shape), leg.maneuvers, leg.summary.time);
+  // Celah posisi → jalan terdekat (mis. dari dalam bangunan); bukan alasan untuk menghitung ulang rute.
+  return { ...r, celah_m: jarakM(asal, { lat: r.titik[0][0], lon: r.titik[0][1] }) };
 }
 
 export function bentukRute(titik, maneuvers, total_s) {
@@ -135,13 +138,28 @@ export function pandu({ titik, kum, manuver, total_s }, pos) {
   const total = kum.at(-1);
   const sudah = kum[best.j] + best.t * ((kum[best.j + 1] ?? kum[best.j]) - kum[best.j]);
   const sisa = Math.max(0, total - sudah);
-  const berikut = manuver.find((m) => kum[m.i] > sudah + 5) ?? manuver.at(-1);
+  const sisa_s = total ? (total_s * sisa) / total : 0;
   const k = kum.findIndex((x) => x >= sudah + LIHAT_DEPAN_M);
   const [lat, lon] = titik[k < 0 ? titik.length - 1 : k];
+  const menyimpang_m = titik.length > 1 ? best.d : jarakM(pos, { lat, lon });
+  if (menyimpang_m > MENUJU_M) {
+    // Belum/tidak di jalur: arahkan ke titik terdekat di garis rute dulu, baru manuver berikutnya bermakna.
+    const [a, b] = [titik[best.j], titik[best.j + 1] ?? titik[best.j]];
+    return {
+      menyimpang_m,
+      sisa_m: sisa,
+      sisa_s,
+      menuju: true,
+      manuver: { teks: 'Menuju jalur rute', jarak_m: menyimpang_m },
+      titikArah: { lat: a[0] + best.t * (b[0] - a[0]), lon: a[1] + best.t * (b[1] - a[1]) },
+    };
+  }
+  const berikut = manuver.find((m) => kum[m.i] > sudah + 5) ?? manuver.at(-1);
   return {
-    menyimpang_m: titik.length > 1 ? best.d : jarakM(pos, { lat, lon }),
+    menyimpang_m,
     sisa_m: sisa,
-    sisa_s: total ? (total_s * sisa) / total : 0,
+    sisa_s,
+    menuju: false,
     manuver: { teks: berikut.teks, jarak_m: Math.max(0, kum[berikut.i] - sudah) },
     titikArah: { lat, lon },
   };

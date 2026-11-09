@@ -103,6 +103,7 @@ export function useNearest(moda) {
     galat: s.galat,
     // Hanya hasil jarak tempuh (tanpa garis lurus): null selama menghitung atau bila layanan rute gagal.
     daftar: s.mentah?.length === 0 ? [] : siap ? tempuh.daftar : null,
+    kandidat: s.mentah?.length ?? null, // taman ≤ 10 km garis lurus, untuk membedakan pesan "kosong"
     menghitung: !!s.mentah?.length && !siap,
     tempuhGagal: siap && !tempuh.daftar,
     fokus,
@@ -136,7 +137,8 @@ export function useRute(pos, tujuan, moda) {
   }, [tujuan, moda, ulang]);
 
   const p = r?.rute && pos ? pandu(r.rute, pos) : null;
-  const keluar = !!p && p.menyimpang_m > MENYIMPANG_M + (pos?.akurasi ?? 0);
+  // Celah awal posisi → jalan (dari dalam bangunan) tidak dihitung menyimpang; rute ulang akan berawal di jalan yang sama.
+  const keluar = !!p && p.menyimpang_m > r.rute.celah_m + MENYIMPANG_M + (pos?.akurasi ?? 0);
   useEffect(() => {
     if (keluar && Date.now() - terakhir.current > JEDA_ULANG_MS) setUlang((n) => n + 1);
   });

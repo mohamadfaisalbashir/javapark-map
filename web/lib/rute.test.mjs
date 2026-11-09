@@ -36,7 +36,18 @@ test('pandu: di jalur, sebelum belokan', () => {
   kira(p.sisa_s, 250, 2);
   assert.equal(p.manuver.teks, 'Belok kanan');
   kira(p.manuver.jarak_m, 150, 2);
+  assert.equal(p.menuju, false);
   assert.deepEqual(p.titikArah, { lat: 0.0009, lon: 0 }); // titik rute pertama ≥ 40 m di depan
+});
+
+test('pandu: belum di jalur (mis. di dalam bangunan) → Menuju jalur rute', () => {
+  const p = pandu(rute, { lat: 0.0003, lon: 0.00045 }); // ±50 m ke timur dari garis awal
+  assert.equal(p.menuju, true);
+  assert.equal(p.manuver.teks, 'Menuju jalur rute');
+  kira(p.manuver.jarak_m, 50, 1);
+  kira(p.titikArah.lat, 0.0003, 1e-9, 'lat proyeksi');
+  kira(p.titikArah.lon, 0, 1e-9, 'lon proyeksi'); // panah menunjuk ke garis, bukan ke depan
+  kira(p.sisa_m, 300 - 33.4, 2);
 });
 
 test('pandu: setelah belokan dan menyimpang jauh', () => {
