@@ -5,7 +5,7 @@ import './leaflet-global'; // window.L harus ada sebelum plugin dimuat
 import 'leaflet.markercluster';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import { useEffect } from 'react';
-import { Circle, MapContainer, Marker, ScaleControl, TileLayer, useMap } from 'react-leaflet';
+import { Circle, MapContainer, Marker, Polyline, ScaleControl, TileLayer, useMap } from 'react-leaflet';
 import { KATEGORI } from '../lib/format';
 import { urlPanorama } from '../lib/xr';
 
@@ -92,7 +92,16 @@ function FlyTo({ fokus }) {
   return null;
 }
 
-export default function MapView({ fitur, bbox, pos, fokus, onVr }) {
+// FR-07: tampilkan seluruh rute setiap rute baru dihitung; ruang bawah untuk kartu rute.
+function FitRute({ rute }) {
+  const map = useMap();
+  useEffect(() => {
+    if (rute?.length > 1) map.fitBounds(rute, { paddingTopLeft: [40, 40], paddingBottomRight: [40, 240], maxZoom: 17 });
+  }, [rute, map]);
+  return null;
+}
+
+export default function MapView({ fitur, bbox, pos, fokus, onVr, rute }) {
   return (
     <MapContainer center={[-7.3, 110]} zoom={7} minZoom={5} zoomSnap={0.5} className="peta">
       <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" attribution={ATRIBUSI} maxZoom={19} />
@@ -100,6 +109,13 @@ export default function MapView({ fitur, bbox, pos, fokus, onVr }) {
       <LapisTaman fitur={fitur} onVr={onVr} />
       <FitBounds bbox={bbox} />
       <FlyTo fokus={fokus} />
+      {rute && (
+        <>
+          <Polyline positions={rute} pathOptions={{ color: '#14342a', weight: 8, opacity: 0.35 }} interactive={false} />
+          <Polyline positions={rute} pathOptions={{ color: '#c4552d', weight: 4 }} interactive={false} />
+          <FitRute rute={rute} />
+        </>
+      )}
       {pos && (
         <>
           <Circle

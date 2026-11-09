@@ -2,9 +2,11 @@
 import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
 import { api } from '../lib/api';
-import { KATEGORI, jarakLabel } from '../lib/format';
-import { useNearest } from '../lib/useNearest';
+import { KATEGORI, jarakLabel, waktuLabel } from '../lib/format';
+import { MODA } from '../lib/rute';
+import { useNearest, useRute } from '../lib/useNearest';
 import BarChart from './BarChart';
+import PilihModa from './PilihModa';
 import { ArView, Viewer360 } from './Xr';
 
 // Leaflet butuh `window`: komponen peta tidak dirender di server.
@@ -50,7 +52,10 @@ export default function Halaman() {
   const [galat, setGalat] = useState(null);
   const [ar, setAr] = useState(null); // FR-05: null = tertutup, { izinArah } = terbuka
   const [vr, setVr] = useState(null); // FR-06: fitur taman yang panoramanya dibuka
-  const nearest = useNearest();
+  const [moda, setModa] = useState('kaki'); // FR-07
+  const [tujuan, setTujuan] = useState(null); // FR-07: taman yang rutenya ditampilkan
+  const nearest = useNearest(moda);
+  const rute = useRute(nearest.pos, tujuan, moda);
 
   useEffect(() => {
     const ac = new AbortController();
@@ -101,6 +106,19 @@ export default function Halaman() {
       izinArah = await DeviceOrientationEvent.requestPermission().then((s) => s === 'granted', () => false);
     }
     setAr({ izinArah });
+  };
+  // FR-07: pilih/batalkan rute; di HP peta ada di atas daftar, jadi gulir ke peta agar rutenya terlihat.
+  const pilihRute = (t) => {
+    const batal = tujuan?.id === t.id;
+    setTujuan(batal ? null : t);
+    if (!batal) {
+      const halus = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.querySelector('.stage')?.scrollIntoView({ behavior: halus ? 'smooth' : 'auto', block: 'start' });
+    }
+  };
+  const berhentiLacak = () => {
+    nearest.berhenti();
+    setTujuan(null);
   };
 
   return (
@@ -155,21 +173,27 @@ export default function Halaman() {
 
         <section className="sec rise" style={{ '--i': 2 }} aria-labelledby="h-terdekat">
           <h2 id="h-terdekat"><span className="num" aria-hidden="true">II</span>Terdekat</h2>
-          <p className="hint">10 taman terdekat dalam radius 10 km dari posisi Anda, diperbarui saat Anda berpindah.</p>
+          <p className="hint">Maksimal 10 taman dengan jarak tempuh ≤ 10 km menurut moda pilihan Anda, diperbarui saat Anda berpindah.</p>
+          <PilihModa moda={moda} onModa={setModa} />
           <button
             type="button"
             className={`btn ${nearest.aktif ? 'btn-ghost' : 'btn-primary'}`}
             aria-pressed={nearest.aktif}
-            onClick={nearest.aktif ? nearest.berhenti : nearest.mulai}
+            onClick={nearest.aktif ? berhentiLacak : nearest.mulai}
           >
             {nearest.aktif ? 'Hentikan pelacakan' : 'Taman Terdekat'}
           </button>
           <div className="status" aria-live="polite">
             {nearest.galat && <p className="galat">{nearest.galat}</p>}
             {!nearest.galat && nearest.aktif && !nearest.pos && <p>Menunggu sinyal GPS…</p>}
-            {!nearest.galat && nearest.pos && nearest.daftar == null && <p>Mencari taman terdekat…</p>}
+            {!nearest.galat && nearest.pos && nearest.daftar == null && !nearest.tempuhGagal && (
+              <p>Menghitung jarak tempuh ({MODA[moda].label.toLowerCase()})…</p>
+            )}
             {nearest.pos && <p className="akurasi">Akurasi GPS ±{Math.round(nearest.pos.akurasi)} m</p>}
-            {nearest.daftar?.length === 0 && <p>Tidak ada taman dalam radius 10 km dari posisi Anda.</p>}
+            {nearest.daftar?.length === 0 && (
+              <p>Tidak ada taman dengan jarak tempuh ≤ 10 km ({MODA[moda].label.toLowerCase()}) dari posisi Anda.</p>
+            )}
+            {nearest.tempuhGagal && <p className="galat">Jarak tempuh tidak dapat dihitung (layanan rute tidak tersedia). Coba lagi nanti.</p>}
           </div>
           {nearest.daftar?.length > 0 && (
             <ol className="near">
@@ -177,7 +201,19 @@ export default function Halaman() {
                 <li key={t.id}>
                   <span className="n">{i + 1}</span>
                   <span className="nm">{t.name}<small>{KATEGORI[t.category] ?? t.category}</small></span>
-                  <span className="d">{jarakLabel(t.distance_m)}</span>
+                  <span className="d">
+                    {jarakLabel(t.rute_m)}
+                    <small>±{waktuLabel(t.rute_s)}</small>
+                  </span>
+                  <button
+                    type="button"
+                    className="btn-rute"
+                    aria-pressed={tujuan?.id === t.id}
+                    aria-label={`Rute ke ${t.name}`}
+                    onClick={() => pilihRute(t)}
+                  >
+                    Rute
+                  </button>
                 </li>
               ))}
             </ol>
@@ -213,15 +249,54 @@ export default function Halaman() {
             pos={nearest.pos}
             fokus={nearest.fokus}
             onVr={setVr}
+            rute={rute.rute?.titik}
           />
           {data.parks == null && !galat && <div className="map-pesan">Memuat data taman…</div>}
+          {/* FR-07: kartu rute di atas peta (ala Google Maps). */}
+          {tujuan && (
+            <section className="kartu-rute" aria-label={`Rute ke ${tujuan.name}`}>
+              <div className="kartu-kepala">
+                <p>Rute ke <b>{tujuan.name}</b></p>
+                <button type="button" className="kartu-tutup" aria-label="Tutup rute" onClick={() => setTujuan(null)}>×</button>
+              </div>
+              <PilihModa moda={moda} onModa={setModa} kecil />
+              {rute.galat && <p className="galat">{rute.galat}</p>}
+              {!rute.galat && !rute.pandu && <p className="kartu-ket">Menghitung rute…</p>}
+              <div className="kartu-aksi">
+                {rute.pandu && (
+                  <p className="kartu-waktu">
+                    {waktuLabel(rute.pandu.sisa_s)} <span>({jarakLabel(rute.pandu.sisa_m)})</span>
+                  </p>
+                )}
+                <button type="button" className="btn btn-primary kartu-mulai" onClick={bukaAr}>Mulai (AR)</button>
+              </div>
+              {rute.pandu && (
+                <p className="kartu-ket">
+                  Berikutnya: <b>{rute.pandu.manuver.teks}</b> · {jarakLabel(rute.pandu.manuver.jarak_m)}
+                </p>
+              )}
+            </section>
+          )}
         </div>
       </main>
 
-      {ar && (
-        <ArView pos={nearest.pos} daftar={nearest.daftar ?? []} izinArah={ar.izinArah} onTutup={() => setAr(null)} />
+      {/* AR disembunyikan (kamera dimatikan) selama panorama dibuka dari label AR; menutup panorama = kembali ke AR. */}
+      {ar && !vr && (
+        <ArView
+          pos={nearest.pos}
+          daftar={nearest.daftar ?? []}
+          izinArah={ar.izinArah}
+          onTutup={() => setAr(null)}
+          onVr={setVr}
+          moda={moda}
+          onModa={setModa}
+          tujuan={tujuan}
+          pandu={rute.pandu}
+          onNavigasi={setTujuan}
+          onAkhiriNav={() => setTujuan(null)}
+        />
       )}
-      {vr && <Viewer360 fitur={vr} onTutup={() => setVr(null)} />}
+      {vr && <Viewer360 fitur={vr} onTutup={() => setVr(null)} labelTutup={ar ? 'Kembali ke Mode AR' : 'Tutup'} />}
     </div>
   );
 }

@@ -202,6 +202,8 @@ select:disabled { opacity: .5; cursor: not-allowed; }
 }
 .ar-label b { display: block; font-size: 14px; line-height: 1.25; overflow-wrap: anywhere; }
 .ar-label span { font-family: var(--f-display); font-size: 15px; color: var(--moss-d); }
+button.ar-label { font: inherit; cursor: pointer; }
+.ar-label small { display: block; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--clay); }
 .ar-info {
   position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%); display: flex; gap: 12px; margin: 0;
   padding: 8px 14px; font-size: 13px; white-space: nowrap; color: var(--panel); background: rgba(20, 52, 42, .82);
@@ -232,3 +234,73 @@ select:disabled { opacity: .5; cursor: not-allowed; }
   h1 { font-size: 38px; }
   .count { font-size: 56px; }
 }
+
+/* ---------- FR-07 rute ---------- */
+.moda { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0 0 14px; padding: 0; border: 0; }
+.moda legend { margin-bottom: 6px; padding: 0; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
+.moda label { position: relative; }
+.moda input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.moda span {
+  display: grid; place-items: center; min-height: 44px; padding: 0 6px; font-size: 14px; font-weight: 600; text-align: center;
+  border: 1px solid var(--ink); background: var(--field); color: var(--ink);
+}
+.moda label + label span { border-left: 0; }
+.moda input:checked + span { background: var(--ink); color: var(--panel); }
+.moda input:focus-visible + span { outline: 3px solid var(--clay); outline-offset: 2px; }
+
+.near li { grid-template-columns: 26px 1fr auto auto; align-items: center; }
+.near .d small { text-align: right; }
+.btn-rute {
+  min-height: 44px; padding: 0 12px; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+  border: 1px solid var(--ink); background: var(--field); color: var(--ink);
+}
+.btn-rute[aria-pressed="true"] { background: var(--clay); border-color: var(--clay); color: #fff; }
+.moda-kecil { margin: 0; }
+.moda-kecil span { min-height: 38px; font-size: 13px; }
+
+/* Kartu rute di atas peta (ala Google Maps); bottom 26px: atribusi OSM tetap terlihat. */
+.kartu-rute {
+  position: absolute; left: 12px; right: 12px; bottom: 26px; z-index: 1000; max-width: 400px;
+  padding: 10px 14px 14px; font-size: 14px; background: var(--grain), var(--panel);
+  border: 1px solid var(--ink); box-shadow: 4px 4px 0 var(--clay);
+}
+.kartu-rute p { margin: 0; }
+.kartu-kepala { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.kartu-kepala p { overflow-wrap: anywhere; }
+.kartu-tutup {
+  flex: none; width: 44px; height: 44px; margin: -6px -8px -6px 0; font: inherit; font-size: 26px; line-height: 1;
+  cursor: pointer; border: 0; background: none; color: var(--ink);
+}
+.kartu-tutup:hover { color: var(--clay); }
+.kartu-aksi { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; }
+.kartu-waktu { font-family: var(--f-display); font-size: 26px; line-height: 1.1; color: var(--moss-d); }
+.kartu-waktu span { font-size: 17px; color: var(--ink-2); }
+.kartu-ket { margin-top: 6px !important; font-size: 13.5px; color: var(--ink-2); overflow-wrap: anywhere; }
+.kartu-ket b { color: var(--ink); }
+.kartu-rute .galat { margin-top: 8px; }
+.kartu-mulai { flex: none; width: auto; min-height: 44px; margin-left: auto; padding: 0 16px; }
+@media (max-width: 1023px) { .kartu-rute { bottom: 40px; } } /* atribusi 2 baris di layar sempit */
+
+.ar-nav {
+  position: absolute; left: 16px; right: 16px; bottom: 72px; display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; color: var(--panel); background: rgba(20, 52, 42, .88); border-left: 4px solid var(--clay);
+}
+.ar-nav svg { flex: none; fill: var(--clay); stroke: var(--panel); stroke-width: 2; transition: transform .2s linear; }
+.ar-nav p { flex: 1; margin: 0; min-width: 0; }
+.ar-akhiri {
+  flex: none; min-height: 44px; padding: 0 12px; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+  color: var(--panel); background: none; border: 1px solid var(--panel);
+}
+.ar-moda { position: absolute; top: 12px; left: 16px; right: 16px; z-index: 2; max-width: 420px; margin: 0 auto; }
+.ar-pilih {
+  position: absolute; left: 16px; right: 16px; bottom: 16px; z-index: 3; padding: 14px;
+  color: var(--ink); background: var(--grain), var(--panel); border: 1px solid var(--ink); box-shadow: 4px 4px 0 var(--clay);
+}
+.ar-pilih p { margin: 0 0 10px; }
+.ar-pilih b { display: block; font-size: 17px; line-height: 1.25; overflow-wrap: anywhere; }
+.ar-pilih span { font-size: 13.5px; color: var(--ink-2); }
+.ar-pilih-tombol { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.ar-pilih-tombol .btn-primary, .ar-pilih-tombol .btn-ghost { flex: 1 1 140px; width: auto; }
+.ar-nav b { display: block; font-size: 16px; line-height: 1.25; overflow-wrap: anywhere; }
+.ar-nav span { font-size: 13px; opacity: .85; overflow-wrap: anywhere; }
+@media (prefers-reduced-motion: reduce) { .ar-nav svg { transition: none; } }

@@ -97,7 +97,7 @@ def nearest(lat: float = Query(..., ge=-90, le=90),
         WITH t AS (SELECT ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography AS g)
         SELECT p.id, p.name, p.category,
                p.latitude::float8 AS latitude, p.longitude::float8 AS longitude,
-               ST_Distance(p.geom, t.g) AS distance_m
+               ST_Distance(p.geom, t.g) AS distance_m, p.vr_source, p.mapillary_id
         FROM parks p, t
         WHERE ST_DWithin(p.geom, t.g, :radius_m)
         ORDER BY p.geom <-> t.g
