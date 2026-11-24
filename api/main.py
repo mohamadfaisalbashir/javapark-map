@@ -103,7 +103,7 @@ def nearest(lat: float = Query(..., ge=-90, le=90),
                p.facilities, p.facilities_verified
         FROM parks p, t
         WHERE ST_DWithin(p.geom, t.g, :radius_m)
-        ORDER BY p.geom <-> t.g
+        ORDER BY distance_m  -- bukan <-> (jarak bola): urutan harus sama dengan distance_m (spheroid) yang dikirim
         LIMIT :limit""", lat=lat, lon=lon, radius_m=radius_km * 1000, limit=limit)]
 
 

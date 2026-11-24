@@ -31,17 +31,10 @@ export const FASILITAS = {
   olahraga: 'Lapangan olahraga',
 };
 
-// FR-12: cari taman menurut kegiatan; cocok bila taman punya SALAH SATU fasilitasnya.
-export const KEGIATAN = {
-  anak: { label: 'Bawa anak', fas: ['bermain'] },
-  olahraga: { label: 'Olahraga', fas: ['jogging', 'olahraga'] },
-};
-
-/** FR-09/11/12: properti taman lolos saringan? q = teks cari huruf kecil; fas = fasilitas yang WAJIB ada semua. */
-export function cocok(p, { kat = '', kegiatan = '', fas = [], q = '' }) {
+/** FR-09/11: properti taman lolos saringan? q = teks cari huruf kecil; fas = fasilitas yang WAJIB ada semua. */
+export function cocok(p, { kat = '', fas = [], q = '' }) {
   const ada = new Set(p.facilities ?? []);
   return (!kat || p.category === kat)
-    && (!kegiatan || KEGIATAN[kegiatan].fas.some((f) => ada.has(f)))
     && fas.every((f) => ada.has(f))
     && (!q || p.name.toLowerCase().includes(q));
 }

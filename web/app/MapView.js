@@ -25,11 +25,21 @@ function el(tag, kelas, teks) {
 
 function isiPopup(f, onVr) {
   const { name, category, address, city, province } = f.properties;
-  const [lon, lat] = f.geometry.coordinates;
   const root = document.createElement('div');
   root.className = 'popup';
   root.append(el('p', 'popup-kat', KATEGORI[category] ?? category));
   root.append(el('h3', 'popup-nama', name));
+  // Gambar taman = titik tur pertama lewat Maps Embed (gratis tanpa batas); statis: tak bisa diklik/digeser.
+  const foto = titikPanorama(f)[0];
+  if (foto) {
+    const ifr = el('iframe', 'popup-foto', '');
+    ifr.src = foto.url;
+    ifr.title = `Gambar ${name}`;
+    ifr.loading = 'lazy';
+    ifr.tabIndex = -1;
+    ifr.setAttribute('aria-hidden', 'true');
+    root.append(ifr);
+  }
   if (address) root.append(el('p', 'popup-alamat', address));
   root.append(el('p', 'popup-kota', `${city}, ${province}`));
   // FR-11: label fasilitas.
@@ -40,11 +50,6 @@ function isiPopup(f, onVr) {
     fas.forEach((k) => ul.append(el('li', '', FASILITAS[k] ?? k)));
     root.append(ul);
   }
-  const a = el('a', 'popup-link', 'Buka di OpenStreetMap');
-  a.href = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=19/${lat}/${lon}`;
-  a.target = '_blank';
-  a.rel = 'noopener noreferrer';
-  root.append(a);
   const b = el('button', 'popup-vr', titikPanorama(f).length ? 'Tur virtual 360°' : 'Tur virtual'); // FR-06: semua taman
   b.type = 'button';
   b.addEventListener('click', () => onVr(f));

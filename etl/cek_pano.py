@@ -8,7 +8,8 @@ Per taman:
     atau yang terdekat ≤ 60 m; tidak ada = lingkaran RADIUS_CADANGAN_M. Marker di luar poligonnya digeser ke
     dalam (≤ GESER_MAKS_M) dan ditulis balik ke taman_kota.geojson.
  2. Panorama yang LOKASINYA di dalam batas, menurut prioritas (PERINGKAT): virtual tour Street View Google,
-    lalu virtual tour Mapillary (360°), lalu photosphere pengguna. Maks. MAKS_TITIK, berjarak ≥ JARAK_MIN_M.
+    lalu virtual tour Mapillary (360°), lalu photosphere pengguna, lalu panorama di jalan kendaraan (OSM) di dalam
+    batas. Maks. MAKS_TITIK, berjarak ≥ JARAK_MIN_M; bila ada photosphere, minimal satu titik adalah photosphere.
  3. Tak ada satu pun di dalam: panorama terdekat di luar, dengan heading menghadap taman (= "hanya jalan").
 Kolom `titik` = "lat,lon;m:<id>;..." (di dalam; m: = gambar Mapillary) atau "lat,lon,heading" (dari tepi).
 Kolom `jenis` = virtual_tour | photosphere | jalan | kosong. Untuk Google disimpan koordinat panorama, bukan pano_id
@@ -40,9 +41,19 @@ RADIUS_CADANGAN_M = 60  # taman tanpa poligon OSM
 TEPI_GOOGLE_M = 15
 CARI_LUAR_M = (50, 150, 400, 1000)  # radius panorama cadangan "dari tepi"
 GESER_MAKS_M = 300  # marker lebih jauh dari ini ke poligonnya tidak digeser otomatis (dicetak untuk dicek tim)
-GOOGLE, MAPILLARY, PHOTOSPHERE = 0, 1, 2  # peringkat: kecil = didahulukan; 0 & 1 = virtual tour
-JENIS_TAMAN = ('["leisure"~"^(park|garden|common|recreation_ground|nature_reserve)$"]',
-               '["landuse"~"^(grass|village_green|recreation_ground|forest)$"]')
+# Titik tur yang sudah dicek tim dan tidak boleh dihitung ulang: (kota_kabupaten, nama_taman) -> (titik, jenis).
+TITIK_TETAP = {
+    # 24 Nov 2026 (user): panorama Google ini benar; aturan jalan ≤ JALAN_M salah menggantinya dengan photosphere lain.
+    ("Kabupaten Indramayu", "Alun-Alun Indramayu"): ("-6.326631,108.322909", "virtual_tour"),
+}
+GOOGLE, MAPILLARY, PHOTOSPHERE, JALAN = 0, 1, 2, 3  # peringkat: kecil = didahulukan; 0 & 1 = virtual tour
+JALAN_M = 8  # panorama Google/Mapillary sedekat ini ke jalan kendaraan OSM = panorama jalan (peringkat JALAN)
+JALAN_OSM = "motorway|trunk|primary|secondary|tertiary|unclassified|residential|living_street|service"
+# Poligon taman: dicari yang memuat titik dan yang ≤ 60 m. Alun-alun sering place=square; sebagian taman ditandai
+# leisure lain (mis. "Taman Milenial Bantul" = pitch), jadi objek leisure bernama Taman/Alun-alun/... ikut dihitung.
+JENIS_TAMAN = ('["leisure"~"^(park|garden|common|recreation_ground|nature_reserve)$"]', '["place"="square"]',
+               '["leisure"]["name"~"^(taman|alun|hutan kota|rth)",i]')
+JENIS_HIJAU = '["landuse"~"^(grass|village_green|recreation_ground|forest)$"]'  # hanya bila memuat titik
 
 
 def baca_env():
@@ -81,12 +92,12 @@ def di_dalam(lat, lon, cincin):
     return hasil
 
 
-def jarak_ke_tepi(lat, lon, cincin):
-    """Jarak (m) titik ke sisi terdekat cincin; proyeksi ekuirektangular lokal (cukup untuk skala taman)."""
+def jarak_ke_tepi(lat, lon, cincin, tutup=True):
+    """Jarak (m) titik ke sisi terdekat cincin (tutup=False: garis/jalan); proyeksi ekuirektangular lokal."""
     ky, kx = 111_320, 111_320 * math.cos(math.radians(lat))
     xy = [((b - lon) * kx, (a - lat) * ky) for a, b in cincin]
     terbaik = math.inf
-    for (x1, y1), (x2, y2) in zip(xy, xy[1:] + xy[:1]):
+    for (x1, y1), (x2, y2) in zip(xy, xy[1:] + (xy[:1] if tutup else [])):
         dx, dy = x2 - x1, y2 - y1
         t = max(0, min(1, -(x1 * dx + y1 * dy) / (dx * dx + dy * dy))) if dx or dy else 0
         terbaik = min(terbaik, math.hypot(x1 + t * dx, y1 + t * dy))
@@ -118,7 +129,14 @@ def pilih(pano, lat, lon):
     for p in urut:
         if all(jarak_m(p[0], p[1], q[0], q[1]) >= JARAK_MIN_M for q in hasil):
             hasil.append(p)
-    return hasil[:MAKS_TITIK]
+    hasil = hasil[:MAKS_TITIK]
+    # Permintaan user: bila ada photosphere tapi tak terpilih, titik terakhir diganti photosphere.
+    if hasil and all(q[2] != PHOTOSPHERE for q in hasil):
+        ps = [p for p in urut if p[2] == PHOTOSPHERE
+              and all(jarak_m(p[0], p[1], q[0], q[1]) >= JARAK_MIN_M for q in hasil[:-1])]
+        if ps:
+            hasil[-1] = ps[0]
+    return hasil
 
 
 def get_json(url, data=None, headers=None):
@@ -140,27 +158,33 @@ def query_batas(titik):
     Hasil tiap taman dipisah elemen penanda `batas` (pola = etl/fasilitas_osm.py). Satu query per taman
     terlalu lambat (Overpass publik ±2 menit per permintaan).
     """
-    taman, hijau = JENIS_TAMAN
-    blok = [f'is_in({lat},{lon})->.a;(way(pivot.a){taman};rel(pivot.a){taman};way(pivot.a){hijau};'
-            f'rel(pivot.a){hijau};way(around:60,{lat},{lon}){taman};rel(around:60,{lat},{lon}){taman};);'
-            'out geom;make batas;out;' for lat, lon in titik]
+    def blok(lat, lon):
+        memuat = "".join(f"{t}(pivot.a){f};" for f in JENIS_TAMAN + (JENIS_HIJAU,) for t in ("way", "rel"))
+        dekat = "".join(f"{t}(around:60,{lat},{lon}){f};" for f in JENIS_TAMAN for t in ("way", "rel"))
+        return (f'is_in({lat},{lon})->.a;({memuat}{dekat});out geom;'
+                f'way(around:400,{lat},{lon})["highway"~"^({JALAN_OSM})(_link)?$"];out geom;make batas;out;')
+    return "[out:json][timeout:900];" + "".join(blok(lat, lon) for lat, lon in titik)
     return "[out:json][timeout:900];" + "".join(blok)
 
 
 def pisah_batas(elemen):
-    """Elemen respons -> [[(nama OSM, cincin luar), ...] per taman] sesuai urutan titik."""
-    per, kini = [], []
+    """Elemen respons -> ([[(nama OSM, cincin luar), ...] per taman], [[garis jalan, ...] per taman])."""
+    per, kini, jalan, kini_jalan = [], [], [], []
     for el in elemen:
         nama = el.get("tags", {}).get("name", "")
         if el["type"] == "batas":
             per.append(kini)
-            kini = []
+            jalan.append(kini_jalan)
+            kini, kini_jalan = [], []
+        elif el["type"] == "way" and el.get("geometry") and re.fullmatch(
+                f"({JALAN_OSM})(_link)?", el.get("tags", {}).get("highway", "")):
+            kini_jalan.append([(g["lat"], g["lon"]) for g in el["geometry"]])
         elif el["type"] == "way" and el.get("geometry"):
             kini.append((nama, [(g["lat"], g["lon"]) for g in el["geometry"]]))
         elif el["type"] == "relation":
             kini += [(nama, [(g["lat"], g["lon"]) for g in m["geometry"]])
                      for m in el.get("members", []) if m.get("role") == "outer" and m.get("geometry")]
-    return per
+    return per, jalan
 
 
 def pilih_batas(lat, lon, calon):
@@ -235,14 +259,19 @@ def geser_marker(lat, lon, batas):
     return min(g, key=lambda p: jarak_m(lat, lon, *p)) if g else None
 
 
-def titik_taman(lat, lon, batas, kunci, token):
-    """batas = hasil pilih_batas -> (teks kolom titik, jenis: virtual_tour | photosphere | jalan | '', ada_poligon)."""
+def titik_taman(lat, lon, batas, kunci, token, jalan=()):
+    """batas = hasil pilih_batas, jalan = garis jalan kendaraan OSM ->
+    (teks kolom titik, jenis: virtual_tour | photosphere | jalan | '', ada_poligon)."""
     ada_poligon = bool(batas)
     batas = batas or [lingkaran(lat, lon, RADIUS_CADANGAN_M)]
 
     def jauh_dari_tepi(p):  # kamera mobil (Google/Mapillary) di tepi poligon = di jalan pinggir taman
         memuat = [c for c in batas if di_dalam(p[0], p[1], c)]
         return ada_poligon and memuat and max(jarak_ke_tepi(p[0], p[1], c) for c in memuat) >= TEPI_GOOGLE_M
+
+    def peringkat(p, utama):  # kamera di dalam batas: utama, atau JALAN bila di tepi / di atas jalan kendaraan
+        di_jalan = any(len(g) > 1 and jarak_ke_tepi(p[0], p[1], g, tutup=False) <= JALAN_M for g in jalan)
+        return utama if jauh_dari_tepi(p) and not di_jalan else JALAN
 
     def google(langkah, maks):
         calon = {}
@@ -251,18 +280,18 @@ def titik_taman(lat, lon, batas, kunci, token):
         for p in hasil:
             if p and p[2] and any(di_dalam(p[0], p[1], c) for c in batas):  # photosphere pengguna: cukup di dalam
                 calon[(round(p[0], 6), round(p[1], 6))] = (p[0], p[1], PHOTOSPHERE, None)
-            elif p and not p[2] and jauh_dari_tepi(p):
-                calon[(round(p[0], 6), round(p[1], 6))] = (p[0], p[1], GOOGLE, None)
+            elif p and not p[2] and any(di_dalam(p[0], p[1], c) for c in batas):
+                calon[(round(p[0], 6), round(p[1], 6))] = (p[0], p[1], peringkat(p, GOOGLE), None)
         return list(calon.values())
 
-    mly = [m for m in mapillary(batas, token) if jauh_dari_tepi(m)]
+    mly = [(m[0], m[1], peringkat(m, MAPILLARY), m[3]) for m in mapillary(batas, token)]
     pilihan = pilih(google(GRID_M, MAKS_GRID) + mly, lat, lon)
-    if not pilihan:
+    if not pilihan or all(p[2] == JALAN for p in pilihan):
         # Metadata hanya memberi panorama TERDEKAT: panorama mobil di jalan bisa menutupi photosphere di dalam taman.
         pilihan = pilih(google(GRID_RAPAT_M, MAKS_GRID * 3) + mly, lat, lon)
     if pilihan:
-        return (";".join(p[3] or f"{p[0]:.6f},{p[1]:.6f}" for p in pilihan),
-                "virtual_tour" if pilihan[0][2] < PHOTOSPHERE else "photosphere", ada_poligon)
+        jenis = {GOOGLE: "virtual_tour", MAPILLARY: "virtual_tour", PHOTOSPHERE: "photosphere"}.get(pilihan[0][2], "jalan")
+        return ";".join(p[3] or f"{p[0]:.6f},{p[1]:.6f}" for p in pilihan), jenis, ada_poligon
     for r in CARI_LUAR_M:
         p = metadata(lat, lon, r, kunci)
         if p:
@@ -280,12 +309,12 @@ def main():
     taman = [x for x in json.loads(teks_taman)["features"] if x["properties"].get("status") == "Aktif"]  # = load.py
     titik = [(x["geometry"]["coordinates"][1], x["geometry"]["coordinates"][0]) for x in taman]
     print("Mengambil poligon taman dari Overpass (satu query, bisa beberapa menit)…", flush=True)
-    per = pisah_batas(get_json("https://overpass-api.de/api/interpreter",
+    per, per_jalan = pisah_batas(get_json("https://overpass-api.de/api/interpreter",
                                urllib.parse.urlencode({"data": query_batas(titik)}).encode())["elements"])
     if len(per) != len(taman):
         sys.exit(f"GAGAL: Overpass mengembalikan {len(per)} kelompok, seharusnya {len(taman)} (coba lagi nanti)")
     hasil, digeser, dicek = [], [], []
-    for i, (x, (lat, lon), cincin) in enumerate(zip(taman, titik, per), 1):
+    for i, (x, (lat, lon), cincin, jalan) in enumerate(zip(taman, titik, per, per_jalan), 1):
         p = x["properties"]
         batas, nama_osm = pilih_batas(lat, lon, cincin)
         baru, geser = geser_marker(lat, lon, batas), ""
@@ -304,7 +333,8 @@ def main():
                 lat, lon = baru
             else:
                 dicek.append(f"{p['nama_taman']} (koordinat {lama} tidak unik di geojson)")
-        teks, jenis, ada_poligon = titik_taman(lat, lon, batas, kunci, token)
+        tetap = TITIK_TETAP.get((p["kota_kabupaten"], p["nama_taman"].strip()))
+        teks, jenis, ada_poligon = (*tetap, bool(batas)) if tetap else titik_taman(lat, lon, batas, kunci, token, jalan)
         hasil.append({"kota_kabupaten": p["kota_kabupaten"], "nama_taman": p["nama_taman"].strip(),
                       "titik": teks, "jenis": jenis})
         n = teks.count(";") + 1 if teks else 0
@@ -347,7 +377,13 @@ def selftest():
     assert pilih_batas(0, 0, []) == ([], "")
     el = [{"type": "way", "tags": {"name": "Taman X"}, "geometry": [{"lat": 0, "lon": 0}] * 3}, {"type": "batas"},
           {"type": "batas"}]
-    assert pisah_batas(el) == [[("Taman X", [(0, 0)] * 3)], []]
+    assert pisah_batas(el) == ([[("Taman X", [(0, 0)] * 3)], []], [[], []])
+    el = [{"type": "way", "tags": {"highway": "residential"}, "geometry": [{"lat": 0, "lon": 0}, {"lat": 0, "lon": 1}]},
+          {"type": "batas"}]
+    assert pisah_batas(el) == ([[]], [[[(0, 0), (0, 1)]]])
+    assert "residential" in query_batas([(-7.29, 112.74)])
+    garis = [(-7, 110), (-7, 110.001)]  # jalan barat-timur ±110 m
+    assert jarak_ke_tepi(-7.0001, 110.0005, garis, tutup=False) < 12 < jarak_ke_tepi(-7.0003, 110.0005, garis, tutup=False)
     assert nama_mirip("Taman Film", "Taman Film") and nama_mirip("Alun-Alun Sidoarjo (Monumen Jayandaru)", "Alun-Alun Sidoarjo")
     assert not nama_mirip("Taman Millenial Rajawali", "Taman Adipura Bantul") and not nama_mirip("Taman A", "")
     assert len(grid([c], GRID_RAPAT_M, 500)) > len(grid([c]))
@@ -358,6 +394,14 @@ def selftest():
     m1, m1_kembar = (-7.0003, 110, MAPILLARY, "m:1"), (-7.0003, 110.0001, MAPILLARY, "m:2")
     g1 = (-7, 110.0009, GOOGLE, None)
     assert pilih([u1, m1_kembar, m1, g1], -7, 110) == [g1, m1, u1]
+    # Photosphere didahulukan dari titik jalan; tiga titik Google (mis. jalan tak tercatat OSM) + photosphere:
+    # titik terakhir diganti photosphere (permintaan user).
+    j = [(-7 + i * .0005, 110, JALAN, None) for i in range(3)]
+    gg = [(-7 + i * .0005, 110, GOOGLE, None) for i in range(3)]
+    jauh_ps = (-7.01, 110, PHOTOSPHERE, None)
+    assert pilih(j + [jauh_ps], -7, 110) == [jauh_ps] + j[:2]
+    assert pilih(gg + [jauh_ps], -7, 110) == gg[:2] + [jauh_ps]
+    assert pilih(gg + j, -7, 110) == gg  # tanpa photosphere: apa adanya
     assert len(pilih([(-7 + i * .001, 110, GOOGLE, None) for i in range(5)], -7, 110)) == MAKS_TITIK
     assert pilih([], -7, 110) == []
     # Marker di luar poligon -> pusatnya; di dalam / tanpa poligon -> None. Poligon L: pusat di luar -> titik grid.

@@ -32,7 +32,7 @@ FASILITAS = ["toilet", "mushola", "bermain", "jogging", "olahraga"]
 def kategori(nama):
     """Data tim tidak berkategori; diturunkan dari nama (Bagian 6.4: "Alun-alun" -> alun_alun)."""
     n = nama.lower()
-    if re.search(r"alun[- ]alun", n):
+    if re.search(r"alun[- ]alun|aloon[- ]aloon", n):
         return "alun_alun"
     if "hutan kota" in n or re.search(r"\brth\b", n):
         return "rth"
@@ -288,6 +288,7 @@ def main():
 def selftest():
     assert kategori("Alun-Alun Kota Serang (Taman Kota)") == "alun_alun"
     assert kategori("Alun Alun Bandung") == "alun_alun"
+    assert kategori("Taman Aloon Aloon Tulungagung") == "alun_alun"
     assert kategori("Hutan Kota Pamulang") == "rth"
     assert kategori("RTH Maya Datar") == "rth"
     assert kategori("Taman Perdamaian BSD") == "taman_kota"

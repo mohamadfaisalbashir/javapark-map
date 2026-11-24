@@ -2,7 +2,7 @@
 import dynamic from 'next/dynamic';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { api } from '../lib/api';
-import { FASILITAS, KATEGORI, KEGIATAN, cocok, jarakLabel, waktuLabel } from '../lib/format';
+import { FASILITAS, KATEGORI, cocok, jarakLabel, waktuLabel } from '../lib/format';
 import { MENIT_JANGKAUAN, MODA, dalamPoligon, jangkauan } from '../lib/rute';
 import { useNearest, useRute } from '../lib/useNearest';
 import BarChart from './BarChart';
@@ -55,7 +55,6 @@ export default function Halaman() {
   const [vr, setVr] = useState(null); // FR-06: fitur taman yang tur virtualnya dibuka
   const [cari, setCari] = useState(''); // FR-09: cari nama
   const [kat, setKat] = useState(''); // FR-09: saring kategori
-  const [kegiatan, setKegiatan] = useState(''); // FR-12: kunci KEGIATAN
   const [fas, setFas] = useState([]); // FR-11: fasilitas yang wajib ada
   const [iso, setIso] = useState(null); // FR-08: null = mati, {} = menghitung, { daftar } | { galat }
   const [moda, setModa] = useState('kaki'); // FR-07
@@ -89,14 +88,14 @@ export default function Halaman() {
     return () => ac.abort();
   }, [provinsiId, kotaId, resetN]);
 
-  // FR-09/11/12: nama, kategori, kegiatan, fasilitas disaring di browser dari data yang sudah dimuat (103 taman).
+  // FR-09/11: nama, kategori, fasilitas disaring di browser dari data yang sudah dimuat (104 taman).
   const tampil = useMemo(() => {
     const q = cari.trim().toLowerCase();
-    return (data.parks?.features ?? []).filter((f) => cocok(f.properties, { kat, kegiatan, fas, q }));
-  }, [data.parks, cari, kat, kegiatan, fas]);
-  const adaSaring = !!(cari.trim() || kegiatan || fas.length);
-  // Daftar hasil: bila menyaring fasilitas/kegiatan, taman berfasilitas terlengkap di atas.
-  const urut = kegiatan || fas.length
+    return (data.parks?.features ?? []).filter((f) => cocok(f.properties, { kat, fas, q }));
+  }, [data.parks, cari, kat, fas]);
+  const adaSaring = !!(cari.trim() || fas.length);
+  // Daftar hasil: bila menyaring fasilitas, taman berfasilitas terlengkap di atas.
+  const urut = fas.length
     ? [...tampil].sort((a, b) => (b.properties.facilities?.length ?? 0) - (a.properties.facilities?.length ?? 0))
     : tampil;
   const togFas = (k) => setFas((x) => (x.includes(k) ? x.filter((y) => y !== k) : [...x, k]));
@@ -145,7 +144,6 @@ export default function Halaman() {
     setKotaId('');
     setCari('');
     setKat('');
-    setKegiatan('');
     setFas([]);
     setResetN((n) => n + 1);
   };
@@ -223,13 +221,6 @@ export default function Halaman() {
             <select value={kat} onChange={(e) => setKat(e.target.value)}>
               <option value="">Semua kategori</option>
               {Object.entries(KATEGORI).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
-            </select>
-          </label>
-          <label className="field">
-            <span>Mau ke taman untuk…</span>
-            <select value={kegiatan} onChange={(e) => setKegiatan(e.target.value)}>
-              <option value="">Kegiatan apa saja</option>
-              {Object.entries(KEGIATAN).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
             </select>
           </label>
           <details className="fas-pilih" open={fas.length > 0 || undefined}>

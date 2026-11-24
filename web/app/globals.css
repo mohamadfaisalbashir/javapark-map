@@ -172,7 +172,7 @@ select:disabled { opacity: .5; cursor: not-allowed; }
 .popup-nama { margin: 4px 0 6px; font-family: var(--f-display); font-weight: 400; font-size: 20px; line-height: 1.15; }
 .popup-alamat { font-size: 13px; color: var(--ink-2); }
 .popup-kota { font-size: 13px; font-weight: 600; }
-.popup-link { display: inline-block; margin-top: 10px; font-size: 13px; font-weight: 700; color: var(--moss-d); }
+.popup-foto { display: block; width: 100%; height: 130px; margin: 2px 0 8px; border: 0; border-radius: 6px; background: var(--field); pointer-events: none; }
 .popup-vr {
   display: block; width: 100%; min-height: 40px; margin-top: 12px; padding: 0 14px;
   font: inherit; font-size: 14px; font-weight: 700; color: #fff; cursor: pointer;
@@ -327,7 +327,6 @@ input[type="search"] {
   padding: 8px 16px; font-size: 13.5px; color: var(--panel); background: var(--ink);
 }
 .tur-info p { display: flex; flex-wrap: wrap; gap: 0 14px; margin: 0; }
-.tur-info span { opacity: .85; }
 .tur-tab { display: flex; }
 .tur-tab button {
   min-height: 40px; padding: 0 14px; font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer;
@@ -338,7 +337,7 @@ input[type="search"] {
 .tur-tampil { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; }
 .tur-tab button:hover { border-color: var(--panel); }
 
-/* ---------- FR-11 fasilitas & FR-12 kegiatan ---------- */
+/* ---------- FR-11 fasilitas ---------- */
 .fas { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0 0; padding: 0; list-style: none; }
 .fas li { padding: 2px 8px; font-size: 12px; font-weight: 600; line-height: 1.5; border: 1px solid currentColor; }
 .popup .fas li { color: var(--moss-d); background: var(--field); }

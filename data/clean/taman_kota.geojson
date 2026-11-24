@@ -112,16 +112,6 @@
       "type": "Feature",
       "properties": {
         "provinsi": "Banten",
-        "kota_kabupaten": "Kabupaten Serang",
-        "nama_taman": "Alun-Alun Ciruas (Taman Kota)",
-        "status": "Aktif"
-      },
-      "geometry": { "type": "Point", "coordinates": [106.234558, -6.125948] }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "provinsi": "Banten",
         "kota_kabupaten": "Kabupaten Pandeglang",
         "nama_taman": "Alun-Alun Pandeglang (Taman Kota)",
         "status": "Aktif"
@@ -137,16 +127,6 @@
         "status": "Aktif"
       },
       "geometry": { "type": "Point", "coordinates": [106.246111, -6.36] }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "provinsi": "Banten",
-        "kota_kabupaten": "Kabupaten Lebak",
-        "nama_taman": "Taman Balong Ranca Lentah",
-        "status": "Aktif"
-      },
-      "geometry": { "type": "Point", "coordinates": [106.248687, -6.362714] }
     },
     {
       "type": "Feature",
@@ -323,20 +303,60 @@
       "properties": {
         "provinsi": "DKI Jakarta",
         "kota_kabupaten": "Jakarta Timur",
-        "nama_taman": "Taman Waduk Ria Rio",
+        "nama_taman": "Taman Bambu Cipayung",
         "status": "Aktif"
       },
-      "geometry": { "type": "Point", "coordinates": [106.878158, -6.170764] }
+      "geometry": { "type": "Point", "coordinates": [106.914794, -6.303123] }
     },
     {
       "type": "Feature",
       "properties": {
         "provinsi": "DKI Jakarta",
-        "kota_kabupaten": "Jakarta Timur",
-        "nama_taman": "Taman Bambu Cipayung",
+        "kota_kabupaten": "Jakarta Pusat",
+        "nama_taman": "Taman Proklamasi",
         "status": "Aktif"
       },
-      "geometry": { "type": "Point", "coordinates": [106.914794, -6.303123] }
+      "geometry": { "type": "Point", "coordinates": [106.84659, -6.203065] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman Daksa",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.80639, -6.232467] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman Hang Tuah",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.797311, -6.234844] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman Kerinci",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.78781, -6.239013] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman Martha Tiahahu",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.798714, -6.243221] }
     },
     {
       "type": "Feature",
@@ -446,7 +466,7 @@
         "nama_taman": "Taman Kota Tasikmalaya",
         "status": "Aktif"
       },
-      "geometry": { "type": "Point", "coordinates": [108.220878, -7.326378] }
+      "geometry": { "type": "Point", "coordinates": [108.224238, -7.326335] }
     },
     {
       "type": "Feature",
@@ -456,7 +476,7 @@
         "nama_taman": "Alun-Alun Kejaksan",
         "status": "Aktif"
       },
-      "geometry": { "type": "Point", "coordinates": [108.5552, -6.7153] }
+      "geometry": { "type": "Point", "coordinates": [108.559229, -6.709515] }
     },
     {
       "type": "Feature",
@@ -772,16 +792,6 @@
       "type": "Feature",
       "properties": {
         "provinsi": "DI Yogyakarta",
-        "kota_kabupaten": "Kota Yogyakarta",
-        "nama_taman": "RTH Gajahwong Educational Park",
-        "status": "Aktif"
-      },
-      "geometry": { "type": "Point", "coordinates": [110.393276, -7.817614] }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "provinsi": "DI Yogyakarta",
         "kota_kabupaten": "Kabupaten Sleman",
         "nama_taman": "Taman Denggung",
         "status": "Aktif"
@@ -957,16 +967,6 @@
         "status": "Aktif"
       },
       "geometry": { "type": "Point", "coordinates": [111.516831, -7.629179] }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "provinsi": "Jawa Timur",
-        "kota_kabupaten": "Kota Madiun",
-        "nama_taman": "Taman Bantaran Madiun",
-        "status": "Aktif"
-      },
-      "geometry": { "type": "Point", "coordinates": [111.514185, -7.626173] }
     },
     {
       "type": "Feature",

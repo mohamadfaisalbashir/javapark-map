@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { ambilCuaca } from '../lib/cuaca';
 import { FASILITAS, KATEGORI, jarakLabel, waktuLabel } from '../lib/format';
 import { MODA } from '../lib/rute';
 import PilihModa from './PilihModa';
@@ -145,7 +144,7 @@ export function ArView({ pos, daftar, izinArah, onTutup, onVr, moda, onModa }) {
 }
 
 /**
- * FR-06: tur virtual 360° di DALAM taman: maks. 3 titik panorama (etl/cek_pano.py), plus cuaca kini dan fasilitas (FR-11).
+ * FR-06: tur virtual 360° di DALAM taman: maks. 3 titik panorama (etl/cek_pano.py), plus fasilitas (FR-11).
  * Taman tanpa panorama di dalamnya: satu panorama dari tepi, menghadap ke taman.
  */
 export function TurVirtual({ fitur, onTutup, labelTutup }) {
@@ -153,18 +152,9 @@ export function TurVirtual({ fitur, onTutup, labelTutup }) {
   const [lon, lat] = fitur.geometry.coordinates;
   const titik = titikPanorama(fitur);
   const [n, setN] = useState(0);
-  const [cuaca, setCuaca] = useState(null);
   const fas = p.facilities ?? [];
 
-  useEffect(() => {
-    let hidup = true;
-    setN(0);
-    setCuaca(null);
-    ambilCuaca(lat, lon).then((x) => hidup && setCuaca(x), () => {}); // pelengkap: gagal = tidak tampil
-    return () => {
-      hidup = false;
-    };
-  }, [lat, lon]);
+  useEffect(() => setN(0), [lat, lon]); // ganti taman = kembali ke titik 1
 
   const t = titik[n];
   return (
@@ -172,7 +162,6 @@ export function TurVirtual({ fitur, onTutup, labelTutup }) {
       <div className="tur-info">
         <p>
           {p.city && <b>{p.city}, {p.province}</b>}
-          {cuaca && <span>Cuaca kini: {cuaca}</span>}
         </p>
         {titik.length > 1 && (
           <div className="tur-tab" role="group" aria-label="Titik tur">

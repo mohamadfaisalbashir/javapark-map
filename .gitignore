@@ -11,3 +11,4 @@ __pycache__/
 /.claude
 *.png
 *.xlsx
+catatan_sesi/*
