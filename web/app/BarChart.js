@@ -29,8 +29,11 @@ const angkaUjung = {
   },
 };
 
-/** FR-04: bar chart jumlah taman per kota/kabupaten (urutan sudah menurun dari API). */
-export default function BarChart({ data, kotaId }) {
+/**
+ * FR-04: bar chart jumlah taman per kota/kabupaten (urutan sudah menurun dari API).
+ * FR-11 memakai ulang untuk jumlah taman per fasilitas: { city_id: kunci, city_name: label, count }.
+ */
+export default function BarChart({ data, kotaId, jenis = 'kota atau kabupaten' }) {
   const chartData = useMemo(
     () => ({
       labels: data.map((d) => ringkasNama(d.city_name)),
@@ -67,7 +70,7 @@ export default function BarChart({ data, kotaId }) {
   }), [data]);
 
   const ringkas = data.length
-    ? `Bar chart jumlah taman per kota atau kabupaten. Tertinggi: ${data[0].city_name}, ${data[0].count} taman.`
+    ? `Bar chart jumlah taman per ${jenis}. Tertinggi: ${data[0].city_name}, ${data[0].count} taman.`
     : 'Bar chart kosong.';
 
   return (

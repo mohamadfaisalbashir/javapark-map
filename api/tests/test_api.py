@@ -15,6 +15,8 @@ API = os.environ.get("API_URL", "http://localhost:8000")
 DB = os.environ["DATABASE_URL"]
 
 # Lima titik uji TC-10, tersebar di Jawa (Monas, Bandung, Tugu Yogyakarta, Surabaya, Semarang).
+FASILITAS = {"toilet", "mushola", "bermain", "jogging", "olahraga"}
+
 TITIK = [(-6.1754, 106.8272), (-6.9218, 107.6048), (-7.7829, 110.3671), (-7.2575, 112.7521), (-6.9932, 110.4203)]
 
 
@@ -70,9 +72,12 @@ class Kontrak(unittest.TestCase):
         self.assertEqual(len(fc["features"]), ada)
         f = fc["features"][0]
         self.assertEqual(set(f["properties"]),
-                         {"id", "name", "category", "address", "city", "province", "vr_source", "mapillary_id"})
+                         {"id", "name", "category", "address", "city", "province", "pano_titik",
+                          "facilities", "facilities_verified"})
         for x in fc["features"]:
-            self.assertIn(x["properties"]["vr_source"], (None, "google", "mapillary"))
+            self.assertIn(type(x["properties"]["pano_titik"]), (type(None), str))  # FR-06
+            self.assertLessEqual(set(x["properties"]["facilities"]), FASILITAS)  # FR-11
+            self.assertIsInstance(x["properties"]["facilities_verified"], bool)
         self.assertEqual(f["geometry"]["type"], "Point")
         lon, lat = f["geometry"]["coordinates"]  # urutan GeoJSON
         self.assertTrue(105 < lon < 115 and -9 < lat < -5)
@@ -127,7 +132,8 @@ class DataDanTerdekat(unittest.TestCase):
             self.assertEqual([h["id"] for h in hasil], [m[0] for m in manual])
             for h, m in zip(hasil, manual):
                 self.assertAlmostEqual(h["distance_m"], m[1], places=6)
-            self.assertEqual(set(hasil[0]), {"id", "name", "category", "latitude", "longitude", "distance_m"})
+            self.assertEqual(set(hasil[0]), {"id", "name", "category", "latitude", "longitude", "distance_m",
+                                         "pano_titik", "facilities", "facilities_verified"})
             self.assertEqual([h["distance_m"] for h in hasil], sorted(h["distance_m"] for h in hasil))
 
     def test_terdekat_di_laut_kosong(self):

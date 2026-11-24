@@ -77,7 +77,9 @@ def parks(province_id: int | None = None, city_id: int | None = None):
                    'geometry', ST_AsGeoJSON(p.geom::geometry, 6)::json,
                    'properties', json_build_object('id', p.id, 'name', p.name, 'category', p.category,
                                                    'address', p.address, 'city', c.name, 'province', pr.name,
-                                                   'vr_source', p.vr_source, 'mapillary_id', p.mapillary_id))
+                                                   'pano_titik', p.pano_titik,
+                                                   'facilities', p.facilities,
+                                                   'facilities_verified', p.facilities_verified))
                  ORDER BY p.name, p.id), '[]'::json))::text AS g
         FROM parks p
         JOIN cities c ON c.id = p.city_id
@@ -97,7 +99,8 @@ def nearest(lat: float = Query(..., ge=-90, le=90),
         WITH t AS (SELECT ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography AS g)
         SELECT p.id, p.name, p.category,
                p.latitude::float8 AS latitude, p.longitude::float8 AS longitude,
-               ST_Distance(p.geom, t.g) AS distance_m, p.vr_source, p.mapillary_id
+               ST_Distance(p.geom, t.g) AS distance_m, p.pano_titik,
+               p.facilities, p.facilities_verified
         FROM parks p, t
         WHERE ST_DWithin(p.geom, t.g, :radius_m)
         ORDER BY p.geom <-> t.g

@@ -1,9 +1,10 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { jarakLabel, waktuLabel } from '../lib/format';
+import { ambilCuaca } from '../lib/cuaca';
+import { FASILITAS, KATEGORI, jarakLabel, waktuLabel } from '../lib/format';
 import { MODA } from '../lib/rute';
 import PilihModa from './PilihModa';
-import { arah, arahHp, selisih, urlPanorama } from '../lib/xr';
+import { arah, arahHp, selisih, titikPanorama } from '../lib/xr';
 
 // FR-05: kalibrasi saat uji lapangan (NFR-08).
 const SETENGAH_FOV = 30; // sudut pandang kamera belakang HP tegak, ± derajat dari tengah layar
@@ -45,12 +46,11 @@ function galatAwal(izinArah) {
 }
 
 /** FR-05: label taman FR-02 di atas tampilan kamera, mengikuti arah hadap HP. */
-export function ArView({ pos, daftar, izinArah, onTutup, onVr, moda, onModa, tujuan, pandu, onNavigasi, onAkhiriNav }) {
+export function ArView({ pos, daftar, izinArah, onTutup, onVr, moda, onModa }) {
   const video = useRef(null);
   const [hadap, setHadap] = useState(null);
   const [pilih, setPilih] = useState(null); // taman yang labelnya diketuk → panel pilihan
   const [galat, setGalat] = useState(() => galatAwal(izinArah));
-  const putar = useRef(0); // sudut panah kumulatif: transisi CSS tidak berputar 358° saat melintasi ±180°
 
   useEffect(() => {
     if (galat) return undefined;
@@ -95,11 +95,8 @@ export function ArView({ pos, daftar, izinArah, onTutup, onVr, moda, onModa, tuj
     const d = selisih(hadap, arah(pos, { lat: t.latitude, lon: t.longitude }));
     return Math.abs(d) > SETENGAH_FOV ? [] : [{ t, x: 50 + (d / SETENGAH_FOV) * 30, y: 18 + i * 6 }];
   });
-  // Item /api/parks/nearest dibungkus jadi fitur GeoJSON agar urlPanorama & Viewer360 bisa dipakai ulang.
+  // Item /api/parks/nearest dibungkus jadi fitur GeoJSON agar titikPanorama & TurVirtual bisa dipakai ulang.
   const fiturDari = (t) => ({ properties: t, geometry: { coordinates: [t.longitude, t.latitude] } });
-  const pilih360 = pilih && urlPanorama(fiturDari(pilih)) ? fiturDari(pilih) : null;
-  // Idempoten (render ganda aman): selisih dari sudut yang sudah kongruen = 0.
-  if (pandu && hadap != null && pos) putar.current += selisih(putar.current, selisih(hadap, arah(pos, pandu.titikArah)));
 
   return (
     <Layar kat={`Mode AR · ${MODA[moda].label}`} judul="Arahkan kamera ke sekitar Anda" onTutup={onTutup}>
@@ -112,13 +109,13 @@ export function ArView({ pos, daftar, izinArah, onTutup, onVr, moda, onModa, tuj
               key={t.id}
               type="button"
               className="ar-label"
-              aria-label={`${t.name}, ${jarakLabel(t.rute_m)}: pilih navigasi atau panorama`}
+              aria-label={`${t.name}, ${jarakLabel(t.rute_m)}: detail dan tur virtual`}
               style={{ left: `${x}%`, top: `${y}%` }}
               onClick={() => setPilih(t)}
             >
               <b>{t.name}</b>
               <span>{jarakLabel(t.rute_m)}</span>
-              <small>{urlPanorama(fiturDari(t)) ? 'Rute · 360°' : 'Rute'}</small>
+              {titikPanorama(fiturDari(t)).length > 0 && <small>360°</small>}
             </button>
           ))}
           {/* FR-05: panel tetap (tidak ikut goyang kompas) setelah label diketuk. */}
@@ -126,32 +123,9 @@ export function ArView({ pos, daftar, izinArah, onTutup, onVr, moda, onModa, tuj
             <div className="ar-pilih" role="group" aria-label={`Pilihan untuk ${pilih.name}`}>
               <p><b>{pilih.name}</b><span>{jarakLabel(pilih.rute_m)} · ±{waktuLabel(pilih.rute_s)} ({MODA[moda].label.toLowerCase()})</span></p>
               <div className="ar-pilih-tombol">
-                <button type="button" className="btn btn-primary" onClick={() => { onNavigasi(pilih); setPilih(null); }}>Navigasi ke sini</button>
-                {pilih360 && <button type="button" className="btn btn-ghost" onClick={() => onVr(pilih360)}>Lihat 360°</button>}
+                <button type="button" className="btn btn-primary" onClick={() => onVr(fiturDari(pilih))}>Tur virtual</button>
                 <button type="button" className="btn btn-text" onClick={() => setPilih(null)}>Batal</button>
               </div>
-            </div>
-          )}
-          {/* FR-07: hanya bila rute dipilih; panah menunjuk titik rute ±40 m di depan, atas layar = arah hadap kamera. */}
-          {!pilih && pandu && tujuan && hadap != null && pos && (
-            <div className="ar-nav">
-              <svg
-                viewBox="0 0 40 40"
-                width="52"
-                height="52"
-                aria-hidden="true"
-                style={{ transform: `rotate(${putar.current}deg)` }}
-              >
-                <path d="M20 3 L35 36 L20 28 L5 36 Z" />
-              </svg>
-              <p>
-                <b>{pandu.manuver.teks}</b>
-                <span>
-                  {pandu.menuju ? `${jarakLabel(pandu.manuver.jarak_m)} lagi` : `dalam ${jarakLabel(pandu.manuver.jarak_m)}`}
-                  {' '}· sisa {jarakLabel(pandu.sisa_m)} ke {tujuan.name}
-                </span>
-              </p>
-              <button type="button" className="ar-akhiri" onClick={onAkhiriNav}>Akhiri</button>
             </div>
           )}
           <p className="ar-info">
@@ -170,28 +144,69 @@ export function ArView({ pos, daftar, izinArah, onTutup, onVr, moda, onModa, tuj
   );
 }
 
-/** FR-06: panorama 360° Google Street View / Mapillary dalam iframe. */
-export function Viewer360({ fitur, onTutup, labelTutup }) {
+/**
+ * FR-06: tur virtual 360° di DALAM taman: maks. 3 titik panorama (etl/cek_pano.py), plus cuaca kini dan fasilitas (FR-11).
+ * Taman tanpa panorama di dalamnya: satu panorama dari tepi, menghadap ke taman.
+ */
+export function TurVirtual({ fitur, onTutup, labelTutup }) {
   const p = fitur.properties;
-  const sumber = p.vr_source === 'google' ? 'Google Street View' : 'Mapillary';
   const [lon, lat] = fitur.geometry.coordinates;
+  const titik = titikPanorama(fitur);
+  const [n, setN] = useState(0);
+  const [cuaca, setCuaca] = useState(null);
+  const fas = p.facilities ?? [];
+
+  useEffect(() => {
+    let hidup = true;
+    setN(0);
+    setCuaca(null);
+    ambilCuaca(lat, lon).then((x) => hidup && setCuaca(x), () => {}); // pelengkap: gagal = tidak tampil
+    return () => {
+      hidup = false;
+    };
+  }, [lat, lon]);
+
+  const t = titik[n];
   return (
-    <Layar kat={`Panorama 360° · ${sumber}`} judul={p.name} onTutup={onTutup} labelTutup={labelTutup}>
-      {/* Isi iframe transparan sampai panorama tergambar: teks ini terlihat selama memuat (data seluler bisa lama). */}
-      <p className="vr-muat" aria-hidden="true">Memuat panorama 360°…</p>
-      <iframe
-        className="layar-iframe"
-        src={urlPanorama(fitur)}
-        title={`Panorama 360° ${p.name} (${sumber})`}
-        allow="accelerometer; gyroscope; fullscreen"
-      />
-      {/* Jalan keluar bila viewer tidak tampil di perangkat: Maps URLs (tanpa kunci) membuka Street View di app Google Maps. */}
-      <p className="vr-alt">
-        Panorama tidak muncul?{' '}
-        <a href={`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${lat},${lon}`} target="_blank" rel="noopener noreferrer">
-          Buka di Google Maps ↗
-        </a>
-      </p>
+    <Layar kat={`Tur virtual · ${KATEGORI[p.category] ?? p.category}`} judul={p.name} onTutup={onTutup} labelTutup={labelTutup}>
+      <div className="tur-info">
+        <p>
+          {p.city && <b>{p.city}, {p.province}</b>}
+          {cuaca && <span>Cuaca kini: {cuaca}</span>}
+        </p>
+        {titik.length > 1 && (
+          <div className="tur-tab" role="group" aria-label="Titik tur">
+            {titik.map((x, i) => (
+              <button key={x.url} type="button" aria-pressed={i === n} onClick={() => setN(i)}>Titik {i + 1}</button>
+            ))}
+          </div>
+        )}
+      </div>
+      {(fas.length > 0 || t?.tepi) && (
+        <div className="tur-detail">
+          {fas.length > 0 && (
+            <ul className="fas" aria-label="Fasilitas">
+              {fas.map((k) => <li key={k}>{FASILITAS[k] ?? k}</li>)}
+            </ul>
+          )}
+          {t?.tepi && <p className="tur-catatan">Belum ada panorama di dalam taman ini; tampilan dari tepi taman.</p>}
+        </div>
+      )}
+      <div className="tur-tampil">
+        {t ? (
+          <>
+            {/* Isi iframe transparan sampai panorama tergambar: teks ini terlihat selama memuat (data seluler bisa lama). */}
+            <p className="vr-muat" aria-hidden="true">Memuat panorama 360°…</p>
+            <iframe
+              key={t.url}
+              className="layar-iframe"
+              src={t.url}
+              title={`Panorama 360° ${p.name}, titik ${n + 1}`}
+              allow="accelerometer; gyroscope; fullscreen"
+            />
+          </>
+        ) : <p className="vr-muat">Panorama 360° taman ini belum tersedia.</p>}
+      </div>
     </Layar>
   );
 }

@@ -5,9 +5,9 @@ import './leaflet-global'; // window.L harus ada sebelum plugin dimuat
 import 'leaflet.markercluster';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import { useEffect } from 'react';
-import { Circle, MapContainer, Marker, Polyline, ScaleControl, TileLayer, useMap } from 'react-leaflet';
-import { KATEGORI } from '../lib/format';
-import { urlPanorama } from '../lib/xr';
+import { Circle, MapContainer, Marker, Polygon, Polyline, ScaleControl, TileLayer, useMap } from 'react-leaflet';
+import { FASILITAS, KATEGORI } from '../lib/format';
+import { titikPanorama } from '../lib/xr';
 
 // 6.1: atribusi wajib peta dasar + sumber data taman.
 const ATRIBUSI = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &middot; data taman: inventaris tim';
@@ -32,17 +32,23 @@ function isiPopup(f, onVr) {
   root.append(el('h3', 'popup-nama', name));
   if (address) root.append(el('p', 'popup-alamat', address));
   root.append(el('p', 'popup-kota', `${city}, ${province}`));
+  // FR-11: label fasilitas.
+  const fas = f.properties.facilities ?? [];
+  if (fas.length) {
+    const ul = el('ul', 'fas', '');
+    ul.setAttribute('aria-label', 'Fasilitas');
+    fas.forEach((k) => ul.append(el('li', '', FASILITAS[k] ?? k)));
+    root.append(ul);
+  }
   const a = el('a', 'popup-link', 'Buka di OpenStreetMap');
   a.href = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=19/${lat}/${lon}`;
   a.target = '_blank';
   a.rel = 'noopener noreferrer';
   root.append(a);
-  if (urlPanorama(f)) {
-    const b = el('button', 'popup-vr', 'Lihat 360°'); // FR-06
-    b.type = 'button';
-    b.addEventListener('click', () => onVr(f));
-    root.append(b);
-  }
+  const b = el('button', 'popup-vr', titikPanorama(f).length ? 'Tur virtual 360°' : 'Tur virtual'); // FR-06: semua taman
+  b.type = 'button';
+  b.addEventListener('click', () => onVr(f));
+  root.append(b);
   return root;
 }
 
@@ -101,10 +107,14 @@ function FitRute({ rute }) {
   return null;
 }
 
-export default function MapView({ fitur, bbox, pos, fokus, onVr, rute, jalur }) {
+export default function MapView({ fitur, bbox, pos, fokus, onVr, rute, jalur, iso }) {
   return (
     <MapContainer center={[-7.3, 110]} zoom={7} minZoom={5} zoomSnap={0.5} className="peta">
       <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" attribution={ATRIBUSI} maxZoom={19} />
+      {/* FR-08: wilayah terjangkau 15/10/5 menit, terluas digambar dulu. */}
+      {iso?.map(({ menit, ring }) => (
+        <Polygon key={menit} positions={ring} pathOptions={{ color: '#2e6b4a', weight: 1.5, fillColor: '#2e6b4a', fillOpacity: 0.13 }} interactive={false} />
+      ))}
       <ScaleControl imperial={false} position="bottomleft" />
       <LapisTaman fitur={fitur} onVr={onVr} />
       <FitBounds bbox={bbox} />

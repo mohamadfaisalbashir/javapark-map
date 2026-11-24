@@ -88,3 +88,13 @@ test('jarakTempuh: km → m, urut naik, buang > 10 km & tanpa rute, maks. 10 tam
     globalThis.fetch = asli;
   }
 });
+
+test('dalamPoligon: titik di dalam, di luar, dan di cekungan', async () => {
+  const { dalamPoligon } = await import('./rute.js');
+  // Bentuk L (lat, lon): cekungan di kanan atas.
+  const L = [[0, 0], [0, 2], [1, 2], [1, 1], [2, 1], [2, 0]];
+  assert.equal(dalamPoligon({ lat: 0.5, lon: 1.5 }, L), true);
+  assert.equal(dalamPoligon({ lat: 1.5, lon: 0.5 }, L), true);
+  assert.equal(dalamPoligon({ lat: 1.5, lon: 1.5 }, L), false);
+  assert.equal(dalamPoligon({ lat: 3, lon: 0.5 }, L), false);
+});

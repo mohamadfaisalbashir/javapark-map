@@ -29,12 +29,16 @@ CREATE TABLE IF NOT EXISTS parks (
     longitude  numeric(9,6) NOT NULL,
     geom       geography(Point, 4326) NOT NULL,
     fee_tag    text,
-    -- 6.5: sumber panorama 360° (FR-06); dari Google hanya labelnya, pano_id tidak disimpan.
-    vr_source    text CHECK (vr_source IN ('google', 'mapillary')),
-    mapillary_id text,
     updated_at timestamptz  NOT NULL DEFAULT now(),
-    UNIQUE (city_id, name),
-    CHECK ((vr_source IS NOT DISTINCT FROM 'mapillary') = (mapillary_id IS NOT NULL))
+    UNIQUE (city_id, name)
 );
+-- FR-06: titik tur 360° (etl/cek_pano.py): "lat,lon;lat,lon" di dalam taman, atau "lat,lon,heading" dari tepi.
+-- Koordinat panorama Street View, bukan pano_id (Google: jangan dipersist).
+ALTER TABLE parks DROP COLUMN IF EXISTS vr_source, DROP COLUMN IF EXISTS mapillary_id;
+ALTER TABLE parks ADD COLUMN IF NOT EXISTS pano_titik text;
+-- FR-11: fasilitas (kunci = FASILITAS di etl/load.py) dan apakah sudah diverifikasi tim (false = draf OSM).
+-- ALTER agar DB lama ikut termigrasi: docker compose exec -T db psql -U taman -d taman < etl/sql/schema.sql
+ALTER TABLE parks ADD COLUMN IF NOT EXISTS facilities text[] NOT NULL DEFAULT '{}';
+ALTER TABLE parks ADD COLUMN IF NOT EXISTS facilities_verified boolean NOT NULL DEFAULT false;
 CREATE INDEX IF NOT EXISTS parks_geom_gix ON parks USING gist (geom);
 CREATE INDEX IF NOT EXISTS parks_city_idx ON parks (city_id);

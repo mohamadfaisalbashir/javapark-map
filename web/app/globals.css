@@ -283,21 +283,9 @@ button.ar-label { font: inherit; cursor: pointer; }
 .kartu-waktu { font-family: var(--f-display); font-size: 26px; line-height: 1.1; color: var(--moss-d); }
 .kartu-waktu span { font-size: 17px; color: var(--ink-2); }
 .kartu-ket { margin-top: 6px !important; font-size: 13.5px; color: var(--ink-2); overflow-wrap: anywhere; }
-.kartu-ket b { color: var(--ink); }
 .kartu-rute .galat { margin-top: 8px; }
-.kartu-mulai { flex: none; width: auto; min-height: 44px; margin-left: auto; padding: 0 16px; }
 @media (max-width: 1023px) { .kartu-rute { bottom: 40px; } } /* atribusi 2 baris di layar sempit */
 
-.ar-nav {
-  position: absolute; left: 16px; right: 16px; bottom: 72px; display: flex; align-items: center; gap: 12px;
-  padding: 10px 14px; color: var(--panel); background: rgba(20, 52, 42, .88); border-left: 4px solid var(--clay);
-}
-.ar-nav svg { flex: none; fill: var(--clay); stroke: var(--panel); stroke-width: 2; transition: transform .2s linear; }
-.ar-nav p { flex: 1; margin: 0; min-width: 0; }
-.ar-akhiri {
-  flex: none; min-height: 44px; padding: 0 12px; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
-  color: var(--panel); background: none; border: 1px solid var(--panel);
-}
 .ar-moda { position: absolute; top: 12px; left: 16px; right: 16px; z-index: 2; max-width: 420px; margin: 0 auto; }
 .ar-pilih {
   position: absolute; left: 16px; right: 16px; bottom: 16px; z-index: 3; padding: 14px;
@@ -307,7 +295,68 @@ button.ar-label { font: inherit; cursor: pointer; }
 .ar-pilih b { display: block; font-size: 17px; line-height: 1.25; overflow-wrap: anywhere; }
 .ar-pilih span { font-size: 13.5px; color: var(--ink-2); }
 .ar-pilih-tombol { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-.ar-pilih-tombol .btn-primary, .ar-pilih-tombol .btn-ghost { flex: 1 1 140px; width: auto; }
-.ar-nav b { display: block; font-size: 16px; line-height: 1.25; overflow-wrap: anywhere; }
-.ar-nav span { font-size: 13px; opacity: .85; overflow-wrap: anywhere; }
-@media (prefers-reduced-motion: reduce) { .ar-nav svg { transition: none; } }
+.ar-pilih-tombol .btn-primary { flex: 1 1 140px; width: auto; }
+
+/* ---------- FR-09 cari & saring ---------- */
+input[type="search"] {
+  width: 100%; min-height: 46px; padding: 11px 14px; font: inherit; font-size: 16px; color: var(--ink);
+  background: var(--field); border: 1px solid var(--ink); border-radius: 0;
+}
+.hasil { list-style: none; margin: 0 0 10px; padding: 0; }
+.hasil button {
+  display: block; width: 100%; padding: 9px 0; text-align: left; font: inherit; cursor: pointer;
+  color: var(--ink); background: none; border: 0; border-top: 1px dashed var(--rule);
+}
+.hasil button:hover b { color: var(--clay); }
+.hasil b { display: block; line-height: 1.3; overflow-wrap: anywhere; }
+.hasil small { font-size: 10.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+.hasil .hint { margin: 6px 0 0; }
+
+/* ---------- FR-08 jangkauan ---------- */
+.jangkauan { margin-top: 16px; }
+.jangkauan .hint { margin: 12px 0 8px; }
+.iso { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; border: 1px solid var(--ink); background: var(--field); }
+.iso div { padding: 8px 10px; text-align: center; }
+.iso div + div { border-left: 1px solid var(--rule); }
+.iso dt { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.iso dd { margin: 0; font-family: var(--f-display); font-size: 28px; line-height: 1.1; color: var(--moss-d); }
+
+/* ---------- FR-06 tur virtual ---------- */
+.tur-info {
+  flex: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 14px;
+  padding: 8px 16px; font-size: 13.5px; color: var(--panel); background: var(--ink);
+}
+.tur-info p { display: flex; flex-wrap: wrap; gap: 0 14px; margin: 0; }
+.tur-info span { opacity: .85; }
+.tur-tab { display: flex; }
+.tur-tab button {
+  min-height: 40px; padding: 0 14px; font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer;
+  color: var(--panel); background: none; border: 1px solid rgba(250, 246, 234, .5);
+}
+.tur-tab button + button { border-left: 0; }
+.tur-tab button[aria-pressed="true"] { color: var(--ink); background: var(--panel); }
+.tur-tampil { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.tur-tab button:hover { border-color: var(--panel); }
+
+/* ---------- FR-11 fasilitas & FR-12 kegiatan ---------- */
+.fas { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0 0; padding: 0; list-style: none; }
+.fas li { padding: 2px 8px; font-size: 12px; font-weight: 600; line-height: 1.5; border: 1px solid currentColor; }
+.popup .fas li { color: var(--moss-d); background: var(--field); }
+.fas-pilih { margin: 0 0 14px; border: 1px solid var(--ink); background: var(--field); }
+.fas-pilih summary {
+  display: flex; align-items: center; min-height: 46px; padding: 0 14px; cursor: pointer;
+  font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2);
+}
+.fas-pilih fieldset { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px 10px; margin: 0; padding: 4px 14px 12px; border: 0; }
+.fas-pilih label { display: flex; align-items: center; gap: 8px; min-height: 36px; font-size: 14px; cursor: pointer; }
+.fas-pilih input { width: 18px; height: 18px; margin: 0; accent-color: var(--moss); }
+.sub { margin: 22px 0 6px; font-family: var(--f-display); font-weight: 400; font-size: 19px; }
+
+/* ---------- FR-06 detail tur: fasilitas ---------- */
+.tur-detail {
+  flex: none; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 20px;
+  padding: 0 16px 10px; color: var(--panel); background: var(--ink);
+}
+.tur-detail .fas { margin: 0; }
+.tur-detail .fas li { color: var(--panel); border-color: rgba(250, 246, 234, .45); }
+.tur-catatan { margin: 0; font-size: 12px; font-style: italic; opacity: .75; }

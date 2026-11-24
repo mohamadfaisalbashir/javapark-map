@@ -1,104 +1,105 @@
-kota_kabupaten,nama_taman,vr_source,mapillary_id
-Kota Tangerang,Taman Potret,google,
-Kota Tangerang,Taman Elektrik,google,
-Kota Tangerang,Taman Eco Park,google,
-Kota Tangerang,Taman Gajah Tunggal,google,
-Kota Tangerang Selatan,Taman Kota 1 BSD,google,
-Kota Tangerang Selatan,Taman Kota 2 BSD (Jaletreng Riverpark),google,
-Kota Tangerang Selatan,Taman Perdamaian BSD,google,
-Kota Serang,Alun-Alun Kota Serang (Taman Kota),google,
-Kota Cilegon,Alun-Alun Kota Cilegon,google,
-Kabupaten Tangerang,Hutan Kota Tigaraksa,google,
-Kabupaten Serang,Alun-Alun Ciruas (Taman Kota),google,
-Kabupaten Pandeglang,Alun-Alun Pandeglang (Taman Kota),google,
-Kabupaten Lebak,Alun-Alun Rangkasbitung,google,
-Kabupaten Lebak,Taman Balong Ranca Lentah,google,
-Jakarta Pusat,Taman Lapangan Banteng,google,
-Jakarta Pusat,Taman Suropati,google,
-Jakarta Pusat,Taman Menteng,google,
-Jakarta Pusat,Taman Monumen Nasional (Monas),google,
-Jakarta Pusat,Taman Situ Lembang,google,
-Jakarta Selatan,Tebet Eco Park,google,
-Jakarta Selatan,Taman Ayodia,google,
-Jakarta Selatan,Taman Langsat,google,
-Jakarta Selatan,Hutan Kota GBK,google,
-Jakarta Selatan,Taman Spathodea,google,
-Jakarta Selatan,Taman Tabebuya,google,
-Jakarta Barat,Taman Cattleya (Taman Tomang),google,
-Jakarta Barat,Hutan Kota Srengseng,google,
-Jakarta Utara,Taman Waduk Pluit,google,
-Jakarta Utara,Hutan Kota Penjaringan,,
-Jakarta Utara,Taman Jogging 1 Kelapa Gading,google,
-Jakarta Utara,Taman Jogging 2 Kelapa Gading,google,
-Jakarta Timur,Taman Waduk Ria Rio,google,
-Jakarta Timur,Taman Bambu Cipayung,google,
-Kota Bandung,Taman Alun-Alun Bandung,google,
-Kota Bandung,Hutan Kota Babakan Siliwangi,google,
-Kota Bandung,Taman Lansia,google,
-Kota Bandung,Taman Film,google,
-Kota Bogor,Taman Sempur,google,
-Kota Bogor,Taman Kencana,google,
-Kota Bogor,Taman Heulang,google,
-Kota Depok,Taman Lembah Gurame,google,
-Kota Bekasi,Hutan Kota Bina Bangsa (Taman Kota Bekasi),google,
-Kota Cimahi,Alun-Alun Kota Cimahi,google,
-Kota Tasikmalaya,Taman Kota Tasikmalaya,google,
-Kota Cirebon,Alun-Alun Kejaksan,google,
-Kota Sukabumi,Alun-Alun Kota Sukabumi,google,
-Kabupaten Cianjur,Alun-Alun Cianjur,google,
-Kabupaten Cianjur,Taman Prawatasari,google,
-Kabupaten Purwakarta,Taman Sri Baduga (Situ Buleud),google,
-Kabupaten Karawang,Alun-Alun Karawang,google,
-Kabupaten Garut,Alun-Alun Garut,google,
-Kabupaten Sumedang,Alun-Alun Sumedang,google,
-Kota Semarang,Taman Indonesia Kaya,google,
-Kota Semarang,Taman Srigunting,google,
-Kota Semarang,Hutan Kota Tinjomoyo,google,
-Kota Surakarta,Taman Balekambang,google,
-Kota Surakarta,Taman Banjarsari,google,
-Kota Magelang,Alun-Alun Kota Magelang,google,
-Kota Magelang,Taman Kyai Langgeng,google,
-Kota Salatiga,Taman Tingkir,google,
-Kota Salatiga,Alun-Alun Pancasila,google,
-Kota Pekalongan,Taman Jetayu,google,
-Kota Tegal,Alun-Alun Kota Tegal,google,
-Kota Tegal,Taman Pancasila,google,
-Kabupaten Banyumas,Taman Masjot (Balai Kemambang),google,
-Kabupaten Banyumas,Alun-Alun Purwokerto,google,
-Kabupaten Klaten,Taman Lampion Klaten,google,
-Kabupaten Kudus,Alun-Alun Simpang Tujuh,google,
-Kabupaten Cilacap,Alun-Alun Cilacap,google,
-Kabupaten Boyolali,Alun-Alun Kidul Boyolali,google,
-Kabupaten Sragen,Alun-Alun Sasana Langen Putra,google,
-Kabupaten Karanganyar,Alun-Alun Karanganyar,google,
-Kota Yogyakarta,Alun-Alun Selatan Yogyakarta,google,
-Kota Yogyakarta,Alun-Alun Utara Yogyakarta,google,
-Kota Yogyakarta,Taman Pintar Yogyakarta,google,
-Kota Yogyakarta,RTH Gajahwong Educational Park,google,
-Kabupaten Sleman,Taman Denggung,google,
-Kabupaten Bantul,Taman Paseban (Alun-Alun Bantul),google,
-Kabupaten Bantul,Taman Millenial Rajawali,google,
-Kabupaten Kulon Progo,Alun-Alun Wates,google,
-Kabupaten Gunungkidul,Alun-Alun Wonosari,google,
-Kota Surabaya,Taman Bungkul,google,
-Kota Surabaya,Taman Harmoni (Hutan Bambu Keputih),,
-Kota Surabaya,Taman Flora Bratang,,
-Kota Surabaya,Taman Surya (Balai Kota),google,
-Kota Malang,Alun-Alun Merdeka Malang,google,
-Kota Malang,Alun-Alun Tugu Malang,google,
-Kota Malang,Hutan Kota Malabar,google,
-Kota Malang,Taman Slamet,google,
-Kota Batu,Alun-Alun Kota Batu,google,
-Kota Batu,Hutan Kota Bondas,google,
-Kota Kediri,Taman Sekartaji,google,
-Kota Kediri,Hutan Kota Joyoboyo,google,
-Kota Madiun,Alun-Alun Kota Madiun,google,
-Kota Madiun,Taman Bantaran Madiun,google,
-Kota Blitar,Taman Kebon Rojo,google,
-Kota Probolinggo,Alun-Alun Kota Probolinggo,,
-Kota Pasuruan,Alun-Alun Kota Pasuruan,google,
-Kabupaten Sidoarjo,Alun-Alun Sidoarjo (Monumen Jayandaru),google,
-Kabupaten Banyuwangi,Taman Blambangan,google,
-Kabupaten Banyuwangi,Taman Sritanjung,google,
-Kabupaten Jember,Alun-Alun Jember,google,
-Kabupaten Gresik,Alun-Alun Gresik,,
+kota_kabupaten,nama_taman,titik,jenis
+Kota Tangerang,Taman Potret,"-6.195162,106.632131;-6.195322,106.631958",photosphere
+Kota Tangerang,Taman Elektrik,"-6.170122,106.639969;-6.169946,106.640305",photosphere
+Kota Tangerang,Taman Eco Park,"-6.162167,106.630565;-6.162434,106.630840",photosphere
+Kota Tangerang,Taman Gajah Tunggal,"-6.191615,106.632897",photosphere
+Kota Tangerang Selatan,Taman Kota 1 BSD,"-6.288042,106.676167;-6.287768,106.675518;-6.287462,106.675812",photosphere
+Kota Tangerang Selatan,Taman Kota 2 BSD (Jaletreng Riverpark),"-6.331746,106.683338;-6.331504,106.683480;-6.331110,106.683254",photosphere
+Kota Tangerang Selatan,Taman Perdamaian BSD,"-6.307570,106.679170",photosphere
+Kota Serang,Alun-Alun Kota Serang (Taman Kota),"-6.117492,106.152808;-6.117322,106.152594;-6.117333,106.153165",virtual_tour
+Kota Cilegon,Alun-Alun Kota Cilegon,"-6.009628,106.039637;-6.009377,106.039549;-6.009963,106.039756",virtual_tour
+Kabupaten Tangerang,Hutan Kota Tigaraksa,"-6.276536,106.483039;-6.276944,106.483163",photosphere
+Kabupaten Serang,Alun-Alun Ciruas (Taman Kota),"-6.126216,106.234546,3",jalan
+Kabupaten Pandeglang,Alun-Alun Pandeglang (Taman Kota),"-6.310032,106.106875",photosphere
+Kabupaten Lebak,Alun-Alun Rangkasbitung,"-6.359978,106.246147;-6.359973,106.246407;-6.359661,106.246384",photosphere
+Kabupaten Lebak,Taman Balong Ranca Lentah,"-6.362891,106.248555,37",jalan
+Jakarta Pusat,Taman Lapangan Banteng,"-6.170555,106.835038;-6.170689,106.834770;-6.170960,106.835250",photosphere
+Jakarta Pusat,Taman Suropati,"-6.199403,106.832623;-6.199593,106.832273;-6.199161,106.832260",photosphere
+Jakarta Pusat,Taman Menteng,"-6.196521,106.829445;-6.196738,106.829549;-6.196168,106.829261",virtual_tour
+Jakarta Pusat,Taman Monumen Nasional (Monas),"-6.175402,106.827196;-6.175324,106.829328;-6.177645,106.827035",virtual_tour
+Jakarta Pusat,Taman Situ Lembang,"-6.197886,106.834671;-6.197657,106.834274;-6.197616,106.834919",photosphere
+Jakarta Selatan,Tebet Eco Park,"-6.237137,106.853097;-6.237179,106.852567;-6.237456,106.852853",photosphere
+Jakarta Selatan,Taman Ayodia,"-6.245338,106.794600;-6.245493,106.794765;-6.245219,106.794379",photosphere
+Jakarta Selatan,Taman Langsat,"-6.243960,106.792670;-6.242916,106.792397;-6.245545,106.793166",photosphere
+Jakarta Selatan,Hutan Kota GBK,"-6.221815,106.807617;-6.221696,106.807835;-6.222043,106.807765",photosphere
+Jakarta Selatan,Taman Spathodea,"-6.322421,106.823769;-6.321991,106.823387;-6.322450,106.824034",photosphere
+Jakarta Selatan,Taman Tabebuya,"-6.327889,106.810151;-6.327825,106.809933;-6.327565,106.810139",photosphere
+Jakarta Barat,Taman Cattleya (Taman Tomang),"-6.181722,106.794418;-6.181806,106.794708;-6.181530,106.794746",photosphere
+Jakarta Barat,Hutan Kota Srengseng,"-6.208908,106.764038;-6.210694,106.764395;-6.210471,106.764170",virtual_tour
+Jakarta Utara,Taman Waduk Pluit,"-6.113980,106.795330;-6.113549,106.795500;-6.114411,106.795168",virtual_tour
+Jakarta Utara,Hutan Kota Penjaringan,"-6.134673,106.785041",virtual_tour
+Jakarta Utara,Taman Jogging 1 Kelapa Gading,"-6.160471,106.904303;-6.159895,106.903452",photosphere
+Jakarta Utara,Taman Jogging 2 Kelapa Gading,"-6.161192,106.906199;-6.161350,106.905890;-6.161214,106.905522",photosphere
+Jakarta Timur,Taman Waduk Ria Rio,"-6.170943,106.878090,21",jalan
+Jakarta Timur,Taman Bambu Cipayung,"-6.303163,106.914725;-6.303434,106.914683;-6.303217,106.914440",photosphere
+Kota Bandung,Taman Alun-Alun Bandung,"-6.921899,107.606967;-6.921697,107.607165;-6.921653,107.606887",photosphere
+Kota Bandung,Hutan Kota Babakan Siliwangi,"-6.885161,107.610208;-6.885097,107.610604;-6.885034,107.611003",virtual_tour
+Kota Bandung,Taman Lansia,"-6.902133,107.620939;-6.901814,107.620935;-6.902251,107.621358",photosphere
+Kota Bandung,Taman Film,"-6.898571,107.607599",photosphere
+Kota Bogor,Taman Sempur,"-6.591440,106.800203;-6.591683,106.800818;-6.591958,106.800888",virtual_tour
+Kota Bogor,Taman Kencana,"-6.588821,106.801900",photosphere
+Kota Bogor,Taman Heulang,"-6.569727,106.802290;-6.569470,106.802082;-6.569841,106.801904",photosphere
+Kota Depok,Taman Lembah Gurame,"-6.394624,106.808509;-6.394876,106.808770;-6.395354,106.808503",photosphere
+Kota Bekasi,Hutan Kota Bina Bangsa (Taman Kota Bekasi),"-6.234624,106.992676;-6.235009,106.992749;-6.234594,106.992027",virtual_tour
+Kota Cimahi,Alun-Alun Kota Cimahi,"-6.873165,107.542307;-6.873117,107.542076;-6.873452,107.542163",photosphere
+Kota Tasikmalaya,Taman Kota Tasikmalaya,"-7.326381,108.220885;-7.326234,108.220677;-7.326140,108.221007",photosphere
+Kota Cirebon,Alun-Alun Kejaksan,"-6.715418,108.555163,17",jalan
+Kabupaten Indramayu,Alun-Alun Indramayu,"-6.326631,108.322909",virtual_tour
+Kota Sukabumi,Alun-Alun Kota Sukabumi,"-6.921455,106.925708",photosphere
+Kabupaten Cianjur,Alun-Alun Cianjur,"-6.821217,107.140109;-6.820922,107.140513;-6.820472,107.140888",photosphere
+Kabupaten Cianjur,Taman Prawatasari,"-6.825262,107.133298",photosphere
+Kabupaten Purwakarta,Taman Sri Baduga (Situ Buleud),"-6.557413,107.445473;-6.557112,107.445443;-6.557326,107.446915",virtual_tour
+Kabupaten Karawang,Alun-Alun Karawang,"-6.310383,107.293045",photosphere
+Kabupaten Garut,Alun-Alun Garut,"-7.216236,107.901426;-7.216371,107.901229;-7.216550,107.901510",photosphere
+Kabupaten Sumedang,Alun-Alun Sumedang,"-6.859736,107.921149;-6.859525,107.920695;-6.859677,107.920341",virtual_tour
+Kota Semarang,Taman Indonesia Kaya,"-6.992412,110.420009;-6.992445,110.420240;-6.992305,110.419719",photosphere
+Kota Semarang,Taman Srigunting,"-6.968178,110.427826",photosphere
+Kota Semarang,Hutan Kota Tinjomoyo,"-7.028364,110.401892;-7.028022,110.402016;-7.028279,110.402402",photosphere
+Kota Surakarta,Taman Balekambang,"-7.552965,110.808883;-7.552731,110.809076;-7.553061,110.809377",virtual_tour
+Kota Surakarta,Taman Banjarsari,"-7.559885,110.826594",photosphere
+Kota Magelang,Alun-Alun Kota Magelang,"-7.477161,110.218195;-7.477306,110.217930;-7.476931,110.218151",photosphere
+Kota Magelang,Taman Kyai Langgeng,"-7.484392,110.210547;-7.484401,110.210279;-7.483922,110.210395",photosphere
+Kota Salatiga,Taman Tingkir,"-7.337737,110.517414",photosphere
+Kota Salatiga,Alun-Alun Pancasila,"-7.330353,110.499610;-7.330122,110.499847;-7.330597,110.499404",photosphere
+Kota Pekalongan,Taman Jetayu,"-6.878469,109.674851;-6.878706,109.674744;-6.879052,109.674492",photosphere
+Kota Tegal,Alun-Alun Kota Tegal,"-6.867300,109.137909,62",jalan
+Kota Tegal,Taman Pancasila,"-6.867384,109.141712",photosphere
+Kabupaten Banyumas,Taman Masjot (Balai Kemambang),"-7.411930,109.237521;-7.411601,109.237689;-7.412217,109.237694",virtual_tour
+Kabupaten Banyumas,Alun-Alun Purwokerto,"-7.424374,109.230190;-7.424355,109.230469;-7.424673,109.230152",photosphere
+Kabupaten Klaten,Taman Lampion Klaten,"-7.694220,110.608219",photosphere
+Kabupaten Kudus,Alun-Alun Simpang Tujuh,"-6.807778,110.841567;-6.807897,110.841872;-6.807558,110.841820",virtual_tour
+Kabupaten Cilacap,Alun-Alun Cilacap,"-7.727330,109.009510;-7.726971,109.009517;-7.727758,109.009426",virtual_tour
+Kabupaten Boyolali,Alun-Alun Kidul Boyolali,"-7.546030,110.611213;-7.546280,110.611109;-7.545745,110.610425",virtual_tour
+Kabupaten Sragen,Alun-Alun Sasana Langen Putra,"-7.427453,111.023388",photosphere
+Kabupaten Karanganyar,Alun-Alun Karanganyar,"-7.594547,110.939866;-7.594832,110.939424",photosphere
+Kota Yogyakarta,Alun-Alun Selatan Yogyakarta,"-7.811597,110.363187;-7.812104,110.363175;-7.811852,110.363289",virtual_tour
+Kota Yogyakarta,Alun-Alun Utara Yogyakarta,"-7.803822,110.364426;-7.804160,110.364382;-7.803325,110.364488",virtual_tour
+Kota Yogyakarta,Taman Pintar Yogyakarta,"-7.801074,110.367802;-7.801235,110.367329;-7.800983,110.367277",virtual_tour
+Kota Yogyakarta,RTH Gajahwong Educational Park,"-7.817727,110.393046,64",jalan
+Kabupaten Sleman,Taman Denggung,"-7.721741,110.360899;-7.721535,110.360777;-7.721829,110.360627",photosphere
+Kabupaten Bantul,Taman Paseban (Alun-Alun Bantul),"-7.887762,110.327358;-7.887760,110.327620;-7.888035,110.327487",photosphere
+Kabupaten Bantul,Taman Millenial Rajawali,"-7.888782,110.327071,87",jalan
+Kabupaten Kulon Progo,Alun-Alun Wates,"-7.857876,110.158174;-7.858320,110.158317",photosphere
+Kabupaten Gunungkidul,Alun-Alun Wonosari,"-7.965125,110.600812",photosphere
+Kota Surabaya,Taman Bungkul,"-7.291347,112.739822;-7.291373,112.740070;-7.291215,112.739614",photosphere
+Kota Surabaya,Taman Harmoni (Hutan Bambu Keputih),"-7.294654,112.803871;-7.295215,112.802979;-7.295649,112.804092",photosphere
+Kota Surabaya,Taman Flora Bratang,"-7.295604,112.761733;-7.295248,112.761704;-7.296146,112.761665",photosphere
+Kota Surabaya,Taman Surya (Balai Kota),"-7.260080,112.746862;-7.259686,112.746916;-7.260238,112.747430",photosphere
+Kota Malang,Alun-Alun Merdeka Malang,"-7.982477,112.630798;-7.982849,112.630910;-7.982779,112.630574",photosphere
+Kota Malang,Alun-Alun Tugu Malang,"-7.977143,112.634048;-7.977011,112.633839;-7.977340,112.633883",photosphere
+Kota Malang,Hutan Kota Malabar,"-7.968400,112.626881;-7.968806,112.627299;-7.968713,112.627604",photosphere
+Kota Malang,Taman Slamet,"-7.973969,112.622314;-7.974639,112.621969;-7.973708,112.622450",photosphere
+Kota Batu,Alun-Alun Kota Batu,"-7.871171,112.526931;-7.871004,112.526732;-7.870964,112.527028",photosphere
+Kota Batu,Hutan Kota Bondas,"-7.878810,112.525061;-7.878668,112.525292;-7.878998,112.524861",photosphere
+Kota Kediri,Taman Sekartaji,"-7.810758,112.004139;-7.810524,112.003814;-7.810581,112.004503",photosphere
+Kota Kediri,Hutan Kota Joyoboyo,"-7.818460,112.029892;-7.818579,112.029566;-7.818139,112.029716",photosphere
+Kota Madiun,Alun-Alun Kota Madiun,"-7.629181,111.516828;-7.629069,111.516617;-7.629461,111.516949",virtual_tour
+Kota Madiun,Taman Bantaran Madiun,"-7.626161,111.514330,265",jalan
+Kota Blitar,Taman Kebon Rojo,"-8.096216,112.174509;-8.096518,112.174332;-8.095861,112.174081",virtual_tour
+Kota Probolinggo,Alun-Alun Kota Probolinggo,"-7.744126,113.215822;-7.744119,113.216260;-7.743700,113.215864",virtual_tour
+Kota Pasuruan,Alun-Alun Kota Pasuruan,"-7.641622,112.906794;-7.642203,112.906620;-7.641911,112.906677",virtual_tour
+Kabupaten Sidoarjo,Alun-Alun Sidoarjo (Monumen Jayandaru),"-7.446193,112.717831;-7.446219,112.718130;-7.446101,112.717559",virtual_tour
+Kabupaten Banyuwangi,Taman Blambangan,"-8.212338,114.376859;-8.212285,114.377179;-8.212318,114.376478",photosphere
+Kabupaten Banyuwangi,Taman Sritanjung,"-8.209418,114.373703;-8.209872,114.373605;-8.209955,114.373313",photosphere
+Kabupaten Jember,Alun-Alun Jember,"-8.168975,113.702176;-8.168761,113.701920;-8.168557,113.702053",photosphere
+Kabupaten Gresik,Alun-Alun Gresik,"-7.157131,112.656131;-7.157354,112.655960;-7.157461,112.656180",photosphere

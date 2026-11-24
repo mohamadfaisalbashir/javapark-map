@@ -1,13 +1,13 @@
 'use client';
 import dynamic from 'next/dynamic';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { api } from '../lib/api';
-import { KATEGORI, jarakLabel, waktuLabel } from '../lib/format';
-import { MODA } from '../lib/rute';
+import { FASILITAS, KATEGORI, KEGIATAN, cocok, jarakLabel, waktuLabel } from '../lib/format';
+import { MENIT_JANGKAUAN, MODA, dalamPoligon, jangkauan } from '../lib/rute';
 import { useNearest, useRute } from '../lib/useNearest';
 import BarChart from './BarChart';
 import PilihModa from './PilihModa';
-import { ArView, Viewer360 } from './Xr';
+import { ArView, TurVirtual } from './Xr';
 
 // Leaflet butuh `window`: komponen peta tidak dirender di server.
 const MapView = dynamic(() => import('./MapView'), {
@@ -16,6 +16,7 @@ const MapView = dynamic(() => import('./MapView'), {
 });
 
 const JAWA = [104.9, -8.95, 114.9, -5.5]; // [minLon, minLat, maxLon, maxLat]
+const MAKS_HASIL = 8; // hasil pencarian yang didaftar di panel; sisanya tetap tampil di peta
 const TOP_N = 20; // FR-04: tanpa filter tampilkan 20 kota/kabupaten teratas
 
 function useCountUp(target) {
@@ -51,7 +52,12 @@ export default function Halaman() {
   const [data, setData] = useState({ parks: null, stats: [], bbox: JAWA });
   const [galat, setGalat] = useState(null);
   const [ar, setAr] = useState(null); // FR-05: null = tertutup, { izinArah } = terbuka
-  const [vr, setVr] = useState(null); // FR-06: fitur taman yang panoramanya dibuka
+  const [vr, setVr] = useState(null); // FR-06: fitur taman yang tur virtualnya dibuka
+  const [cari, setCari] = useState(''); // FR-09: cari nama
+  const [kat, setKat] = useState(''); // FR-09: saring kategori
+  const [kegiatan, setKegiatan] = useState(''); // FR-12: kunci KEGIATAN
+  const [fas, setFas] = useState([]); // FR-11: fasilitas yang wajib ada
+  const [iso, setIso] = useState(null); // FR-08: null = mati, {} = menghitung, { daftar } | { galat }
   const [moda, setModa] = useState('kaki'); // FR-07
   const [tujuan, setTujuan] = useState(null); // FR-07: taman yang rutenya ditampilkan
   const nearest = useNearest(moda);
@@ -83,11 +89,51 @@ export default function Halaman() {
     return () => ac.abort();
   }, [provinsiId, kotaId, resetN]);
 
+  // FR-09/11/12: nama, kategori, kegiatan, fasilitas disaring di browser dari data yang sudah dimuat (103 taman).
+  const tampil = useMemo(() => {
+    const q = cari.trim().toLowerCase();
+    return (data.parks?.features ?? []).filter((f) => cocok(f.properties, { kat, kegiatan, fas, q }));
+  }, [data.parks, cari, kat, kegiatan, fas]);
+  const adaSaring = !!(cari.trim() || kegiatan || fas.length);
+  // Daftar hasil: bila menyaring fasilitas/kegiatan, taman berfasilitas terlengkap di atas.
+  const urut = kegiatan || fas.length
+    ? [...tampil].sort((a, b) => (b.properties.facilities?.length ?? 0) - (a.properties.facilities?.length ?? 0))
+    : tampil;
+  const togFas = (k) => setFas((x) => (x.includes(k) ? x.filter((y) => y !== k) : [...x, k]));
+  // FR-11: statistik jumlah taman per fasilitas di wilayah terpilih (bentuk data = BarChart).
+  const statFas = useMemo(() => {
+    const fs = data.parks?.features ?? [];
+    return Object.entries(FASILITAS)
+      .map(([k, label]) => ({ city_id: k, city_name: label, count: fs.filter((f) => f.properties.facilities?.includes(k)).length }))
+      .sort((a, b) => b.count - a.count);
+  }, [data.parks]);
+
+  // FR-08: jangkauan dihitung dari posisi saat tombol ditekan / moda diganti.
+  // ponytail: tidak mengikuti pergerakan pengguna; matikan-nyalakan untuk menghitung ulang.
+  const isoAktif = iso != null;
+  const posKini = useRef(null);
+  useEffect(() => {
+    posKini.current = nearest.pos;
+  });
+  useEffect(() => {
+    if (!isoAktif || !posKini.current) return undefined;
+    const ac = new AbortController();
+    setIso({});
+    jangkauan(posKini.current, moda, ac.signal)
+      .then((daftar) => setIso({ daftar }))
+      .catch((e) => e.name !== 'AbortError' && setIso({ galat: true }));
+    return () => ac.abort();
+  }, [isoAktif, moda]);
+  const isoJumlah = iso?.daftar && Object.fromEntries(iso.daftar.map(({ menit, ring }) => [
+    menit,
+    tampil.filter((f) => dalamPoligon({ lat: f.geometry.coordinates[1], lon: f.geometry.coordinates[0] }, ring)).length,
+  ]));
+
   const provinsi = regions.find((p) => String(p.id) === provinsiId);
   const daftarKota = provinsi?.cities ?? [];
   const kota = daftarKota.find((c) => String(c.id) === kotaId);
   const cakupan = kota ? kota.name : provinsi ? provinsi.name : 'seluruh Pulau Jawa';
-  const jumlah = data.parks ? data.parks.features.length : null;
+  const jumlah = data.parks ? tampil.length : null;
   const angka = useCountUp(jumlah);
 
   const pilihProvinsi = (e) => {
@@ -97,6 +143,10 @@ export default function Halaman() {
   const reset = () => {
     setProvinsiId('');
     setKotaId('');
+    setCari('');
+    setKat('');
+    setKegiatan('');
+    setFas([]);
     setResetN((n) => n + 1);
   };
   const bukaAr = async () => {
@@ -119,6 +169,7 @@ export default function Halaman() {
   const berhentiLacak = () => {
     nearest.berhenti();
     setTujuan(null);
+    setIso(null);
   };
 
   return (
@@ -167,6 +218,53 @@ export default function Halaman() {
               {daftarKota.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
           </label>
+          <label className="field">
+            <span>Kategori</span>
+            <select value={kat} onChange={(e) => setKat(e.target.value)}>
+              <option value="">Semua kategori</option>
+              {Object.entries(KATEGORI).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
+            </select>
+          </label>
+          <label className="field">
+            <span>Mau ke taman untuk…</span>
+            <select value={kegiatan} onChange={(e) => setKegiatan(e.target.value)}>
+              <option value="">Kegiatan apa saja</option>
+              {Object.entries(KEGIATAN).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
+            </select>
+          </label>
+          <details className="fas-pilih" open={fas.length > 0 || undefined}>
+            <summary>Fasilitas wajib ada{fas.length ? ` (${fas.length} dipilih)` : ''}</summary>
+            <fieldset>
+              <legend className="sr-only">Fasilitas wajib ada</legend>
+              {Object.entries(FASILITAS).map(([k, v]) => (
+                <label key={k}>
+                  <input type="checkbox" checked={fas.includes(k)} onChange={() => togFas(k)} />
+                  <span>{v}</span>
+                </label>
+              ))}
+            </fieldset>
+          </details>
+          <label className="field">
+            <span>Cari nama taman</span>
+            <input type="search" value={cari} onChange={(e) => setCari(e.target.value)} placeholder="mis. alun-alun, bungkul" />
+          </label>
+          {adaSaring && data.parks && (
+            <ul className="hasil" aria-label="Hasil pencarian">
+              {urut.slice(0, MAKS_HASIL).map((f) => (
+                <li key={f.properties.id}>
+                  <button type="button" onClick={() => setVr(f)}>
+                    <b>{f.properties.name}</b>
+                    <small>
+                      {f.properties.city}
+                      {f.properties.facilities?.length ? ` · ${f.properties.facilities.length} fasilitas` : ''} · tur virtual
+                    </small>
+                  </button>
+                </li>
+              ))}
+              {tampil.length === 0 && <li className="hint">Tidak ada taman yang cocok di {cakupan}.</li>}
+              {tampil.length > MAKS_HASIL && <li className="hint">+{tampil.length - MAKS_HASIL} lainnya di peta.</li>}
+            </ul>
+          )}
           <button type="button" className="btn btn-text" onClick={reset}>Reset filter</button>
           {galat && <p className="galat" role="alert">{galat}</p>}
         </section>
@@ -225,6 +323,27 @@ export default function Halaman() {
           {nearest.daftar?.length > 0 && (
             <button type="button" className="btn btn-primary btn-ar" onClick={bukaAr}>Mode AR</button>
           )}
+          {nearest.pos && (
+            <div className="jangkauan">
+              <button type="button" className="btn btn-ghost" aria-pressed={isoAktif} onClick={() => setIso(isoAktif ? null : {})}>
+                {isoAktif ? 'Sembunyikan jangkauan' : 'Jangkauan 5/10/15 menit'}
+              </button>
+              <div aria-live="polite">
+                {isoAktif && !iso.daftar && !iso.galat && <p className="hint">Menghitung wilayah terjangkau…</p>}
+                {iso?.galat && <p className="galat">Jangkauan tidak dapat dihitung (layanan rute tidak tersedia).</p>}
+                {isoJumlah && (
+                  <>
+                    <p className="hint">Taman yang terjangkau dengan {MODA[moda].label.toLowerCase()} dari posisi Anda (area hijau di peta):</p>
+                    <dl className="iso">
+                      {MENIT_JANGKAUAN.map((m) => (
+                        <div key={m}><dt>≤ {m} mnt</dt><dd>{isoJumlah[m] ?? 0}</dd></div>
+                      ))}
+                    </dl>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
         </section>
 
         <section className="sec rise" style={{ '--i': 3 }} aria-labelledby="h-statistik">
@@ -234,6 +353,15 @@ export default function Halaman() {
             {!provinsiId && !kotaId ? `, ${TOP_N} teratas se-Jawa.` : ` di ${cakupan}.`}
           </p>
           {data.stats.length > 0 ? <BarChart data={data.stats} kotaId={kotaId} /> : <p className="hint">Memuat statistik…</p>}
+          {data.parks && (
+            <>
+              <h3 className="sub">Fasilitas</h3>
+              <p className="hint">
+                Jumlah taman yang punya tiap fasilitas di {cakupan}.
+              </p>
+              <BarChart data={statFas} jenis="fasilitas" />
+            </>
+          )}
         </section>
 
         <footer className="foot rise" style={{ '--i': 4 }}>
@@ -248,12 +376,13 @@ export default function Halaman() {
       <main className="stage">
         <div className="frame">
           <MapView
-            fitur={data.parks?.features ?? []}
+            fitur={tampil}
             bbox={data.bbox}
             pos={nearest.pos}
             fokus={nearest.fokus}
             onVr={setVr}
             rute={rute.rute?.titik}
+            iso={iso?.daftar}
             jalur={rute.pandu?.menuju && nearest.pos ? [[nearest.pos.lat, nearest.pos.lon], [rute.pandu.titikArah.lat, rute.pandu.titikArah.lon]] : null}
           />
           {data.parks == null && !galat && <div className="map-pesan">Memuat data taman…</div>}
@@ -273,13 +402,7 @@ export default function Halaman() {
                     {waktuLabel(rute.pandu.sisa_s)} <span>({jarakLabel(rute.pandu.sisa_m)})</span>
                   </p>
                 )}
-                <button type="button" className="btn btn-primary kartu-mulai" onClick={bukaAr}>Mulai (AR)</button>
               </div>
-              {rute.pandu && (
-                <p className="kartu-ket">
-                  Berikutnya: <b>{rute.pandu.manuver.teks}</b> · {jarakLabel(rute.pandu.manuver.jarak_m)}
-                </p>
-              )}
             </section>
           )}
         </div>
@@ -295,13 +418,15 @@ export default function Halaman() {
           onVr={setVr}
           moda={moda}
           onModa={setModa}
-          tujuan={tujuan}
-          pandu={rute.pandu}
-          onNavigasi={setTujuan}
-          onAkhiriNav={() => setTujuan(null)}
         />
       )}
-      {vr && <Viewer360 fitur={vr} onTutup={() => setVr(null)} labelTutup={ar ? 'Kembali ke Mode AR' : 'Tutup'} />}
+      {vr && (
+        <TurVirtual
+          fitur={vr}
+          onTutup={() => setVr(null)}
+          labelTutup={ar ? 'Kembali ke Mode AR' : 'Tutup'}
+        />
+      )}
     </div>
   );
 }

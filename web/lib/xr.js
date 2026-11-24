@@ -1,7 +1,7 @@
 // FR-05 (AR) dan FR-06 (VR 360°): fungsi murni, diuji di xr.test.mjs (`npm test`).
 
 // >>> API KEY: isi NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY di .env (lihat .env.example), lalu build ulang web.
-// Kosong = tombol 360° untuk taman ber-vr_source "google" tidak tampil (FR-06).
+// Kosong = tur 360° tidak tampil (FR-06).
 const KUNCI_EMBED = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY;
 
 const rad = Math.PI / 180;
@@ -30,14 +30,20 @@ export function arahHp(e) {
   return (Math.atan2(vx, vy) / rad + 360) % 360;
 }
 
-/** URL iframe panorama 360° sebuah fitur GeoJSON taman, atau null bila tidak tersedia. */
-export function urlPanorama({ properties: p, geometry: g }) {
-  const [lon, lat] = g.coordinates;
-  if (p.vr_source === 'google' && KUNCI_EMBED) {
-    return `https://www.google.com/maps/embed/v1/streetview?key=${encodeURIComponent(KUNCI_EMBED)}&location=${lat},${lon}`;
-  }
-  if (p.vr_source === 'mapillary' && p.mapillary_id) {
-    return `https://www.mapillary.com/embed?image_key=${encodeURIComponent(p.mapillary_id)}&style=photo`;
-  }
-  return null;
+/**
+ * FR-06: titik tur 360° sebuah fitur GeoJSON taman (kolom pano_titik, etl/cek_pano.py) ->
+ * [{ url, tepi }] (kosong bila tidak ada). "m:<id>" = gambar 360° Mapillary (embed tanpa kunci);
+ * selain itu Street View Google (butuh kunci embed). tepi = panorama di luar taman, menghadap ke taman.
+ */
+export function titikPanorama({ properties: p }) {
+  if (!p.pano_titik) return [];
+  return p.pano_titik.split(';').filter((t) => t.startsWith('m:') || KUNCI_EMBED).map((t) => {
+    if (t.startsWith('m:')) return { url: `https://www.mapillary.com/embed?image_key=${t.slice(2)}&style=photo`, tepi: false };
+    const [lat, lon, heading] = t.split(',');
+    return {
+      url: `https://www.google.com/maps/embed/v1/streetview?key=${encodeURIComponent(KUNCI_EMBED)}&location=${lat},${lon}`
+        + (heading ? `&heading=${heading}` : ''),
+      tepi: heading != null,
+    };
+  });
 }

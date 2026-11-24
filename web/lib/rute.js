@@ -2,7 +2,7 @@
 // Fungsi murni diuji di rute.test.mjs (`npm test`).
 // ponytail: server demo FOSSGIS (batas pemakaian wajar, tanpa SLA); untuk produksi self-host Valhalla dengan PBF Jawa.
 const VALHALLA = 'https://valhalla1.openstreetmap.de';
-const LIHAT_DEPAN_M = 40; // panah AR menunjuk titik rute sejauh ini di depan pengguna
+const LIHAT_DEPAN_M = 40; // ponytail: sisa panah AR yang dihapus; titikArah saat di jalur kini tak dipakai UI
 const MENUJU_M = 20; // lebih jauh dari garis rute = pandu dulu ke jalur (mis. masih di dalam bangunan); kalibrasi lapangan
 const MAKS_M = 10000; // FR-02/FR-07: hanya taman dengan jarak tempuh ≤ 10 km
 const MAKS_TAMAN = 10;
@@ -118,7 +118,7 @@ export function bentukRute(titik, maneuvers, total_s) {
 
 /**
  * Posisi pengguna terhadap rute: jarak menyimpang dari garis, sisa jarak/waktu,
- * manuver berikutnya beserta jaraknya, dan titik yang ditunjuk panah AR.
+ * manuver berikutnya beserta jaraknya, dan titikArah (ujung garis putus-putus peta saat menuju jalur).
  */
 export function pandu({ titik, kum, manuver, total_s }, pos) {
   // Proyeksi ekuirektangular lokal di sekitar pengguna (cukup akurat untuk radius ≤ 10 km).
@@ -163,4 +163,34 @@ export function pandu({ titik, kum, manuver, total_s }, pos) {
     manuver: { teks: berikut.teks, jarak_m: Math.max(0, kum[berikut.i] - sudah) },
     titikArah: { lat, lon },
   };
+}
+
+// ---------- FR-08: jangkauan (isochrone) ----------
+export const MENIT_JANGKAUAN = [5, 10, 15];
+
+/** Titik {lat, lon} di dalam cincin [[lat, lon], ...]? (ray casting) */
+export function dalamPoligon({ lat, lon }, ring) {
+  let dalam = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [yi, xi] = ring[i];
+    const [yj, xj] = ring[j];
+    if ((yi > lat) !== (yj > lat) && lon < ((xj - xi) * (lat - yi)) / (yj - yi) + xi) dalam = !dalam;
+  }
+  return dalam;
+}
+
+/**
+ * Wilayah yang terjangkau dari `asal` dalam 5/10/15 menit dengan `moda`: [{ menit, ring }], terluas dulu.
+ * ponytail: hanya cincin luar poligon (lubang diabaikan); pakai turf bila perlu presisi.
+ */
+export async function jangkauan(asal, moda, signal) {
+  const d = await valhalla('isochrone', {
+    locations: [{ lat: asal.lat, lon: asal.lon }],
+    costing: MODA[moda].costing,
+    contours: MENIT_JANGKAUAN.map((time) => ({ time })),
+    polygons: true,
+  }, signal);
+  return d.features
+    .map((f) => ({ menit: f.properties.contour, ring: f.geometry.coordinates[0].map(([x, y]) => [y, x]) }))
+    .sort((a, b) => b.menit - a.menit);
 }

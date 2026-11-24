@@ -1,7 +1,7 @@
 // Jalankan: npm test (dari folder web/)
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { arah, arahHp, selisih, urlPanorama } from './xr.js';
+import { arah, arahHp, selisih, titikPanorama } from './xr.js';
 
 const dekat = (a, b) => assert.ok(Math.abs(selisih(a, b)) < 0.01, `${a} != ${b}`);
 
@@ -29,10 +29,13 @@ test('arah hadap HP', () => {
   dekat(arahHp({ absolute: true, alpha: 270, beta: 80, gamma: 0 }), 90);
 });
 
-test('url panorama', () => {
-  const f = (p) => ({ properties: p, geometry: { coordinates: [110.1, -7.2] } });
-  assert.equal(urlPanorama(f({ vr_source: 'mapillary', mapillary_id: '123' })),
-    'https://www.mapillary.com/embed?image_key=123&style=photo');
-  assert.equal(urlPanorama(f({ vr_source: null })), null);
-  assert.equal(urlPanorama(f({ vr_source: 'google' })), null); // tanpa NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY
+test('titik panorama tanpa kunci embed = kosong', () => {
+  const f = (pano_titik) => ({ properties: { pano_titik } });
+  assert.deepEqual(titikPanorama(f(null)), []);
+  assert.deepEqual(titikPanorama(f('-7.1,110.1;-7.2,110.2')), []); // tanpa NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY
+});
+
+test('titik Mapillary tetap tampil tanpa kunci Google', () => {
+  assert.deepEqual(titikPanorama({ properties: { pano_titik: '-7.1,110.1;m:123' } }),
+    [{ url: 'https://www.mapillary.com/embed?image_key=123&style=photo', tepi: false }]);
 });
