@@ -1047,6 +1047,2606 @@
         "status": "Aktif"
       },
       "geometry": { "type": "Point", "coordinates": [112.656046, -7.157133] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Banten",
+        "kota_kabupaten": "Kabupaten Serang",
+        "nama_taman": "Alun-alun Kramatwatu",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.119890, -6.064710] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Banten",
+        "kota_kabupaten": "Kota Tangerang",
+        "nama_taman": "Taman Bambu",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.632252, -6.194137] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Banten",
+        "kota_kabupaten": "Kota Tangerang Selatan",
+        "nama_taman": "Alun-Alun Pondok Aren",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.692802, -6.274500] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Banten",
+        "kota_kabupaten": "Kota Tangerang Selatan",
+        "nama_taman": "Hutan Kota Jombang",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.696672, -6.290310] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Banten",
+        "kota_kabupaten": "Kota Tangerang Selatan",
+        "nama_taman": "Menteng Park",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.725409, -6.273288] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DI Yogyakarta",
+        "kota_kabupaten": "Kabupaten Sleman",
+        "nama_taman": "Alun-Alun Sleman",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.360429, -7.720931] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Barat",
+        "nama_taman": "Hutan Kota Rawa Buaya",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.730216, -6.167166] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Barat",
+        "nama_taman": "RPTRA Alur Dahlia",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.718235, -6.120363] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Barat",
+        "nama_taman": "RPTRA Jeruk Manis",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.772421, -6.191431] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Barat",
+        "nama_taman": "RPTRA Joglo",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.734965, -6.222508] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Barat",
+        "nama_taman": "RPTRA Meruya Utara",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.736936, -6.201033] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Barat",
+        "nama_taman": "RPTRA Rambutan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.781811, -6.175275] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Barat",
+        "nama_taman": "Taman Fatahillah",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.813234, -6.134720] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Pusat",
+        "nama_taman": "Hutan Kota Gelora Bung Karno",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.806846, -6.222300] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Pusat",
+        "nama_taman": "Link In Park",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.874856, -6.189729] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Pusat",
+        "nama_taman": "RPTRA Harapan Mulia Agung Sedayu Group",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.854931, -6.169987] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Pusat",
+        "nama_taman": "RPTRA Kebon Sirih",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.832207, -6.183142] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Pusat",
+        "nama_taman": "Taman Cattleya",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.801446, -6.206480] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Pusat",
+        "nama_taman": "Taman Diponegoro",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.846505, -6.198865] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Pusat",
+        "nama_taman": "Taman Dukuh Atas",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.822831, -6.201028] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Pusat",
+        "nama_taman": "Taman Kodok",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.829863, -6.197466] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Pusat",
+        "nama_taman": "Taman Kota Gelora Bung Karno",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.803702, -6.221454] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Pusat",
+        "nama_taman": "Taman Lawang",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.827028, -6.201000] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Pusat",
+        "nama_taman": "Taman Pandang Istana",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.823403, -6.172231] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Pusat",
+        "nama_taman": "Taman Viaduct Latuharhary",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.827645, -6.202363] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Hutan Kota Pondok Labu",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.799561, -6.310237] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "RPTRA Akasia",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.850997, -6.233078] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "RPTRA Bahari",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.794335, -6.279362] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "RPTRA Baung",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.836128, -6.304768] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "RPTRA Mawar",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.770242, -6.297149] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "RPTRA Saharjo Mentas",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.845176, -6.219197] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "RPTRA Taman Gajah",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.799571, -6.277105] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "RPTRA Teratai",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.853187, -6.235279] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman Buni",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.808524, -6.331157] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman Cemara",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.813853, -6.232866] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman dan Hutan Kota Sangga Buana",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.777478, -6.313534] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman Eks Pom Bensin (Wijaya 1)",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.811665, -6.243204] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman Gandaria Tengah",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.790034, -6.244788] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman Kota Peruri",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.799099, -6.240538] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman Lauser Utara",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.792402, -6.235957] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman Mataram",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.801189, -6.232819] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman Panglima Polim 13",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.798427, -6.252184] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman Puring",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.788288, -6.241286] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman Sriwijaya",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.802109, -6.233721] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Taman Tangkuban Perahu",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.835300, -6.207575] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Selatan",
+        "nama_taman": "Urban Forest Cipete",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.797515, -6.280858] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Timur",
+        "nama_taman": "Hutan Kota Munjul",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.899917, -6.352191] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Timur",
+        "nama_taman": "RPTRA",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.911741, -6.344752] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Timur",
+        "nama_taman": "RPTRA Arabika",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.945552, -6.229496] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Timur",
+        "nama_taman": "RPTRA Ciracas",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.875940, -6.323958] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Timur",
+        "nama_taman": "RPTRA Malaka Sari",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.925853, -6.221043] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Timur",
+        "nama_taman": "RPTRA Mutiara Rawa Binong",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.904519, -6.298145] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Timur",
+        "nama_taman": "RPTRA Tunas Bangsa Bisa",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.911642, -6.344597] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Timur",
+        "nama_taman": "Taman Apung",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.889977, -6.351342] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Timur",
+        "nama_taman": "Taman Cijantung",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.860941, -6.312803] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Timur",
+        "nama_taman": "Taman Cornelius Simanjuntak",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.873569, -6.237686] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Timur",
+        "nama_taman": "Taman Flamboyan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.898971, -6.339228] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Timur",
+        "nama_taman": "Taman Kota Pondok Ranggon",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.907474, -6.353426] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Timur",
+        "nama_taman": "Taman Layang-Layang",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.882350, -6.324598] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Timur",
+        "nama_taman": "Taman Mahoni",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.874588, -6.339867] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Utara",
+        "nama_taman": "Hutan Kota Kemayoran",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.847703, -6.136209] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Utara",
+        "nama_taman": "RPTRA Berahmat",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.839722, -6.132638] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Utara",
+        "nama_taman": "RPTRA Nirmala",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.867381, -6.154501] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Utara",
+        "nama_taman": "RPTRA Pademangan Timur",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.845810, -6.128787] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Utara",
+        "nama_taman": "RPTRA Rawa Badak",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.896639, -6.117266] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Utara",
+        "nama_taman": "RPTRA RW 010",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.866689, -6.128827] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Utara",
+        "nama_taman": "RPTRA RW 09",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.869778, -6.129490] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Utara",
+        "nama_taman": "RPTRA Sungai Bambu",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.890916, -6.130314] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Utara",
+        "nama_taman": "RPTRA Sutra 3",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.859536, -6.137482] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Utara",
+        "nama_taman": "RPTRA Taman Pinus",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.917616, -6.140201] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Utara",
+        "nama_taman": "RTH/RPTRA Kalijodo",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.788619, -6.140288] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Utara",
+        "nama_taman": "Taman Sarang Bangau",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.953710, -6.126732] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "DKI Jakarta",
+        "kota_kabupaten": "Jakarta Utara",
+        "nama_taman": "Taman Sungai Kendal",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.966192, -6.137079] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Bandung Barat",
+        "nama_taman": "Alun-alun Cililin",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.457357, -6.951454] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Bandung Barat",
+        "nama_taman": "Alun-alun Lembang",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.618823, -6.812289] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Bekasi",
+        "nama_taman": "Taman Sehati",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.180218, -6.311529] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Bogor",
+        "nama_taman": "Alun-Alun GOR Jasinga",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.464642, -6.481304] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Bogor",
+        "nama_taman": "Alun-Alun Jonggol",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.065906, -6.468312] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Bogor",
+        "nama_taman": "Alun-Alun Kabupaten Bogor",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.824733, -6.480435] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Ciamis",
+        "nama_taman": "Alun-Alun Ciamis",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [108.351983, -7.326585] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Ciamis",
+        "nama_taman": "Taman Lokasana",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [108.345786, -7.328314] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Cirebon",
+        "nama_taman": "Alun-Alun Arjawinangun",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [108.407468, -6.647401] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Cirebon",
+        "nama_taman": "Taman Hutan Kota Sumber",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [108.481127, -6.757151] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Garut",
+        "nama_taman": "Alun-Alun Bayongbong",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.821108, -7.270388] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Majalengka",
+        "nama_taman": "Alun-Alun Majalengka",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [108.227725, -6.835271] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Majalengka",
+        "nama_taman": "Alun-alun Talaga",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [108.310600, -6.983133] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Pangandaran",
+        "nama_taman": "Alun-alun Pangandaran",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [108.650198, -7.684397] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Pangandaran",
+        "nama_taman": "Alun-Alun Pangbagea",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [108.510555, -7.652750] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Pangandaran",
+        "nama_taman": "Alun-Alun Parigi",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [108.494590, -7.701773] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Purwakarta",
+        "nama_taman": "Alun Alun",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.556337, -6.681540] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Subang",
+        "nama_taman": "Alun Alun Jalancagak",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.692310, -6.675936] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Subang",
+        "nama_taman": "Alun-alun Kecamatan Sagalaherang",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.653010, -6.673815] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Subang",
+        "nama_taman": "Alun-Alun Subang",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.761585, -6.571134] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Sukabumi",
+        "nama_taman": "Alun-alun Palabuhanratu",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.550961, -6.988449] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kabupaten Sukabumi",
+        "nama_taman": "Taman Kota Cangehgar Palabuhanratu",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.558845, -6.992480] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Alun-Alun Cicendo",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.588920, -6.910796] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Alun-alun Ujungberung",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.701566, -6.913751] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Lapangan Supratman",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.629887, -6.907683] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Peta Park",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.588319, -6.931734] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Anak Tongkeng",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.623385, -6.911742] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Balai Kota Bandung",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.609732, -6.913133] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Cibeunying",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.624222, -6.904724] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Cikapayang Dago",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.612424, -6.898510] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Fitness",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.615753, -6.891982] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Foto",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.627188, -6.913477] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Ganesha",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.610451, -6.894384] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Gasibu",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.618658, -6.900312] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Inklusi",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.615602, -6.908803] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Kandaga Puspa",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.622401, -6.903262] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Kota Tegal Lega",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.604786, -6.935643] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Maluku",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.615163, -6.909378] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Monumen Perjuangan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.618524, -6.893304] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Musik Centrum",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.615999, -6.911944] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Panatayuda",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.615743, -6.897972] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Pasopati",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.609220, -6.898122] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Radio",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.611273, -6.902511] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Sejarah",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.610356, -6.910367] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Superhero",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.630634, -6.910745] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Tegalega",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.604833, -6.934831] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Teras Cikapundung",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.606896, -6.884278] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bandung",
+        "nama_taman": "Taman Vanda",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.610069, -6.914062] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Banjar",
+        "nama_taman": "Alun Alun Langensari",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [108.639516, -7.358589] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Banjar",
+        "nama_taman": "Alun-Alun Banjar",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [108.541642, -7.369550] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bekasi",
+        "nama_taman": "Alun Alun M. Hasibuan Kota Bekasi",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.999896, -6.241869] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bekasi",
+        "nama_taman": "Taman Kota Bekasi",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [107.000250, -6.240232] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bogor",
+        "nama_taman": "Alun-Alun Empang",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.794726, -6.608000] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Bogor",
+        "nama_taman": "Alun-alun Kota Bogor",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.791410, -6.595101] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Cirebon",
+        "nama_taman": "Alun-Alun Sangkala Buana",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [108.570793, -6.725205] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Cirebon",
+        "nama_taman": "Taman Kebumen",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [108.571054, -6.719888] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Depok",
+        "nama_taman": "Alun-Alun Kota Depok",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.827512, -6.438950] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Depok",
+        "nama_taman": "Alun-alun Sukamaju",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.852618, -6.419395] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Barat",
+        "kota_kabupaten": "Kota Depok",
+        "nama_taman": "Taman Merdeka 3",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [106.847644, -6.396489] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Banjarnegara",
+        "nama_taman": "Alun-Alun Banjarnegara",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.695150, -7.396171] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Banjarnegara",
+        "nama_taman": "Taman Kota Banjarnegara",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.699185, -7.395805] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Banyumas",
+        "nama_taman": "Alun-Alun Banyumas",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.293825, -7.516647] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Banyumas",
+        "nama_taman": "Alun-Alun Jatilawang",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.121568, -7.534100] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Banyumas",
+        "nama_taman": "Taman Kota Andhang Pangrenan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.243811, -7.440749] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Banyumas",
+        "nama_taman": "Taman Kota Purwokerto",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.269360, -7.439784] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Batang",
+        "nama_taman": "Alun Alun Kota Batang",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.730238, -6.907812] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Batang",
+        "nama_taman": "Hutan Kota Rajawali Batang",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.720345, -6.906631] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Boyolali",
+        "nama_taman": "Taman Pandanalas",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.603494, -7.536766] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Brebes",
+        "nama_taman": "Alun-Alun Brebes",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.036882, -6.870635] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Cilacap",
+        "nama_taman": "Alun-Alun Kroya",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.244703, -7.631938] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Cilacap",
+        "nama_taman": "Alun-Alun Sidareja",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [108.791519, -7.483570] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Demak",
+        "nama_taman": "Alun - Alun Demak",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.638526, -6.894814] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Grobogan",
+        "nama_taman": "Alun-Alun Purwodadi",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.917350, -7.081034] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Jepara",
+        "nama_taman": "Alun-alun Jepara",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.667336, -6.589811] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Jepara",
+        "nama_taman": "Alun-Alun Jepara 2",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.659511, -6.588901] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Jepara",
+        "nama_taman": "Alun-Alun Karimunjawa",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.432922, -5.880105] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Kebumen",
+        "nama_taman": "Alun Alun Pancasila Kota Kebumen",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.651804, -7.668670] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Kebumen",
+        "nama_taman": "Alun-alun Karanganyar",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.573678, -7.630651] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Kebumen",
+        "nama_taman": "Alun-Alun Manunggal Gombong",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.519223, -7.610588] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Kebumen",
+        "nama_taman": "Taman Kota Kebumen",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.665555, -7.676182] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Kendal",
+        "nama_taman": "Alun-Alun Kaliwungu",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.253134, -6.961440] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Kendal",
+        "nama_taman": "Alun-Alun Kendal",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.204040, -6.921327] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Kendal",
+        "nama_taman": "Taman Kota Weleri",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.062169, -6.970585] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Klaten",
+        "nama_taman": "Alun Alun Kurung",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.685883, -7.678199] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Klaten",
+        "nama_taman": "Alun-alun Klaten",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.601808, -7.704963] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Kudus",
+        "nama_taman": "Taman Lalu Lintas Hutan Kota Rendeng",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.856020, -6.801335] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Pati",
+        "nama_taman": "Alun-Alun Pati",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.040016, -6.753454] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Pati",
+        "nama_taman": "Hutan Taman Kota Pati",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.020657, -6.756804] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Pati",
+        "nama_taman": "Taman Alun-alun Kayen",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.985165, -6.893696] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Pati",
+        "nama_taman": "Taman Kota Winong Pati",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.029472, -6.740274] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Pemalang",
+        "nama_taman": "Alun-Alun Pemalang",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.380627, -6.890290] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Purbalingga",
+        "nama_taman": "Alun-alun Purbalingga",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.363263, -7.389583] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Purbalingga",
+        "nama_taman": "Taman Kota Usman Janatin",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.356614, -7.389580] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Purworejo",
+        "nama_taman": "Alun - Alun Kutoarjo",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.914633, -7.719813] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Purworejo",
+        "nama_taman": "Alun-alun Purworejo",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.009006, -7.713132] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Purworejo",
+        "nama_taman": "Taman Kota Gegermenjangan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.025706, -7.701543] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Rembang",
+        "nama_taman": "Alun-Alun Rembang",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.348661, -6.705726] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Semarang",
+        "nama_taman": "Alun-Alun Ambarawa",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.419352, -7.257688] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Semarang",
+        "nama_taman": "Alun-alun Bung Karno Ungaran",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.419597, -7.133967] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Semarang",
+        "nama_taman": "Alun-alun mini",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.409048, -7.135034] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Semarang",
+        "nama_taman": "Alun-alun Tengaran",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.521184, -7.419904] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Semarang",
+        "nama_taman": "Ungaran Public Square",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.403268, -7.127444] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Sragen",
+        "nama_taman": "Taman Kridoanggo Sragen",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.028189, -7.425896] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Sragen",
+        "nama_taman": "Taman Sukowati Sragen",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.006266, -7.422353] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Sukoharjo",
+        "nama_taman": "Alun-Alun Satya Negara",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.840574, -7.682930] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Sukoharjo",
+        "nama_taman": "Taman Paku Joyo",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.849626, -7.688388] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Temanggung",
+        "nama_taman": "Alun-Alun Kota Temanggung",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.175523, -7.316206] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Wonogiri",
+        "nama_taman": "Alun-Alun Kabupaten Wonogiri",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.925891, -7.814428] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Wonosobo",
+        "nama_taman": "Alun-Alun Wonosobo",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.903042, -7.358705] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Wonosobo",
+        "nama_taman": "Taman Ainun Habibi",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.901316, -7.359043] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kabupaten Wonosobo",
+        "nama_taman": "Taman Kartini",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.902013, -7.359383] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Pekalongan",
+        "nama_taman": "Alun-Alun Pekalongan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.676296, -6.890730] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Pekalongan",
+        "nama_taman": "Taman Alun Alun Kajen",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [109.591546, -7.026857] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Salatiga",
+        "nama_taman": "taman kartini",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.499980, -7.326720] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Salatiga",
+        "nama_taman": "Taman Kota Salatiga",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.481988, -7.353970] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Semarang",
+        "nama_taman": "Alun Alun Semarang",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.423721, -6.971753] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Semarang",
+        "nama_taman": "Lapangan Simpang Lima",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.422959, -6.990357] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Semarang",
+        "nama_taman": "Taman Kota Lama (ex Hotel Jansen)",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.428945, -6.967648] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Semarang",
+        "nama_taman": "Taman Pandanaran",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.417196, -6.987833] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Semarang",
+        "nama_taman": "Taman Sampangan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.395900, -7.008388] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Semarang",
+        "nama_taman": "Taman Sudirman",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.408691, -7.005334] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Semarang",
+        "nama_taman": "Taman Tirto Agung",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.427041, -7.064221] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Surakarta",
+        "nama_taman": "Alun-Alun Selatan Surakarta",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.826452, -7.582113] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Surakarta",
+        "nama_taman": "Alun-alun utara",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.828781, -7.574734] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Surakarta",
+        "nama_taman": "Taman Cerdas Kecamatan Jebres",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.853392, -7.553844] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Surakarta",
+        "nama_taman": "Taman Kota Punggawan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.818274, -7.564558] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Tengah",
+        "kota_kabupaten": "Kota Surakarta",
+        "nama_taman": "Taman Tirtonadi",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [110.820334, -7.551438] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Bojonegoro",
+        "nama_taman": "Alun-Alun Bojonegoro",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.880251, -7.149094] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Bojonegoro",
+        "nama_taman": "Taman Rajekwesi",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.871937, -7.157642] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Bondowoso",
+        "nama_taman": "Alun-alun Bondowoso",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [113.822460, -7.913198] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Gresik",
+        "nama_taman": "\"Taman Klaskustik\" Alun-alun Sangkapura, Bawean",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.658482, -5.845454] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Gresik",
+        "nama_taman": "Alun Alun Sidayu",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.564924, -6.991124] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Jember",
+        "nama_taman": "Alun-Alun Jenggawah",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [113.648512, -8.267107] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Jombang",
+        "nama_taman": "Alun-Alun Jombang",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.233421, -7.557179] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Jombang",
+        "nama_taman": "Alun-alun Mojoagung",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.344939, -7.569864] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Jombang",
+        "nama_taman": "RTH Keplaksari",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.262877, -7.536891] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Kediri",
+        "nama_taman": "Taman Ringin Budho",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.196342, -7.768168] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Lamongan",
+        "nama_taman": "Alun-Alun Lamongan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.415719, -7.120213] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Lumajang",
+        "nama_taman": "Alun-Alun Lumajang",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [113.224443, -8.135220] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Magetan",
+        "nama_taman": "Alun-Alun Magetan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.328203, -7.656133] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Nganjuk",
+        "nama_taman": "Alun-Alun Nganjuk",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.901020, -7.602425] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Ngawi",
+        "nama_taman": "Alun-alun Merdeka Ngawi",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.444597, -7.403608] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Ngawi",
+        "nama_taman": "Taman Dungus Ngawi",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.450194, -7.406301] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Pacitan",
+        "nama_taman": "Alun-Alun Pacitan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.103162, -8.194693] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Pamekasan",
+        "nama_taman": "Alun-Alun Pamekasan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [113.482627, -7.160596] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Ponorogo",
+        "nama_taman": "Alun-Alun Ponorogo",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.462263, -7.871048] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Sidoarjo",
+        "nama_taman": "TAMAN APKASI",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.701002, -7.537460] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Situbondo",
+        "nama_taman": "Alun-Alun Situbondo",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [114.005404, -7.706819] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Sumenep",
+        "nama_taman": "Alun-Alun Sumenep",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [113.860228, -7.008233] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Trenggalek",
+        "nama_taman": "Alun-Alun Trenggalek",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.709203, -8.049135] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Tuban",
+        "nama_taman": "Alun-Alun Kabupaten Tuban",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.065237, -6.895062] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Tuban",
+        "nama_taman": "Taman Sleko",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.067836, -6.901442] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kabupaten Tulungagung",
+        "nama_taman": "Taman Aloon Aloon Tulungagung",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.900612, -8.064627] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Blitar",
+        "nama_taman": "Alun-Alun Blitar",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.165176, -8.098171] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Blitar",
+        "nama_taman": "Taman Kota Wlingi",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.324527, -8.081666] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Blitar",
+        "nama_taman": "Taman Pecut",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.165314, -8.099367] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Kediri",
+        "nama_taman": "Alun-Alun Kediri",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.011060, -7.826563] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Kediri",
+        "nama_taman": "Taman Kediri Memorial Park",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.027355, -7.817537] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Kediri",
+        "nama_taman": "Taman Ngronggo",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.011243, -7.838660] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Madiun",
+        "nama_taman": "Alun-Alun Mejayan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.652255, -7.542203] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Madiun",
+        "nama_taman": "Taman Hutan Kota Madiun",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [111.533752, -7.610406] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Malang",
+        "nama_taman": "Merbabu Family Park",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.625826, -7.967325] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Malang",
+        "nama_taman": "Taman Kota Hijau",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.617072, -7.928743] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Malang",
+        "nama_taman": "Taman Merjosari",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.603170, -7.945106] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Malang",
+        "nama_taman": "Taman Tjerme",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.625241, -7.970525] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Malang",
+        "nama_taman": "Taman Trunojoyo",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.636535, -7.976653] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Mojokerto",
+        "nama_taman": "Alun-Alun Mojokerto",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.431964, -7.463239] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Mojokerto",
+        "nama_taman": "Hutan Kota Mojokerto",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.418317, -7.467911] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Pasuruan",
+        "nama_taman": "Alun-Alun Bangil",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.784551, -7.597834] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Pasuruan",
+        "nama_taman": "Taman Kota Pasuruan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.909430, -7.645020] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Probolinggo",
+        "nama_taman": "Alun-Alun Kraksaan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [113.416245, -7.760640] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Hutan Kota Balas Klumprik",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.691316, -7.330143] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Hutan Kota Pakal",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.620937, -7.235000] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Taman 10 Nopember Park",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.754601, -7.251621] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Taman Ade Irma Suryani Nasution",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.744403, -7.267726] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Taman Apsari",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.742786, -7.263799] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Taman Cahaya",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.625040, -7.241287] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Taman Ekspresi",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.743735, -7.257117] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Taman Jayengrono",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.737813, -7.236124] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Taman Kombes Pol M Durayat",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.738683, -7.268389] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Taman Lansia",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.750249, -7.270946] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Taman Pelangi",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.731168, -7.327841] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Taman Persahabatan",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.746045, -7.276710] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Taman Prestasi",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.742774, -7.261137] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Taman Skate & BMX",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.749824, -7.263136] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Taman Suroboyo",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.787975, -7.225396] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "provinsi": "Jawa Timur",
+        "kota_kabupaten": "Kota Surabaya",
+        "nama_taman": "Taman Teratai",
+        "status": "Aktif"
+      },
+      "geometry": { "type": "Point", "coordinates": [112.755665, -7.255005] }
     }
   ]
 }

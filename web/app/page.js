@@ -88,7 +88,7 @@ export default function Halaman() {
     return () => ac.abort();
   }, [provinsiId, kotaId, resetN]);
 
-  // FR-09/11: nama, kategori, fasilitas disaring di browser dari data yang sudah dimuat (104 taman).
+  // FR-09/11: nama, kategori, fasilitas disaring di browser dari data yang sudah dimuat.
   const tampil = useMemo(() => {
     const q = cari.trim().toLowerCase();
     return (data.parks?.features ?? []).filter((f) => cocok(f.properties, { kat, fas, q }));

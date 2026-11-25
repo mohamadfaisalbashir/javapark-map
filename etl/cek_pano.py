@@ -17,6 +17,7 @@ Kolom `jenis` = virtual_tour | photosphere | jalan | kosong. Untuk Google disimp
 """
 import collections
 import csv
+import http.client
 import json
 import math
 import os
@@ -141,15 +142,19 @@ def pilih(pano, lat, lon):
 
 def get_json(url, data=None, headers=None):
     req = urllib.request.Request(url, data=data, headers={"User-Agent": "TPBW-taman-kota/0.2", **(headers or {})})
-    for coba in range(4):
+    for coba in range(6):
         try:
             with urllib.request.urlopen(req, timeout=900) as r:
                 return json.load(r)
         except urllib.error.HTTPError as e:  # URL tidak dicetak: berisi kunci
-            if e.code in (429, 502, 503, 504) and coba < 3:
+            if e.code in (429, 502, 503, 504) and coba < 5:
                 time.sleep(10 * (coba + 1))
                 continue
             sys.exit(f"GAGAL: {urllib.parse.urlsplit(url).netloc} HTTP {e.code}: {e.read()[:300].decode(errors='replace')}")
+        except (http.client.IncompleteRead, urllib.error.URLError, TimeoutError, ConnectionError):
+            if coba == 5:  # koneksi/DNS putus di tengah respons (sering di Overpass publik)
+                raise
+            time.sleep(10 * (coba + 1))
 
 
 def query_batas(titik):
@@ -164,7 +169,19 @@ def query_batas(titik):
         return (f'is_in({lat},{lon})->.a;({memuat}{dekat});out geom;'
                 f'way(around:400,{lat},{lon})["highway"~"^({JALAN_OSM})(_link)?$"];out geom;make batas;out;')
     return "[out:json][timeout:900];" + "".join(blok(lat, lon) for lat, lon in titik)
-    return "[out:json][timeout:900];" + "".join(blok)
+
+
+def overpass_batas(titik, per=8):
+    """query_batas per kelompok `per` titik (±90 KB/taman; respons >~1 MB sering putus di Overpass publik) -> hasil pisah_batas digabung."""
+    semua, jalan = [], []
+    for i in range(0, len(titik), per):
+        kelompok = titik[i:i + per]
+        a, b = pisah_batas(get_json("https://overpass-api.de/api/interpreter",
+                                    urllib.parse.urlencode({"data": query_batas(kelompok)}).encode())["elements"])
+        if len(a) != len(kelompok):
+            sys.exit(f"GAGAL: Overpass mengembalikan {len(a)} kelompok, seharusnya {len(kelompok)} (coba lagi nanti)")
+        semua, jalan = semua + a, jalan + b
+    return semua, jalan
 
 
 def pisah_batas(elemen):
@@ -308,11 +325,8 @@ def main():
     teks_taman = path_taman.read_text(encoding="utf-8")
     taman = [x for x in json.loads(teks_taman)["features"] if x["properties"].get("status") == "Aktif"]  # = load.py
     titik = [(x["geometry"]["coordinates"][1], x["geometry"]["coordinates"][0]) for x in taman]
-    print("Mengambil poligon taman dari Overpass (satu query, bisa beberapa menit)…", flush=True)
-    per, per_jalan = pisah_batas(get_json("https://overpass-api.de/api/interpreter",
-                               urllib.parse.urlencode({"data": query_batas(titik)}).encode())["elements"])
-    if len(per) != len(taman):
-        sys.exit(f"GAGAL: Overpass mengembalikan {len(per)} kelompok, seharusnya {len(taman)} (coba lagi nanti)")
+    print("Mengambil poligon taman dari Overpass (per 8 taman, bisa beberapa menit)…", flush=True)
+    per, per_jalan = overpass_batas(titik)
     hasil, digeser, dicek = [], [], []
     for i, (x, (lat, lon), cincin, jalan) in enumerate(zip(taman, titik, per, per_jalan), 1):
         p = x["properties"]

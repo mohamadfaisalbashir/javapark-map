@@ -21,7 +21,7 @@ import urllib.request
 from pathlib import Path
 
 from cek_pano import (RADIUS_CADANGAN_M, baca_env, di_dalam, get_json, jarak_m, lingkaran, pilih_batas,
-                      pisah_batas, query_batas)
+                      overpass_batas)
 
 AKAR = Path(__file__).resolve().parent.parent
 CSV = AKAR / "data/clean/fasilitas_taman.csv"
@@ -136,15 +136,14 @@ def main():
         taman = [x for x in json.load(f)["features"] if x["properties"].get("status") == "Aktif"]  # = load.py
     titik = [(x["geometry"]["coordinates"][1], x["geometry"]["coordinates"][0]) for x in taman]
     print("Mengambil poligon taman dari Overpass…", flush=True)
-    per, _ = pisah_batas(get_json("https://overpass-api.de/api/interpreter",
-                                  urllib.parse.urlencode({"data": query_batas(titik)}).encode())["elements"])
-    if len(per) != len(taman):
-        sys.exit(f"GAGAL: Overpass mengembalikan {len(per)} kelompok, seharusnya {len(taman)} (coba lagi nanti)")
+    per, _ = overpass_batas(titik, per=2)  # per 8: kelompok Gresik/Bawean selalu 502
     batas = [pilih_batas(lat, lon, c)[0] or [lingkaran(lat, lon, RADIUS_CADANGAN_M)] for (lat, lon), c in zip(titik, per)]
     lingkup = [(lat, lon, max(RADIUS_M, radius_batas(lat, lon, b))) for (lat, lon), b in zip(titik, batas)]
     print("Mengambil objek fasilitas dari Overpass…", flush=True)
-    objek = pisah(get_json("https://overpass-api.de/api/interpreter",
-                           urllib.parse.urlencode({"data": query(lingkup)}).encode())["elements"])
+    objek = []
+    for i in range(0, len(lingkup), 50):  # satu query untuk ratusan taman timeout
+        objek += pisah(get_json("https://overpass-api.de/api/interpreter",
+                                urllib.parse.urlencode({"data": query(lingkup[i:i + 50])}).encode())["elements"])
     if len(objek) != len(taman):
         sys.exit(f"GAGAL: Overpass mengembalikan {len(objek)} kelompok, seharusnya {len(taman)} (coba lagi nanti)")
 
